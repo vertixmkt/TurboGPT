@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turbo GPT</title>
+    <meta name="description" content="Turbo GPT: biblioteca de prompts de marketing, geração de conteúdo e hooks para qualquer LLM." />
+
+    <!-- ── Vendor libs ──────────────────────────────────────────────────── -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- ── Data ─────────────────────────────────────────────────────────── -->
+    <script src="./llm-prompts-data.js"></script>
+    <script src="./content-hooks-data.js"></script>
+
+    <!-- ── Core JS (plain, no JSX) ──────────────────────────────────────── -->
+    <script src="./js/config.js"></script>
+    <script src="./js/i18n.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/supabase-init.js"></script>
+    <script src="./js/context.js"></script>
+
+    <style>
+      @font-face {
+        font-family: "Helvetica Now";
+        src: url("./assets/fonts/HelveticaNowDisplay-Regular.woff") format("woff");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Helvetica Now";
+        src: url("./assets/fonts/HelveticaNowDisplay-Medium.woff") format("woff");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Helvetica Now";
+        src: url("./assets/fonts/HelveticaNowDisplay-Bold.woff") format("woff");
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+      }
+      :root {
+        --bg: #020409;
+        --surface: rgba(11, 16, 26, 0.78);
+        --surface-strong: rgba(18, 25, 38, 0.92);
+        --border: rgba(148, 163, 184, 0.16);
+        --border-strong: rgba(0, 118, 223, 0.34);
+        --accent: #23e893;
+        --accent-blue: #0076df;
+        --text: #f8fafc;
+        --text-muted: #98a2b3;
+        --shadow-soft: 0 30px 90px rgba(0, 118, 223, 0.12);
+        --gradient-primary: linear-gradient(299deg, #0076df -4.19%, #23e893 142.5%);
+        --gradient-soft: linear-gradient(135deg, rgba(0,118,223,0.22), rgba(35,232,147,0.12));
+      }
+      * { box-sizing: border-box; }
+      html,
+      body,
+      #root {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(0,118,223,0.18), transparent 34%),
+          radial-gradient(circle at 14% 72%, rgba(35,232,147,0.12), transparent 26%),
+          radial-gradient(circle at 85% 28%, rgba(0,118,223,0.16), transparent 28%),
+          var(--bg);
+        color: var(--text);
+        font-family: "Helvetica Now", sans-serif;
+        overflow-x: hidden;
+      }
+      .font-display { font-family: "Helvetica Now", sans-serif; }
+      .font-mono-ui { font-family: "Helvetica Now", sans-serif; }
+      ::selection {
+        background: rgba(35,232,147,0.88);
+        color: #020409;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(to right, rgba(148,163,184,0.08) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(148,163,184,0.08) 1px, transparent 1px);
+        background-size: 52px 52px;
+      }
+      .glass-panel {
+        background: rgba(15,23,42,0.66);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(148,163,184,0.16);
+        box-shadow: var(--shadow-soft);
+      }
+      .flashlight-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .flashlight-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(540px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(35,232,147,0.20), transparent 38%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+        z-index: 2;
+        mix-blend-mode: soft-light;
+      }
+      .flashlight-card:hover::before {
+        opacity: 1;
+      }
+      .transparent-text-outline {
+        -webkit-text-stroke: 1px rgba(248,250,252,0.24);
+        color: transparent;
+      }
+      .wescale-gradient {
+        background: var(--gradient-primary);
+        box-shadow:
+          0 0 8px rgba(0,118,223,0.20) inset,
+          0 20px 20px rgba(0,118,223,0.18) inset,
+          0 1px 2px rgba(255,255,255,0.75) inset,
+          0 18px 42px rgba(0,118,223,0.18);
+      }
+      .wescale-glass {
+        background: rgba(196,196,196,0.01);
+        box-shadow:
+          0 0 8px rgba(33,37,62,0.22) inset,
+          0 1px 2px rgba(255,255,255,0.52) inset,
+          0 8px 11px rgba(255,255,255,0.08) inset;
+        backdrop-filter: blur(8px);
+      }
+      .turbo-dark .bg-white,
+      .turbo-dark .bg-white\/70,
+      .turbo-dark .bg-white\/72,
+      .turbo-dark .bg-white\/75,
+      .turbo-dark .bg-white\/78,
+      .turbo-dark .bg-white\/80,
+      .turbo-dark .bg-white\/82,
+      .turbo-dark .bg-white\/88 {
+        background-color: rgba(15, 21, 33, 0.88) !important;
+      }
+      .turbo-dark .bg-stone-100 {
+        background-color: rgba(31, 42, 55, 0.88) !important;
+      }
+      .turbo-dark .bg-stone-950,
+      .turbo-dark .bg-stone-900 {
+        background: var(--gradient-primary) !important;
+        color: #ffffff !important;
+      }
+      .turbo-dark .text-stone-950,
+      .turbo-dark .text-stone-900,
+      .turbo-dark .text-stone-800,
+      .turbo-dark .text-stone-700 {
+        color: #f8fafc !important;
+      }
+      .turbo-dark .text-stone-600,
+      .turbo-dark .text-stone-500,
+      .turbo-dark .text-stone-400 {
+        color: #98a2b3 !important;
+      }
+      .turbo-dark .border-stone-900\/10,
+      .turbo-dark .border-stone-900\/18,
+      .turbo-dark .border-stone-300 {
+        border-color: rgba(148, 163, 184, 0.16) !important;
+      }
+      .turbo-dark input::placeholder {
+        color: rgba(152, 162, 179, 0.78);
+      }
+      @keyframes entry { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes ping { 75%,100% { transform:scale(2); opacity:0; } }
+      @keyframes modalIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+      @keyframes pageLoad { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+      .animate-entry { animation: entry 0.5s ease both; }
+      .animate-ping   { animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite; }
+      .modal-in       { animation: modalIn 0.2s ease both; }
+      #root           { animation: pageLoad 0.55s cubic-bezier(0.16,1,0.3,1); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- ── Components bundle (plain JS for local file opening) ─────────── -->
+    <script src="./components.bundle.js"></script>
+  </body>
+</html>
