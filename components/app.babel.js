@@ -18,6 +18,7 @@ var Footer                        = window.Footer;
 
 var FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-hooks";
 var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
+var SKILL_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-skills";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 
 var CONTENT_FORMATS = [
@@ -555,10 +556,11 @@ function ContentTypeToggle(props) {
   var options = [
     { id: "hooks", label: "Hooks", icon: "anchor", hint: "aberturas" },
     { id: "prompts", label: "Prompts", icon: "file-text", hint: "comandos" },
+    { id: "skills", label: "Skills", icon: "wand-2", hint: "agentes" },
   ];
 
   return (
-    <div className="grid w-full grid-cols-2 gap-2 rounded-2xl p-1.5 sm:w-auto" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+    <div className="grid w-full grid-cols-3 gap-2 rounded-2xl p-1.5 sm:w-auto" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
       {options.map(function(option) {
         var active = contentType === option.id;
         return (
@@ -699,6 +701,30 @@ function PromptCard(props) {
   );
 }
 
+function SkillCard(props) {
+  var item = props.item;
+  var saved = props.saved;
+  var onToggleSave = props.onToggleSave;
+
+  return (
+    <article
+      className="flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
+      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
+      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
+      <div className="flex-1">
+        <span className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(59,130,246,0.12)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.20)' }}>Skill</span>
+        <h3 className="mt-4 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
+        {item.description ? <p className="mt-2 text-sm leading-relaxed line-clamp-3" style={{ color: '#888' }}>{item.description}</p> : null}
+      </div>
+      <div className="mt-5 grid grid-cols-2 gap-2">
+        <SimpleCopyButton text={item.content} label="Copiar skill" />
+        <SaveButton saved={saved} onToggle={onToggleSave} />
+      </div>
+    </article>
+  );
+}
+
 function DetailModal(props) {
   var item = props.item;
   var onClose = props.onClose;
@@ -783,6 +809,8 @@ function App() {
   var visibleCount = stateVisibleCount[0], setVisibleCount = stateVisibleCount[1];
   var stateSelected = React.useState(null);
   var selected = stateSelected[0], setSelected = stateSelected[1];
+  var stateSkillFavorites = React.useState(function() { return readStoredList(SKILL_FAVORITES_STORAGE_KEY); });
+  var skillFavoriteIds = stateSkillFavorites[0], setSkillFavoriteIds = stateSkillFavorites[1];
 
   var allPromptItems = React.useMemo(function() {
     return (window.LLM_PROMPTS_DATA || []).filter(function(item) {
@@ -806,6 +834,10 @@ function App() {
     return map;
   }, [allHooks]);
 
+  var allSkillItems = React.useMemo(function() {
+    return (window.SKILLS_DATA || []);
+  }, []);
+
   var activeFormatRule = CONTENT_FORMATS.find(function(item) { return item.id === activeFormat; });
   var activeObjectiveRule = OBJECTIVE_FILTERS.find(function(item) { return item.id === activeObjective; });
   var activeStyleRule = STYLE_FILTERS.find(function(item) { return item.id === activeStyle; });
@@ -822,6 +854,15 @@ function App() {
   }, [allPromptItems]);
 
   var activeItems = React.useMemo(function() {
+    if (contentType === "skills") {
+      var q = normalizeText(search.trim());
+      return allSkillItems.filter(function(item) {
+        if (viewMode === "favorites" && skillFavoriteIds.indexOf(item.id) === -1) return false;
+        if (!q) return true;
+        return normalizeText(item.name).indexOf(q) !== -1 || normalizeText(item.description).indexOf(q) !== -1;
+      });
+    }
+
     if (contentType === "prompts") {
       return filterAndRankPrompts(allPromptItems, {
         search: search,
@@ -865,7 +906,7 @@ function App() {
         var scoreB = getHookRuleScore(b, activeFormatRule) + getHookRuleScore(b, activeObjectiveRule) + getHookRuleScore(b, activeStyleRule) + getHookRuleScore(b, activeAggressionRule);
         return scoreB - scoreA;
       });
-  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, recentIds]);
+  }, [contentType, allPromptItems, allSkillItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, skillFavoriteIds, recentIds]);
 
   var searchResults = React.useMemo(function() {
     if (!search.trim()) return [];
@@ -896,6 +937,10 @@ function App() {
   React.useEffect(function() {
     writeStoredList(PROMPT_FAVORITES_STORAGE_KEY, promptFavoriteIds);
   }, [promptFavoriteIds]);
+
+  React.useEffect(function() {
+    writeStoredList(SKILL_FAVORITES_STORAGE_KEY, skillFavoriteIds);
+  }, [skillFavoriteIds]);
 
   React.useEffect(function() {
     writeStoredList(RECENTS_STORAGE_KEY, recentIds);
@@ -964,6 +1009,10 @@ function App() {
 
   var togglePromptFavorite = function(item) {
     setPromptFavoriteIds(function(current) { return toggleListItem(current, item.id); });
+  };
+
+  var toggleSkillFavorite = function(item) {
+    setSkillFavoriteIds(function(current) { return toggleListItem(current, item.id); });
   };
 
   var handleSignOut = async function() {
@@ -1103,7 +1152,7 @@ function App() {
               <h1 className="mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl" style={{ color: '#fff' }}>O que você quer criar hoje?</h1>
             </div>
             <div className="rounded-lg px-4 py-3" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <p className="text-sm font-bold" style={{ color: '#fff' }}>Você já salvou {favoriteIds.length + promptFavoriteIds.length} ideias</p>
+              <p className="text-sm font-bold" style={{ color: '#fff' }}>Você já salvou {favoriteIds.length + promptFavoriteIds.length + skillFavoriteIds.length} ideias</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em]" style={{ color: '#888' }}>{activeItems.length} resultados prontos</p>
             </div>
           </section>
@@ -1126,7 +1175,7 @@ function App() {
                 contentType={contentType}
                 onChange={function(nextType) {
                   setContentType(nextType);
-                  if (nextType === "prompts") setViewMode("all");
+                  setViewMode("all");
                 }} />
 
               <div className="flex gap-2 overflow-x-auto pb-1">
@@ -1138,7 +1187,7 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-5 space-y-4">
+            {contentType === "skills" ? null : <div className="mt-5 space-y-4">
               <div>
                 <p className="mb-2 text-xs font-black uppercase tracking-[0.16em]" style={{ color: '#888' }}>Objetivo do conteúdo</p>
                 <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
@@ -1167,10 +1216,10 @@ function App() {
                   })}
                 </div>
               </div>
-            </div>
+            </div>}
           </section>
 
-          <section className="mt-5">
+          {contentType !== "skills" ? <section className="mt-5">
             <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 md:mx-0 md:flex-wrap md:px-0">
               {currentCategories.map(function(category) {
                 var selectedCategory = activeCategory === category.id;
@@ -1190,7 +1239,7 @@ function App() {
                 );
               })}
             </div>
-          </section>
+          </section> : null}
 
           <section className="mt-6 pb-12">
             {!sessionUser ? (
@@ -1212,6 +1261,9 @@ function App() {
             ) : visibleItems.length ? (
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {visibleItems.map(function(item) {
+                  if (contentType === "skills") {
+                    return <SkillCard key={"skill-" + item.id} item={item} saved={skillFavoriteIds.indexOf(item.id) !== -1} onToggleSave={function() { toggleSkillFavorite(item); }} />;
+                  }
                   if (contentType === "prompts") {
                     return <PromptCard key={"prompt-" + item.id} item={item} saved={promptFavoriteIds.indexOf(item.id) !== -1} onToggleSave={function() { togglePromptFavorite(item); }} onOpen={function() { handleOpenItem(Object.assign({ type: "prompt" }, item)); }} />;
                   }

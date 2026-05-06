@@ -1109,6 +1109,7 @@ var Background = window.Background;
 var Footer = window.Footer;
 var FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-hooks";
 var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
+var SKILL_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-skills";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 var CONTENT_FORMATS = [{
   id: "reels",
@@ -2020,9 +2021,14 @@ function ContentTypeToggle(props) {
     label: "Prompts",
     icon: "file-text",
     hint: "comandos"
+  }, {
+    id: "skills",
+    label: "Skills",
+    icon: "wand-2",
+    hint: "agentes"
   }];
   return React.createElement("div", {
-    className: "grid w-full grid-cols-2 gap-2 rounded-2xl p-1.5 sm:w-auto",
+    className: "grid w-full grid-cols-3 gap-2 rounded-2xl p-1.5 sm:w-auto",
     style: {
       background: 'rgba(255,255,255,0.04)',
       border: '1px solid rgba(255,255,255,0.08)'
@@ -2264,6 +2270,53 @@ function PromptCard(props) {
     onToggle: onToggleSave
   })));
 }
+function SkillCard(props) {
+  var item = props.item;
+  var saved = props.saved;
+  var onToggleSave = props.onToggleSave;
+  return React.createElement("article", {
+    className: "flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
+      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+      e.currentTarget.style.boxShadow = 'none';
+    }
+  }, React.createElement("div", {
+    className: "flex-1"
+  }, React.createElement("span", {
+    className: "rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]",
+    style: {
+      background: 'rgba(59,130,246,0.12)',
+      color: '#3b82f6',
+      border: '1px solid rgba(59,130,246,0.20)'
+    }
+  }, "Skill"), React.createElement("h3", {
+    className: "mt-4 text-lg font-bold leading-snug",
+    style: {
+      color: '#fff'
+    }
+  }, item.name), item.description ? React.createElement("p", {
+    className: "mt-2 text-sm leading-relaxed line-clamp-3",
+    style: {
+      color: '#888'
+    }
+  }, item.description) : null), React.createElement("div", {
+    className: "mt-5 grid grid-cols-2 gap-2"
+  }, React.createElement(SimpleCopyButton, {
+    text: item.content,
+    label: "Copiar skill"
+  }), React.createElement(SaveButton, {
+    saved: saved,
+    onToggle: onToggleSave
+  })));
+}
 function DetailModal(props) {
   var item = props.item;
   var onClose = props.onClose;
@@ -2411,6 +2464,11 @@ function App() {
   var stateSelected = React.useState(null);
   var selected = stateSelected[0],
     setSelected = stateSelected[1];
+  var stateSkillFavorites = React.useState(function () {
+    return readStoredList(SKILL_FAVORITES_STORAGE_KEY);
+  });
+  var skillFavoriteIds = stateSkillFavorites[0],
+    setSkillFavoriteIds = stateSkillFavorites[1];
   var allPromptItems = React.useMemo(function () {
     return (window.LLM_PROMPTS_DATA || []).filter(function (item) {
       return PROMPTS_ALLOWED_SUBCATEGORIES.indexOf(item.subcategory) !== -1;
@@ -2435,6 +2493,9 @@ function App() {
     });
     return map;
   }, [allHooks]);
+  var allSkillItems = React.useMemo(function () {
+    return window.SKILLS_DATA || [];
+  }, []);
   var activeFormatRule = CONTENT_FORMATS.find(function (item) {
     return item.id === activeFormat;
   });
@@ -2459,6 +2520,14 @@ function App() {
     });
   }, [allPromptItems]);
   var activeItems = React.useMemo(function () {
+    if (contentType === "skills") {
+      var q = normalizeText(search.trim());
+      return allSkillItems.filter(function (item) {
+        if (viewMode === "favorites" && skillFavoriteIds.indexOf(item.id) === -1) return false;
+        if (!q) return true;
+        return normalizeText(item.name).indexOf(q) !== -1 || normalizeText(item.description).indexOf(q) !== -1;
+      });
+    }
     if (contentType === "prompts") {
       return filterAndRankPrompts(allPromptItems, {
         search: search,
@@ -2496,7 +2565,7 @@ function App() {
       var scoreB = getHookRuleScore(b, activeFormatRule) + getHookRuleScore(b, activeObjectiveRule) + getHookRuleScore(b, activeStyleRule) + getHookRuleScore(b, activeAggressionRule);
       return scoreB - scoreA;
     });
-  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, recentIds]);
+  }, [contentType, allPromptItems, allSkillItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, skillFavoriteIds, recentIds]);
   var searchResults = React.useMemo(function () {
     if (!search.trim()) return [];
     if (contentType === "prompts") {
@@ -2526,6 +2595,9 @@ function App() {
   React.useEffect(function () {
     writeStoredList(PROMPT_FAVORITES_STORAGE_KEY, promptFavoriteIds);
   }, [promptFavoriteIds]);
+  React.useEffect(function () {
+    writeStoredList(SKILL_FAVORITES_STORAGE_KEY, skillFavoriteIds);
+  }, [skillFavoriteIds]);
   React.useEffect(function () {
     writeStoredList(RECENTS_STORAGE_KEY, recentIds);
   }, [recentIds]);
@@ -2590,6 +2662,11 @@ function App() {
   };
   var togglePromptFavorite = function (item) {
     setPromptFavoriteIds(function (current) {
+      return toggleListItem(current, item.id);
+    });
+  };
+  var toggleSkillFavorite = function (item) {
+    setSkillFavoriteIds(function (current) {
       return toggleListItem(current, item.id);
     });
   };
@@ -2868,7 +2945,7 @@ function App() {
     style: {
       color: '#fff'
     }
-  }, "Voc\xEA j\xE1 salvou ", favoriteIds.length + promptFavoriteIds.length, " ideias"), React.createElement("p", {
+  }, "Voc\xEA j\xE1 salvou ", favoriteIds.length + promptFavoriteIds.length + skillFavoriteIds.length, " ideias"), React.createElement("p", {
     className: "mt-1 text-xs font-medium uppercase tracking-[0.12em]",
     style: {
       color: '#888'
@@ -2897,7 +2974,7 @@ function App() {
     contentType: contentType,
     onChange: function (nextType) {
       setContentType(nextType);
-      if (nextType === "prompts") setViewMode("all");
+      setViewMode("all");
     }
   }), React.createElement("div", {
     className: "flex gap-2 overflow-x-auto pb-1"
@@ -2923,7 +3000,7 @@ function App() {
     onClick: function () {
       setViewMode("recent");
     }
-  }) : null)), React.createElement("div", {
+  }) : null)), contentType === "skills" ? null : React.createElement("div", {
     className: "mt-5 space-y-4"
   }, React.createElement("div", null, React.createElement("p", {
     className: "mb-2 text-xs font-black uppercase tracking-[0.16em]",
@@ -2988,7 +3065,7 @@ function App() {
         setActiveAggression(activeAggression === filter.id ? "all" : filter.id);
       }
     });
-  }))))), React.createElement("section", {
+  }))))), contentType !== "skills" ? React.createElement("section", {
     className: "mt-5"
   }, React.createElement("div", {
     className: "-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 md:mx-0 md:flex-wrap md:px-0"
@@ -3016,7 +3093,7 @@ function App() {
         background: 'rgba(255,255,255,0.10)'
       }
     }, category.count));
-  }))), React.createElement("section", {
+  }))) : null, React.createElement("section", {
     className: "mt-6 pb-12"
   }, !sessionUser ? React.createElement("div", {
     className: "flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center",
@@ -3059,6 +3136,16 @@ function App() {
   }), "Entrar na plataforma")) : visibleItems.length ? React.createElement("div", {
     className: "grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
   }, visibleItems.map(function (item) {
+    if (contentType === "skills") {
+      return React.createElement(SkillCard, {
+        key: "skill-" + item.id,
+        item: item,
+        saved: skillFavoriteIds.indexOf(item.id) !== -1,
+        onToggleSave: function () {
+          toggleSkillFavorite(item);
+        }
+      });
+    }
     if (contentType === "prompts") {
       return React.createElement(PromptCard, {
         key: "prompt-" + item.id,
