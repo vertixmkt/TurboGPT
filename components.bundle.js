@@ -1946,15 +1946,15 @@ function SimpleCopyButton(props) {
   return React.createElement("button", {
     type: "button",
     onClick: handleCopy,
-    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
+    className: "surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: copied ? {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
-      border: '1px solid rgba(59,130,246,0.35)'
+      border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#fff',
-      border: '1px solid rgba(255,255,255,0.10)'
+      border: '2px solid rgba(255,255,255,0.12)'
     },
     title: copied ? "Copiado" : label
   }, React.createElement("i", {
@@ -1971,15 +1971,15 @@ function SaveButton(props) {
       event.stopPropagation();
       onToggle();
     },
-    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
+    className: "surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: saved ? {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
-      border: '1px solid rgba(59,130,246,0.35)'
+      border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#888',
-      border: '1px solid rgba(255,255,255,0.10)'
+      border: '2px solid rgba(255,255,255,0.12)'
     },
     title: saved ? "Remover dos favoritos" : "Salvar"
   }, React.createElement("i", {
@@ -2033,15 +2033,15 @@ function FilterChip(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
+    className: "surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
     style: active ? {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
-      border: '1px solid rgba(59,130,246,0.35)'
+      border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, icon ? React.createElement("i", {
     "data-lucide": icon,
@@ -2071,11 +2071,11 @@ function DownloadButtons(props) {
     onClick: function () {
       downloadTextFile(item.id + ".txt", content);
     },
-    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    className: "surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
     style: {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("i", {
     "data-lucide": "download",
@@ -2085,11 +2085,11 @@ function DownloadButtons(props) {
     onClick: function () {
       downloadTextFile(item.id + ".md", content);
     },
-    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    className: "surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
     style: {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("i", {
     "data-lucide": "download",
@@ -2129,12 +2129,15 @@ function ContentTypeToggle(props) {
       onClick: function () {
         onChange(option.id);
       },
-      className: "group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]",
+      className: "surface-card group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]",
       style: active ? {
-        background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
-        color: '#fff'
+        background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+        color: '#fff',
+        border: '2px solid rgba(78,119,255,0.58)'
       } : {
-        color: '#888'
+        background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+        color: '#888',
+        border: '2px solid rgba(255,255,255,0.10)'
       }
     }, React.createElement("span", {
       className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all",
@@ -2171,15 +2174,15 @@ function ViewModeButton(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]",
+    className: "surface-card group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]",
     style: active ? {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
-      border: '1px solid rgba(59,130,246,0.35)'
+      border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: '#161616',
+      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
       color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("span", {
     className: "inline-flex h-8 w-8 items-center justify-center rounded-full",
@@ -2207,7 +2210,7 @@ function ContentFormatCard(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "format-card group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
+    className: "surface-card group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
     style: active ? {
       background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
@@ -2251,22 +2254,14 @@ function HookCard(props) {
   var styleMeta = getHookStyleMeta(item);
   var badges = getHighlightBadges(item);
   return React.createElement("article", {
-    className: "group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "surface-card group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)',
       minHeight: '316px'
-    },
-    onMouseEnter: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
-      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
-    },
-    onMouseLeave: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-      e.currentTarget.style.boxShadow = 'none';
     }
   }, React.createElement("div", {
-    className: "absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass
+    className: "surface-rail absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass
   }), React.createElement("button", {
     type: "button",
     onClick: onOpen,
@@ -2319,18 +2314,10 @@ function PromptCard(props) {
   var onToggleSave = props.onToggleSave;
   var text = getPromptText(item);
   return React.createElement("article", {
-    className: "flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "surface-card flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
-    },
-    onMouseEnter: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
-      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
-    },
-    onMouseLeave: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-      e.currentTarget.style.boxShadow = 'none';
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("button", {
     type: "button",
@@ -2373,18 +2360,10 @@ function SkillCard(props) {
   var saved = props.saved;
   var onToggleSave = props.onToggleSave;
   return React.createElement("article", {
-    className: "flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "surface-card flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
-    },
-    onMouseEnter: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
-      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
-    },
-    onMouseLeave: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-      e.currentTarget.style.boxShadow = 'none';
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("div", {
     className: "flex-1"
@@ -2996,10 +2975,10 @@ function App() {
   }), "Entrar"))), search.trim() ? React.createElement("div", {
     className: "mx-auto max-w-[1240px] px-4 pb-3 md:px-6"
   }, React.createElement("div", {
-    className: "overflow-hidden rounded-lg",
+    className: "surface-card overflow-hidden rounded-lg",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)',
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)',
       boxShadow: '0 18px 42px rgba(0,0,0,0.6)'
     }
   }, searchResults.length ? searchResults.map(function (item) {
@@ -3036,10 +3015,10 @@ function App() {
       color: '#fff'
     }
   }, "O que voc\xEA quer criar hoje?")), React.createElement("div", {
-    className: "rounded-lg px-4 py-3",
+    className: "surface-card rounded-lg px-4 py-3",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("p", {
     className: "text-sm font-bold",
@@ -3064,10 +3043,10 @@ function App() {
       }
     });
   })), React.createElement("section", {
-    className: "mt-6 rounded-lg p-4",
+    className: "surface-card mt-6 rounded-lg p-4",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("div", {
     className: "flex flex-wrap items-center justify-between gap-3"
@@ -3178,15 +3157,15 @@ function App() {
       onClick: function () {
         handleCategorySelect(category.id);
       },
-      className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
+      className: "surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
       style: selectedCategory ? {
-        background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+        background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
         color: '#fff',
-        border: '1px solid rgba(59,130,246,0.35)'
+        border: '2px solid rgba(78,119,255,0.58)'
       } : {
-        background: '#161616',
+        background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
         color: '#888',
-        border: '1px solid rgba(255,255,255,0.08)'
+        border: '2px solid rgba(255,255,255,0.10)'
       }
     }, category.icon ? React.createElement("span", null, category.icon) : null, category.label, React.createElement("span", {
       className: "rounded-full px-2 py-0.5 text-[11px]",
@@ -3197,10 +3176,10 @@ function App() {
   }))) : null, React.createElement("section", {
     className: "mt-6 pb-12"
   }, !sessionUser ? React.createElement("div", {
-    className: "flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center",
+    className: "surface-card flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("span", {
     className: "mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl",
@@ -3226,10 +3205,11 @@ function App() {
     onClick: function () {
       setLoginModalOpen(true);
     },
-    className: "mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5",
+    className: "surface-card mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5",
     style: {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
-      color: '#fff'
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      color: '#fff',
+      border: '2px solid rgba(78,119,255,0.58)'
     }
   }, React.createElement("i", {
     "data-lucide": "log-in",
@@ -3281,10 +3261,10 @@ function App() {
       }
     });
   })) : React.createElement("div", {
-    className: "rounded-lg px-5 py-10 text-center",
+    className: "surface-card rounded-lg px-5 py-10 text-center",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("p", {
     className: "text-lg font-bold",
@@ -3303,10 +3283,10 @@ function App() {
     onClick: function () {
       setVisibleCount(visibleCount + 36);
     },
-    className: "rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5",
+    className: "surface-card rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5",
     style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.10)',
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)',
       color: '#fff'
     }
   }, "Mostrar mais")) : null)), React.createElement(Footer, null), React.createElement(DetailModal, {

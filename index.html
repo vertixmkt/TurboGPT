@@ -90,8 +90,11 @@
       .animate-entry { animation: entry 0.5s ease both; }
       .animate-ping   { animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite; }
       .modal-in       { animation: modalIn 0.2s ease both; }
-      .format-card { position: relative; overflow: hidden; }
-      .format-card::before {
+      .surface-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .surface-card::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -103,8 +106,8 @@
         transition: opacity 180ms ease;
         pointer-events: none;
       }
-      .format-card:hover::before { opacity: 1; }
-      .format-card > span { position: relative; z-index: 1; }
+      .surface-card:hover::before { opacity: 1; }
+      .surface-card > :not(.surface-rail) { position: relative; z-index: 1; }
       #root           { animation: pageLoad 0.55s cubic-bezier(0.16,1,0.3,1); }
     </style>
   </head>
