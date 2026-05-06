@@ -765,6 +765,260 @@
   </div>
 </section>
 
+<!-- ── MOCKUP DA PLATAFORMA ── -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Veja em ação</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width:620px; margin:0 auto;">
+      Do zero ao hook certo<br>em menos de 10 segundos
+    </h2>
+    <p class="section-sub centered reveal reveal-d2">
+      Escolha o formato, ative o filtro, copie. Sem cadastro, sem IA gerando texto aleatório — só a referência certa, quando você precisa.
+    </p>
+
+    <!-- App Mockup -->
+    <div class="reveal reveal-d2" style="margin-top:48px; position:relative;">
+
+      <!-- Glow behind mockup -->
+      <div style="position:absolute; inset:-40px; background: radial-gradient(ellipse at 50% 60%, rgba(59,130,246,0.18) 0%, transparent 70%); pointer-events:none; z-index:0;"></div>
+
+      <!-- App Window Frame -->
+      <div id="platform-mockup" style="
+        position:relative; z-index:1;
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(180deg, rgba(18,18,22,0.96) 0%, rgba(8,8,12,0.98) 100%);
+        box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.10);
+        overflow:hidden;
+        backdrop-filter:blur(20px);
+        font-family: 'Helvetica Now', system-ui, sans-serif;
+      ">
+
+        <!-- Window Chrome (dots) -->
+        <div style="padding:14px 18px; background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:10px;">
+          <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+          <div style="flex:1; margin:0 16px; height:26px; border-radius:6px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; padding:0 10px;">
+            <span style="font-size:11px; color:rgba(255,255,255,0.30);">turbo-gpt-nu.vercel.app</span>
+          </div>
+        </div>
+
+        <!-- App Header -->
+        <div style="padding:12px 20px; background:rgba(0,0,0,0.60); border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:16px; backdrop-filter:blur(12px);">
+          <div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
+            <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#1d4ed8,#000);display:grid;place-items:center;font-size:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.16);">⚡</div>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:-0.02em;">Turbo GPT</div>
+              <div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-top:1px;">Viralização de conteúdo</div>
+            </div>
+          </div>
+          <div style="flex:1;"></div>
+          <!-- Tabs -->
+          <div style="display:flex; gap:4px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:4px;">
+            <div id="tab-hooks" class="mock-tab mock-tab-active" onclick="mockSelectTab('hooks')" style="padding:6px 14px; border-radius:9px; font-size:11px; font-weight:800; cursor:pointer; transition:all 0.2s; background:linear-gradient(135deg,#1d4ed8,#050515); color:#fff; border:1px solid rgba(59,130,246,0.38);">Hooks</div>
+            <div id="tab-prompts" class="mock-tab" onclick="mockSelectTab('prompts')" style="padding:6px 14px; border-radius:9px; font-size:11px; font-weight:800; cursor:pointer; transition:all 0.2s; color:#888;">Prompts</div>
+            <div id="tab-skills" class="mock-tab" onclick="mockSelectTab('skills')" style="padding:6px 14px; border-radius:9px; font-size:11px; font-weight:800; cursor:pointer; transition:all 0.2s; color:#888;">Skills</div>
+          </div>
+        </div>
+
+        <!-- App Body -->
+        <div style="padding:20px; display:flex; flex-direction:column; gap:14px;">
+
+          <!-- Format Cards Row -->
+          <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px;">
+            <div id="fmt-reels" class="mock-fmt mock-fmt-active" onclick="mockSelectFormat('reels')" style="border-radius:10px; padding:12px 10px; text-align:center; cursor:pointer; transition:all 0.25s; background:linear-gradient(135deg,#1d4ed8,#000); border:1px solid rgba(59,130,246,0.38); color:#fff;">
+              <div style="font-size:15px; margin-bottom:4px;">🎬</div>
+              <div style="font-size:10px; font-weight:800; letter-spacing:-0.01em;">Reels</div>
+              <div style="font-size:9px; color:rgba(255,255,255,0.55); margin-top:2px;">abertura forte</div>
+            </div>
+            <div id="fmt-story" class="mock-fmt" onclick="mockSelectFormat('story')" style="border-radius:10px; padding:12px 10px; text-align:center; cursor:pointer; transition:all 0.25s; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#fff;">
+              <div style="font-size:15px; margin-bottom:4px;">📱</div>
+              <div style="font-size:10px; font-weight:800; letter-spacing:-0.01em;">Story</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">conversa rápida</div>
+            </div>
+            <div id="fmt-carousel" class="mock-fmt" onclick="mockSelectFormat('carousel')" style="border-radius:10px; padding:12px 10px; text-align:center; cursor:pointer; transition:all 0.25s; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#fff;">
+              <div style="font-size:15px; margin-bottom:4px;">📊</div>
+              <div style="font-size:10px; font-weight:800; letter-spacing:-0.01em;">Carrossel</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">ideia em sequência</div>
+            </div>
+            <div id="fmt-ad" class="mock-fmt" onclick="mockSelectFormat('ad')" style="border-radius:10px; padding:12px 10px; text-align:center; cursor:pointer; transition:all 0.25s; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#fff;">
+              <div style="font-size:15px; margin-bottom:4px;">📣</div>
+              <div style="font-size:10px; font-weight:800; letter-spacing:-0.01em;">Anúncio</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">clique e oferta</div>
+            </div>
+            <div id="fmt-vsl" class="mock-fmt" onclick="mockSelectFormat('vsl')" style="border-radius:10px; padding:12px 10px; text-align:center; cursor:pointer; transition:all 0.25s; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#fff;">
+              <div style="font-size:15px; margin-bottom:4px;">▶️</div>
+              <div style="font-size:10px; font-weight:800; letter-spacing:-0.01em;">VSL</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">retenção e venda</div>
+            </div>
+          </div>
+
+          <!-- Filter Row -->
+          <div style="padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.07); display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+            <span style="font-size:9px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:#666; width:100%; margin-bottom:2px;">Objetivo do conteúdo</span>
+            <div id="obj-atrai" class="mock-obj mock-obj-active" onclick="mockSelectObj('atrai')" style="padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800; cursor:pointer; transition:all 0.2s; background:linear-gradient(135deg,#1d4ed8,#000); color:#fff; border:1px solid rgba(59,130,246,0.38);">⚡ ATRAI</div>
+            <div id="obj-engaja" class="mock-obj" onclick="mockSelectObj('engaja')" style="padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.06); color:#888; border:1px solid rgba(255,255,255,0.08);">💬 ENGAJA</div>
+            <div id="obj-vende" class="mock-obj" onclick="mockSelectObj('vende')" style="padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.06); color:#888; border:1px solid rgba(255,255,255,0.08);">💰 VENDE</div>
+            <div id="obj-educa" class="mock-obj" onclick="mockSelectObj('educa')" style="padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.06); color:#888; border:1px solid rgba(255,255,255,0.08);">📚 EDUCA</div>
+          </div>
+
+          <!-- Hook Cards Grid -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;" id="mock-cards">
+
+            <div style="border-radius:10px; padding:14px; border:1px solid rgba(255,255,255,0.09); background:linear-gradient(180deg,rgba(22,22,26,0.90) 0%, rgba(8,8,12,0.90) 100%); display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:#ef4444;border-radius:0 2px 2px 0;"></div>
+              <div style="padding-left:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:8px;">
+                  <span style="font-size:8px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; border-radius:999px; background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.25);">Urgência</span>
+                  <span style="font-size:8px; color:#666; font-weight:600;">Problema / Dor</span>
+                </div>
+                <p style="font-size:11px; font-weight:700; color:#fff; line-height:1.45; margin:0;">Cansado de tentar métodos que simplesmente não funcionam? Deixe-me mostrar o que realmente acontece.</p>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:auto;">
+                <button id="copy-btn-1" onclick="mockCopy(1)" style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.06); color:#fff; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:4px;"><span id="copy-icon-1">📋</span> <span id="copy-text-1">Copiar</span></button>
+                <button style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px;">🔖 Salvar</button>
+              </div>
+            </div>
+
+            <div style="border-radius:10px; padding:14px; border:1px solid rgba(255,255,255,0.09); background:linear-gradient(180deg,rgba(22,22,26,0.90) 0%, rgba(8,8,12,0.90) 100%); display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:#8b5cf6;border-radius:0 2px 2px 0;"></div>
+              <div style="padding-left:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:8px;">
+                  <span style="font-size:8px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; border-radius:999px; background:rgba(139,92,246,0.15); color:#8b5cf6; border:1px solid rgba(139,92,246,0.25);">Segredo</span>
+                  <span style="font-size:8px; color:#666; font-weight:600;">Seg. / Inf. Oculta</span>
+                </div>
+                <p style="font-size:11px; font-weight:700; color:#fff; line-height:1.45; margin:0;">O que os maiores criadores fazem diferente — e nunca contam publicamente. Isso muda tudo.</p>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:auto;">
+                <button onclick="mockCopy(2)" style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.06); color:#fff; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:4px;">📋 Copiar</button>
+                <button style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px;">🔖 Salvar</button>
+              </div>
+            </div>
+
+            <div style="border-radius:10px; padding:14px; border:1px solid rgba(255,255,255,0.09); background:linear-gradient(180deg,rgba(22,22,26,0.90) 0%, rgba(8,8,12,0.90) 100%); display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:#0ea5e9;border-radius:0 2px 2px 0;"></div>
+              <div style="padding-left:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:8px;">
+                  <span style="font-size:8px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; border-radius:999px; background:rgba(14,165,233,0.15); color:#0ea5e9; border:1px solid rgba(14,165,233,0.25);">Curiosidade</span>
+                  <span style="font-size:8px; color:#666; font-weight:600;">Choque / Surpresa</span>
+                </div>
+                <p style="font-size:11px; font-weight:700; color:#fff; line-height:1.45; margin:0;">Eu testei todos os ___ por aí — e aqui estão os resultados que ninguém esperava ver.</p>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:auto;">
+                <button onclick="mockCopy(3)" style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.10); background:rgba(255,255,255,0.06); color:#fff; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:4px;">📋 Copiar</button>
+                <button style="padding:6px; border-radius:7px; font-size:9px; font-weight:800; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px;">🔖 Salvar</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Result count bar -->
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 2px;">
+            <span id="mock-count" style="font-size:10px; color:#888; font-weight:600;">Mostrando <strong style="color:#fff;">247</strong> hooks para Reels · ATRAI</span>
+            <span style="font-size:10px; color:#3b82f6; font-weight:700; cursor:pointer;">Ver mais →</span>
+          </div>
+
+        </div>
+      </div><!-- /App Window -->
+
+      <!-- Feature Callouts -->
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px;">
+        <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">🎯</div>
+          <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">Filtros combinados</div>
+          <div style="font-size:11px; color:#888; line-height:1.5;">Formato + Objetivo + Estilo + Agressividade</div>
+        </div>
+        <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">⚡</div>
+          <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">1 clique para copiar</div>
+          <div style="font-size:11px; color:#888; line-height:1.5;">Cole direto no ChatGPT, Claude ou onde quiser</div>
+        </div>
+        <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">📥</div>
+          <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">Download .txt e .md</div>
+          <div style="font-size:11px; color:#888; line-height:1.5;">Skills prontas para qualquer ferramenta de IA</div>
+        </div>
+        <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03); text-align:center;">
+          <div style="font-size:20px; margin-bottom:8px;">🔖</div>
+          <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">Biblioteca pessoal</div>
+          <div style="font-size:11px; color:#888; line-height:1.5;">Salve favoritos e acesse os usados recentemente</div>
+        </div>
+      </div>
+
+    </div><!-- /reveal -->
+  </div>
+</section>
+
+<style>
+  .mock-fmt { user-select:none; }
+  .mock-fmt-active { background: linear-gradient(135deg,#1d4ed8,#000) !important; color:#fff !important; border-color:rgba(59,130,246,0.38) !important; }
+  .mock-obj { user-select:none; }
+  .mock-obj-active { background: linear-gradient(135deg,#1d4ed8,#000) !important; color:#fff !important; border-color:rgba(59,130,246,0.38) !important; }
+  .mock-tab { user-select:none; }
+  .mock-tab-active { background:linear-gradient(135deg,#1d4ed8,#050515) !important; color:#fff !important; border:1px solid rgba(59,130,246,0.38) !important; }
+  #copy-btn-1.copied { background: linear-gradient(135deg,#1d4ed8,#000) !important; border-color:rgba(59,130,246,0.4) !important; color:#fff !important; }
+</style>
+
+<script>
+  // Interactive mockup
+  function mockSelectFormat(id) {
+    document.querySelectorAll('.mock-fmt').forEach(el => el.classList.remove('mock-fmt-active'));
+    document.getElementById('fmt-'+id).classList.add('mock-fmt-active');
+  }
+  function mockSelectObj(id) {
+    document.querySelectorAll('.mock-obj').forEach(el => el.classList.remove('mock-obj-active'));
+    document.getElementById('obj-'+id).classList.add('mock-obj-active');
+    updateCount(id);
+  }
+  function mockSelectTab(id) {
+    document.querySelectorAll('.mock-tab').forEach(el => el.classList.remove('mock-tab-active'));
+    document.getElementById('tab-'+id).classList.add('mock-tab-active');
+  }
+  function updateCount(obj) {
+    const counts = { atrai:247, engaja:183, vende:312, educa:156 };
+    const labels = { atrai:'ATRAI', engaja:'ENGAJA', vende:'VENDE', educa:'EDUCA' };
+    const fmts = { reels:'Reels', story:'Story', carousel:'Carrossel', ad:'Anúncio', vsl:'VSL' };
+    const activeFmt = document.querySelector('.mock-fmt-active');
+    const fmtId = activeFmt ? activeFmt.id.replace('fmt-','') : 'reels';
+    document.getElementById('mock-count').innerHTML =
+      'Mostrando <strong style="color:#fff;">' + counts[obj] + '</strong> hooks para ' + fmts[fmtId] + ' · ' + labels[obj];
+  }
+  function mockCopy(n) {
+    if (n !== 1) return;
+    const btn = document.getElementById('copy-btn-1');
+    const icon = document.getElementById('copy-icon-1');
+    const text = document.getElementById('copy-text-1');
+    btn.classList.add('copied');
+    icon.textContent = '✅';
+    text.textContent = 'Copiado!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      icon.textContent = '📋';
+      text.textContent = 'Copiar';
+    }, 2000);
+  }
+
+  // Auto-animation loop
+  (function autoPlay() {
+    const seq = [
+      () => mockSelectFormat('reels'),
+      () => mockSelectObj('atrai'),
+      () => { mockSelectFormat('story'); mockSelectObj('engaja'); },
+      () => { mockSelectFormat('ad'); mockSelectObj('vende'); },
+      () => mockCopy(1),
+      () => { mockSelectFormat('reels'); mockSelectObj('atrai'); },
+    ];
+    let i = 0;
+    function step() {
+      seq[i % seq.length]();
+      i++;
+      setTimeout(step, i % 2 === 0 ? 2200 : 1800);
+    }
+    setTimeout(step, 3000);
+  })();
+</script>
+
 <!-- ── SEÇÃO 6: PROVA SOCIAL ── -->
 <section class="section">
   <div class="wrap">
