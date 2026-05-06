@@ -143,6 +143,15 @@
         transform: translateY(-1px);
       }
       .surface-card:hover::after { opacity: 0.68; }
+      .surface-panel::before {
+        opacity: 0.24;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.018) 34%, rgba(255,255,255,0.00) 72%),
+          radial-gradient(circle at 18% 0%, rgba(59,130,246,0.10) 0%, rgba(255,255,255,0.00) 40%);
+      }
+      .surface-panel::after { opacity: 0.16; }
+      .surface-panel:hover::before { opacity: 0.36; }
+      .surface-panel:hover::after { opacity: 0.24; }
       .surface-card > :not(.surface-rail) { position: relative; z-index: 1; }
       #root           { animation: pageLoad 0.55s cubic-bezier(0.16,1,0.3,1); }
     </style>
