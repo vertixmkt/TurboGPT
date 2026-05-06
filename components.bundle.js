@@ -2207,24 +2207,24 @@ function ContentFormatCard(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
+    className: "format-card group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
     style: active ? {
-      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
       color: '#fff',
-      border: '1px solid rgba(59,130,246,0.35)'
+      border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: '#0f0f0f',
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
       color: '#fff',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("span", {
     className: "inline-flex h-10 w-10 items-center justify-center rounded-md",
     style: active ? {
-      background: 'rgba(0,0,0,0.15)',
-      border: '1px solid rgba(0,0,0,0.15)'
+      background: 'rgba(255,255,255,0.08)',
+      border: '1px solid rgba(255,255,255,0.12)'
     } : {
       background: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '1px solid rgba(255,255,255,0.12)'
     }
   }, React.createElement("i", {
     "data-lucide": format.icon,
