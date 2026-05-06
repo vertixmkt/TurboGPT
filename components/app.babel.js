@@ -34,7 +34,7 @@ var CONTENT_FORMATS = [
   { id: "vsl", label: "VSL", icon: "square-play", hint: "retenção e venda", categoryIds: ["1-segredo-informao-oculta", "3-polmica-contrariao", "6-storytelling-histria-pessoal", "9-problema-dor", "13-resultado-transformao"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["vsl", "sales video", "video sales", "pitch", "webinar", "segredo", "historia", "verdade", "problema", "resultado"] },
   { id: "email", label: "E-mail", icon: "mail", hint: "assunto e conversão", categoryIds: ["1-segredo-informao-oculta", "5-perguntas-curiosidade", "8-urgncia-cta-direto", "9-problema-dor"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["email", "e-mail", "newsletter", "assunto", "subject", "sequence", "sequencia", "cold outreach", "follow-up", "cta", "click"] },
   { id: "youtube", label: "Vídeo YouTube", icon: "square-play", hint: "título, roteiro e retenção", categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"], promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"], terms: ["youtube", "video", "vídeo", "roteiro", "script", "titulo", "title", "thumbnail", "miniatura", "retencao", "canal", "shorts"] },
-  { id: "linkedin", label: "Post LinkedIn", icon: "linkedin", hint: "autoridade e networking", categoryIds: ["4-listas-numerados", "6-storytelling-histria-pessoal", "7-teste-experimento-review", "10-tutorial-howto-soluo"], promptSubcategories: ["Social Media", "Copywriting", "SEO & Content"], terms: ["linkedin", "post linkedin", "thought leadership", "lideranca", "autoridade", "networking", "b2b", "carrossel", "artigo", "comentarios"] },
+  { id: "linkedin", label: "Post LinkedIn", icon: "briefcase", hint: "autoridade e networking", categoryIds: ["4-listas-numerados", "6-storytelling-histria-pessoal", "7-teste-experimento-review", "10-tutorial-howto-soluo"], promptSubcategories: ["Social Media", "Copywriting", "SEO & Content"], terms: ["linkedin", "post linkedin", "thought leadership", "lideranca", "autoridade", "networking", "b2b", "carrossel", "artigo", "comentarios"] },
   { id: "x-post", label: "Post X", icon: "send", hint: "ideia curta e viral", categoryIds: ["2-choque-surpresa", "3-polmica-contrariao", "5-perguntas-curiosidade", "11-what-if-imaginao"], promptSubcategories: ["Social Media", "Copywriting"], terms: ["twitter", "x/twitter", "post x", "tweet", "thread", "threads", "viral", "opiniao", "curto", "engajamento"] },
   { id: "google-ads", label: "Anúncio Google Ads", icon: "search", hint: "intenção e conversão", categoryIds: ["8-urgncia-cta-direto", "9-problema-dor", "10-tutorial-howto-soluo", "13-resultado-transformao"], promptSubcategories: ["Sales & E-commerce", "Copywriting", "SEO & Content"], terms: ["google ads", "google", "search ads", "pesquisa", "campanha", "keyword", "palavra-chave", "cpc", "display", "shopping", "conversao"] },
 ];
@@ -676,7 +676,11 @@ function ContentFormatCard(props) {
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-md" style={active
         ? { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }
         : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}>
-        <i data-lucide={format.icon} className="h-5 w-5" />
+        {format.id === "linkedin" ? (
+          <span className="text-lg font-black leading-none tracking-tight">in</span>
+        ) : (
+          <i data-lucide={format.icon} className="h-5 w-5" />
+        )}
       </span>
       <span className="block pt-6">
         <span className="block break-words text-xl font-bold leading-tight">{format.label}</span>

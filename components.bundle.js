@@ -1174,7 +1174,7 @@ var CONTENT_FORMATS = [{
 }, {
   id: "linkedin",
   label: "Post LinkedIn",
-  icon: "linkedin",
+  icon: "briefcase",
   hint: "autoridade e networking",
   categoryIds: ["4-listas-numerados", "6-storytelling-histria-pessoal", "7-teste-experimento-review", "10-tutorial-howto-soluo"],
   promptSubcategories: ["Social Media", "Copywriting", "SEO & Content"],
@@ -2233,7 +2233,9 @@ function ContentFormatCard(props) {
       background: 'rgba(255,255,255,0.06)',
       border: '1px solid rgba(255,255,255,0.12)'
     }
-  }, React.createElement("i", {
+  }, format.id === "linkedin" ? React.createElement("span", {
+    className: "text-lg font-black leading-none tracking-tight"
+  }, "in") : React.createElement("i", {
     "data-lucide": format.icon,
     className: "h-5 w-5"
   })), React.createElement("span", {
