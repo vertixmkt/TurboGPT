@@ -28,7 +28,7 @@ var CONTENT_FORMATS = [
   { id: "ad", label: "Anúncio", icon: "megaphone", hint: "clique e oferta", categoryIds: ["8-urgncia-cta-direto", "9-problema-dor", "13-resultado-transformao", "1-segredo-informao-oculta"], promptSubcategories: ["Copywriting", "Sales & E-commerce", "Social Media"], terms: ["anuncio", "ad", "ads", "campanha", "criativo", "comprar", "resultado", "oferta", "solucao", "agora"] },
   { id: "vsl", label: "VSL", icon: "square-play", hint: "retenção e venda", categoryIds: ["1-segredo-informao-oculta", "3-polmica-contrariao", "6-storytelling-histria-pessoal", "9-problema-dor", "13-resultado-transformao"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["vsl", "sales video", "video sales", "pitch", "webinar", "segredo", "historia", "verdade", "problema", "resultado"] },
   { id: "email", label: "E-mail", icon: "mail", hint: "assunto e conversão", categoryIds: ["1-segredo-informao-oculta", "5-perguntas-curiosidade", "8-urgncia-cta-direto", "9-problema-dor"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["email", "e-mail", "newsletter", "assunto", "subject", "sequence", "sequencia", "cold outreach", "follow-up", "cta", "click"] },
-  { id: "youtube", label: "Vídeo YouTube", icon: "youtube", hint: "título, roteiro e retenção", categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"], promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"], terms: ["youtube", "video", "vídeo", "roteiro", "script", "titulo", "title", "thumbnail", "miniatura", "retencao", "canal", "shorts"] },
+  { id: "youtube", label: "Vídeo YouTube", icon: "square-play", hint: "título, roteiro e retenção", categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"], promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"], terms: ["youtube", "video", "vídeo", "roteiro", "script", "titulo", "title", "thumbnail", "miniatura", "retencao", "canal", "shorts"] },
 ];
 
 var OBJECTIVE_FILTERS = [
@@ -623,7 +623,7 @@ function ContentFormatCard(props) {
     <button
       type="button"
       onClick={onClick}
-      className="group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1"
+      className="group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]"
       style={active
         ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#0f0f0f', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -632,8 +632,10 @@ function ContentFormatCard(props) {
         : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <i data-lucide={format.icon} className="h-5 w-5" />
       </span>
-      <span className="mt-4 block break-words text-xl font-bold leading-tight">{format.label}</span>
-      <span className="mt-1 block text-sm" style={active ? { color: 'rgba(255,255,255,0.6)' } : { color: '#888' }}>{format.hint}</span>
+      <span className="block pt-6">
+        <span className="block break-words text-xl font-bold leading-tight">{format.label}</span>
+        <span className="mt-1 block text-sm leading-snug" style={active ? { color: 'rgba(255,255,255,0.6)' } : { color: '#888' }}>{format.hint}</span>
+      </span>
     </button>
   );
 }

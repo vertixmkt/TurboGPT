@@ -1162,7 +1162,7 @@ var CONTENT_FORMATS = [{
 }, {
   id: "youtube",
   label: "Vídeo YouTube",
-  icon: "youtube",
+  icon: "square-play",
   hint: "título, roteiro e retenção",
   categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"],
   promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"],
@@ -2135,7 +2135,7 @@ function ContentFormatCard(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1",
+    className: "group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
     style: active ? {
       background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
       color: '#fff',
@@ -2158,15 +2158,17 @@ function ContentFormatCard(props) {
     "data-lucide": format.icon,
     className: "h-5 w-5"
   })), React.createElement("span", {
-    className: "mt-4 block break-words text-xl font-bold leading-tight"
+    className: "block pt-6"
+  }, React.createElement("span", {
+    className: "block break-words text-xl font-bold leading-tight"
   }, format.label), React.createElement("span", {
-    className: "mt-1 block text-sm",
+    className: "mt-1 block text-sm leading-snug",
     style: active ? {
       color: 'rgba(255,255,255,0.6)'
     } : {
       color: '#888'
     }
-  }, format.hint));
+  }, format.hint)));
 }
 function HookCard(props) {
   var item = props.item;
