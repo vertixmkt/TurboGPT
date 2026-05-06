@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turbo GPT — A Biblioteca de Conteúdo que Faz Criadores Crescerem de Verdade</title>
+  <meta name="description" content="1.134 hooks, 690 prompts e 63 skills curados para criação de conteúdo que engaja e vende. Filtros inteligentes, PT-BR, copie em 1 clique." />
+  <link rel="icon" href="./assets/favicon.ico" />
+
+  <style>
+    @font-face {
+      font-family: "Helvetica Now";
+      src: url("./assets/fonts/HelveticaNowDisplay-Regular.woff") format("woff");
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: "Helvetica Now";
+      src: url("./assets/fonts/HelveticaNowDisplay-Medium.woff") format("woff");
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: "Helvetica Now";
+      src: url("./assets/fonts/HelveticaNowDisplay-Bold.woff") format("woff");
+      font-weight: 800; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      color-scheme: dark;
+      --bg: #000000;
+      --grid: rgba(255,255,255,0.032);
+      --surface: rgba(22,22,22,0.80);
+      --surface-b: rgba(6,6,6,0.64);
+      --panel: rgba(10,10,12,0.92);
+      --control: rgba(32,32,32,0.74);
+      --blue: #3b82f6;
+      --blue-dark: #1d4ed8;
+      --white: #ffffff;
+      --muted: #888888;
+      --soft: rgba(255,255,255,0.62);
+      --border: rgba(255,255,255,0.09);
+      --border-s: rgba(255,255,255,0.16);
+      --active-b: rgba(59,130,246,0.40);
+      --r-sm: 12px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --glass:
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(255,255,255,0.03),
+        0 20px 52px rgba(0,0,0,0.48),
+        0 0 0 1px rgba(255,255,255,0.022);
+      --glass-hover:
+        inset 0 1px 0 rgba(255,255,255,0.22),
+        inset 0 -1px 0 rgba(255,255,255,0.055),
+        0 24px 64px rgba(0,0,0,0.58),
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 0 48px rgba(59,130,246,0.14);
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -8%, rgba(59,130,246,0.28), transparent 32%),
+        radial-gradient(circle at 6% 14%, rgba(14,165,233,0.14), transparent 26%),
+        radial-gradient(circle at 88% 72%, rgba(29,78,216,0.10), transparent 28%),
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, auto, 48px 48px, 48px 48px, auto;
+      color: var(--white);
+      font-family: "Helvetica Now", system-ui, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.88) 60%),
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.055), transparent 44%);
+    }
+
+    ::selection { background: rgba(59,130,246,0.72); color: #fff; }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; cursor: pointer; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Layout ── */
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .wrap-narrow { width: min(780px, calc(100% - 40px)); margin: 0 auto; }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+      will-change: opacity, transform;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+    .reveal-d6 { transition-delay: 0.48s; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 14px 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-logo {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #000 100%);
+      display: grid; place-items: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 8px 24px rgba(29,78,216,0.32);
+      font-size: 18px;
+    }
+    .nav-name { font-size: 17px; font-weight: 800; letter-spacing: -0.03em; }
+    .nav-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 2px; }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 999px; font-size: 13px; font-weight: 800;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #080818 100%);
+      border: 1px solid rgba(59,130,246,0.38);
+      color: #fff; transition: all 0.2s var(--ease);
+      box-shadow: 0 8px 24px rgba(29,78,216,0.30);
+      white-space: nowrap;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(29,78,216,0.42); }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.055);
+      font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--blue);
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+      animation: pulse-dot 2s ease infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    /* ── Hero ── */
+    .hero { padding: 100px 0 80px; text-align: center; position: relative; }
+    .hero-headline {
+      margin: 24px auto 0;
+      max-width: 900px;
+      font-size: clamp(44px, 7.5vw, 96px);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 0.88;
+    }
+    .hero-headline span.hl {
+      background: linear-gradient(135deg, #fff 30%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      margin: 28px auto 0; max-width: 620px;
+      font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.68);
+      font-weight: 400;
+    }
+    .hero-cta-row { margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 36px; border-radius: 999px; font-size: 15px; font-weight: 800;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #060616 100%);
+      border: 1px solid rgba(59,130,246,0.40);
+      color: #fff; transition: all 0.25s var(--ease);
+      box-shadow: 0 12px 36px rgba(29,78,216,0.36);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 48px rgba(29,78,216,0.48); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 28px; border-radius: 999px; font-size: 15px; font-weight: 700;
+      border: 1px solid var(--border-s); color: rgba(255,255,255,0.72);
+      transition: all 0.2s; background: transparent;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.32); color: #fff; background: rgba(255,255,255,0.04); }
+
+    /* Stats ticker */
+    .stats-row {
+      margin-top: 60px; display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      background: var(--surface);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: var(--glass);
+      overflow: hidden;
+    }
+    .stat-item {
+      flex: 1; min-width: 140px; padding: 28px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.05em;
+      background: linear-gradient(135deg, #fff 0%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
+    }
+    .stat-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
+
+    /* ── Section base ── */
+    .section { padding: 96px 0; }
+    .section + .section { padding-top: 0; }
+    .section-eyebrow { margin-bottom: 20px; }
+    .section-title {
+      font-size: clamp(32px, 5vw, 58px); font-weight: 800;
+      letter-spacing: -0.05em; line-height: 0.92;
+    }
+    .section-sub {
+      margin-top: 18px; max-width: 620px;
+      font-size: 18px; line-height: 1.55; color: rgba(255,255,255,0.60);
+    }
+    .section-sub.centered { margin-left: auto; margin-right: auto; text-align: center; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px; margin: 0 0; width: 100%;
+      background: linear-gradient(90deg, transparent 0%, var(--border-s) 20%, var(--border-s) 80%, transparent 100%);
+    }
+
+    /* ── Surface Card ── */
+    .card {
+      position: relative; overflow: hidden; isolation: isolate;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, var(--surface) 0%, var(--surface-b) 100%);
+      box-shadow: var(--glass);
+      backdrop-filter: blur(18px) saturate(145%);
+      -webkit-backdrop-filter: blur(18px) saturate(145%);
+      transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease), border-color 0.25s;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      opacity: 0.55; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 34%, rgba(255,255,255,0) 70%),
+        radial-gradient(circle at 18% 0%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 38%),
+        linear-gradient(180deg, rgba(59,130,246,0.10) 0%, rgba(0,0,0,0) 70%);
+      transition: opacity 0.25s;
+    }
+    .card::after {
+      content: ""; position: absolute; inset: 1px; z-index: 0;
+      border-radius: inherit; opacity: 0.30; mix-blend-mode: screen; pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 26%),
+        linear-gradient(315deg, rgba(59,130,246,0.13) 0%, rgba(255,255,255,0) 22%);
+      transition: opacity 0.25s;
+    }
+    .card:hover { box-shadow: var(--glass-hover); transform: translateY(-2px); border-color: rgba(59,130,246,0.22); }
+    .card:hover::before { opacity: 1; }
+    .card:hover::after { opacity: 0.65; }
+    .card > * { position: relative; z-index: 1; }
+
+    /* ── Problem section ── */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+    .problem-card { padding: 32px; border-radius: var(--r-lg); }
+    .problem-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+      display: grid; place-items: center; margin-bottom: 20px; font-size: 20px;
+    }
+    .problem-card h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .problem-card p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.58); }
+
+    .problem-callout {
+      margin-top: 48px; padding: 40px; border-radius: var(--r-xl);
+      border: 1px solid rgba(59,130,246,0.22);
+      background: linear-gradient(135deg, rgba(29,78,216,0.18) 0%, rgba(0,0,0,0.60) 100%);
+      text-align: center;
+    }
+    .problem-callout .label {
+      display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+    }
+    .problem-callout blockquote {
+      font-size: clamp(22px, 3.5vw, 36px); font-weight: 800; letter-spacing: -0.04em;
+      line-height: 1.1; color: #fff;
+    }
+    .problem-callout blockquote em { color: var(--blue); font-style: normal; }
+    .problem-callout p { margin-top: 16px; font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* ── Opportunity ── */
+    .opportunity-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 48px; }
+    .diff-table { border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--border); }
+    .diff-row { display: grid; grid-template-columns: 1fr 1px 1fr; align-items: stretch; }
+    .diff-row + .diff-row { border-top: 1px solid var(--border); }
+    .diff-cell { padding: 18px 22px; font-size: 14px; line-height: 1.4; }
+    .diff-cell.bad { color: rgba(255,255,255,0.42); }
+    .diff-cell.good { color: rgba(255,255,255,0.90); font-weight: 600; }
+    .diff-sep { background: var(--border); }
+    .diff-header { padding: 12px 22px; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .diff-header.bad-h { color: rgba(239,68,68,0.80); background: rgba(239,68,68,0.06); }
+    .diff-header.good-h { color: rgba(59,130,246,0.90); background: rgba(59,130,246,0.08); }
+
+    /* ── Who it's for ── */
+    .personas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .persona-card { padding: 36px 28px; border-radius: var(--r-lg); }
+    .persona-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 20px; display: block;
+    }
+    .persona-title { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 14px; }
+    .persona-pain { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.50); margin-bottom: 18px; }
+    .persona-want { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.80); font-weight: 600; padding: 12px 16px; border-radius: 10px; border-left: 2px solid var(--blue); background: rgba(59,130,246,0.06); }
+
+    /* ── Benefits ── */
+    .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+    .benefit-card { padding: 36px 32px; border-radius: var(--r-lg); }
+    .benefit-num {
+      font-size: clamp(38px, 5vw, 56px); font-weight: 800; letter-spacing: -0.06em; line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block; margin-bottom: 8px;
+    }
+    .benefit-title { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .benefit-body { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.55); }
+
+    /* ── Social proof ── */
+    .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+    .testimonial { padding: 32px 28px; border-radius: var(--r-lg); display: flex; flex-direction: column; gap: 20px; }
+    .testimonial-quote { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.80); flex: 1; }
+    .testimonial-quote strong { color: #fff; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #000 100%);
+      display: grid; place-items: center; font-size: 15px; font-weight: 800;
+      border: 1px solid var(--border-s);
+    }
+    .testimonial-name { font-size: 13px; font-weight: 800; }
+    .testimonial-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .stars { color: #f59e0b; font-size: 13px; letter-spacing: 2px; margin-bottom: 4px; }
+
+    /* ── Origin story ── */
+    .origin { padding: 80px; border-radius: var(--r-xl); margin-top: 64px; }
+    .origin-quote {
+      font-size: clamp(20px, 3vw, 30px); font-weight: 800; letter-spacing: -0.04em;
+      line-height: 1.15; margin-bottom: 28px; color: #fff;
+    }
+    .origin-quote em { color: var(--blue); font-style: normal; }
+    .origin p { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.60); margin-bottom: 20px; }
+    .origin p:last-child { margin-bottom: 0; }
+    .origin p strong { color: rgba(255,255,255,0.90); }
+
+    /* ── Method ── */
+    .method-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 48px; }
+    .method-step { padding: 32px 24px; border-radius: var(--r-lg); text-align: center; }
+    .method-letter {
+      font-size: 48px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; display: block;
+      background: linear-gradient(135deg, #fff 0%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 16px;
+    }
+    .method-name { font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+    .method-desc { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.50); }
+
+    /* ── Pricing ── */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; margin-top: 56px; align-items: start; }
+    .pricing-card { padding: 40px 36px; border-radius: var(--r-xl); }
+    .pricing-card.featured {
+      border-color: rgba(59,130,246,0.40) !important;
+      background: linear-gradient(180deg, rgba(29,78,216,0.22) 0%, rgba(6,6,18,0.82) 100%) !important;
+    }
+    .pricing-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: 999px; font-size: 11px; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .pricing-badge.featured-b { background: rgba(59,130,246,0.20); color: var(--blue); border: 1px solid rgba(59,130,246,0.30); }
+    .pricing-badge.base-b { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+    .pricing-name { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .pricing-desc { font-size: 14px; color: rgba(255,255,255,0.52); line-height: 1.55; margin-bottom: 28px; }
+    .pricing-price {
+      font-size: clamp(42px, 5vw, 60px); font-weight: 800; letter-spacing: -0.06em; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pricing-price sup { font-size: 0.32em; vertical-align: top; margin-top: 0.4em; margin-right: 2px; font-weight: 700; }
+    .pricing-price small { font-size: 0.24em; font-weight: 600; color: var(--muted); vertical-align: baseline; }
+    .pricing-period { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+    .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; }
+    .pricing-features li span.check { color: var(--blue); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .pricing-cta {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px 24px; border-radius: 999px; font-size: 14px; font-weight: 800;
+      border: 1px solid rgba(59,130,246,0.38);
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #040414 100%);
+      color: #fff; transition: all 0.25s var(--ease);
+      box-shadow: 0 10px 28px rgba(29,78,216,0.30);
+    }
+    .pricing-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(29,78,216,0.44); }
+    .pricing-cta.ghost {
+      background: transparent;
+      border-color: var(--border-s); color: rgba(255,255,255,0.72);
+      box-shadow: none;
+    }
+    .pricing-cta.ghost:hover { border-color: rgba(255,255,255,0.30); background: rgba(255,255,255,0.04); box-shadow: none; }
+
+    /* ── Guarantee ── */
+    .guarantee {
+      display: flex; align-items: center; gap: 48px; padding: 56px 64px;
+      border-radius: var(--r-xl); margin-top: 24px;
+    }
+    .guarantee-seal {
+      flex-shrink: 0; width: 120px; height: 120px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #000 100%);
+      border: 2px solid rgba(59,130,246,0.38);
+      box-shadow: 0 0 40px rgba(59,130,246,0.24);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px; text-align: center;
+    }
+    .guarantee-seal strong { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; display: block; }
+    .guarantee-seal span { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+    .guarantee-content h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 14px; }
+    .guarantee-content p { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.58); }
+    .guarantee-content p + p { margin-top: 12px; }
+    .guarantee-content strong { color: #fff; }
+
+    /* ── Future Vision ── */
+    .vision-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+    .vision-card { padding: 40px 36px; border-radius: var(--r-xl); }
+    .vision-card.positive { border-color: rgba(59,130,246,0.28) !important; background: linear-gradient(160deg, rgba(29,78,216,0.16) 0%, rgba(0,0,0,0.70) 100%) !important; }
+    .vision-card.negative { border-color: rgba(239,68,68,0.18) !important; background: linear-gradient(160deg, rgba(220,38,38,0.08) 0%, rgba(0,0,0,0.70) 100%) !important; }
+    .vision-tag { font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 20px; display: block; }
+    .vision-card.positive .vision-tag { color: var(--blue); }
+    .vision-card.negative .vision-tag { color: rgba(239,68,68,0.80); }
+    .vision-card h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .vision-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .vision-list li { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.70); display: flex; gap: 10px; }
+    .vision-list li::before { content: "→"; color: var(--blue); flex-shrink: 0; }
+    .vision-card.negative .vision-list li::before { color: rgba(239,68,68,0.70); content: "✕"; }
+    .vision-closer {
+      margin-top: 48px; padding: 40px; border-radius: var(--r-xl); text-align: center;
+      background: linear-gradient(135deg, rgba(29,78,216,0.14) 0%, rgba(0,0,0,0.60) 100%);
+      border: 1px solid rgba(59,130,246,0.20);
+    }
+    .vision-closer p { font-size: clamp(18px, 2.5vw, 26px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+    .vision-closer p em { color: var(--blue); font-style: normal; }
+
+    /* ── FAQ ── */
+    .faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: var(--r-md);
+      background: rgba(255,255,255,0.028); overflow: hidden; transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: var(--border-s); }
+    .faq-q {
+      width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+      padding: 22px 24px; font-size: 15px; font-weight: 700; text-align: left; color: #fff;
+      background: transparent; border: none;
+    }
+    .faq-q:hover { background: rgba(255,255,255,0.02); }
+    .faq-q .q-icon { flex-shrink: 0; color: var(--blue); font-size: 18px; margin-top: 2px; transition: transform 0.25s var(--ease); }
+    .faq-q.open .q-icon { transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 24px; max-height: 0; overflow: hidden;
+      font-size: 14px; line-height: 1.75; color: rgba(255,255,255,0.58);
+      transition: max-height 0.4s var(--ease), padding 0.3s;
+    }
+    .faq-a.open { max-height: 400px; padding-bottom: 22px; }
+    .faq-a strong { color: rgba(255,255,255,0.85); }
+
+    /* ── Final CTA ── */
+    .final-cta {
+      text-align: center; padding: 96px 40px;
+      background: linear-gradient(180deg, rgba(29,78,216,0.14) 0%, transparent 100%);
+      border-radius: var(--r-xl); border: 1px solid rgba(59,130,246,0.16); margin-top: 80px;
+    }
+    .final-cta .section-title { max-width: 700px; margin: 16px auto 0; }
+    .final-cta .section-sub { margin: 20px auto 40px; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px;
+      text-align: center;
+    }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .footer-brand { font-size: 18px; font-weight: 800; letter-spacing: -0.04em; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .problem-grid { grid-template-columns: 1fr; }
+      .opportunity-split { grid-template-columns: 1fr; }
+      .personas { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .testimonials { grid-template-columns: 1fr; }
+      .method-steps { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .guarantee { flex-direction: column; padding: 40px 28px; gap: 28px; text-align: center; }
+      .vision-split { grid-template-columns: 1fr; }
+      .origin { padding: 40px 28px; }
+      .hero-headline { letter-spacing: -0.04em; }
+      .stats-row { flex-direction: column; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+    @media (max-width: 600px) {
+      .method-steps { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0 48px; }
+      .section { padding: 64px 0; }
+      .nav-cta span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">⚡</div>
+      <div>
+        <span class="nav-name">Turbo GPT</span>
+        <span class="nav-sub">Viralização de conteúdo</span>
+      </div>
+    </div>
+    <a href="#pricing" class="nav-cta">
+      <span>Quero Acessar</span>
+      <span>→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ── SEÇÃO 1: HERO ── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow reveal">
+      <span class="eyebrow-dot"></span>
+      Biblioteca Curada de Conteúdo em PT-BR
+    </div>
+
+    <h1 class="hero-headline reveal reveal-d1">
+      Seu negócio existe online.<br>
+      <span class="hl">Mas não está vendendo.</span>
+    </h1>
+
+    <p class="hero-sub reveal reveal-d2">
+      Você posta, você tenta, você investe horas — e os resultados não chegam.
+      Não é falta de esforço. É falta de sistema. É falta de referência certa, na hora certa.
+    </p>
+
+    <div class="hero-cta-row reveal reveal-d3">
+      <a href="#pricing" class="btn-primary">
+        Quero Criar Conteúdo que Vende →
+      </a>
+      <a href="#method" class="btn-ghost">
+        Ver como funciona
+      </a>
+    </div>
+
+    <div class="stats-row reveal reveal-d4">
+      <div class="stat-item">
+        <span class="stat-num" data-count="1134">0</span>
+        <span class="stat-label">Hooks organizados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="690">0</span>
+        <span class="stat-label">Prompts de marketing</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="63">0</span>
+        <span class="stat-label">Skills curadas</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" data-count="10">0</span>
+        <span class="stat-label">Formatos de conteúdo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 2: O PROBLEMA — PARALISIA DO CRIADOR ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="divider"></div>
+    <br><br>
+    <div class="eyebrow section-eyebrow reveal">O Problema Real</div>
+    <h2 class="section-title reveal reveal-d1">
+      A "Paralisia do Criador"<br>está destruindo seu tempo
+    </h2>
+    <p class="section-sub reveal reveal-d2">
+      Você abre o computador, vai criar um post, um anúncio, um hook — e trava.
+      Não é preguiça. É que criar do zero, sempre, sem referências, é impossível de manter.
+    </p>
+
+    <div class="problem-grid">
+      <div class="card problem-card reveal reveal-d1">
+        <div class="problem-icon">😶</div>
+        <h3>A tela em branco toda semana</h3>
+        <p>Você senta com a intenção de criar. 40 minutos depois, ainda está olhando para o cursor piscando. O conteúdo que devia ter saído às 9h sai às 16h — ou não sai.</p>
+      </div>
+      <div class="card problem-card reveal reveal-d2">
+        <div class="problem-icon">📉</div>
+        <h3>Conteúdo que não engaja</h3>
+        <p>Você publica. Recebe 12 likes. A concorrência — com um produto pior que o seu — tem 3.000 curtidas e comentários. A diferença não é o produto. É o hook, o ângulo, a abertura.</p>
+      </div>
+      <div class="card problem-card reveal reveal-d3">
+        <div class="problem-icon">💸</div>
+        <h3>Anúncios que drenam o caixa</h3>
+        <p>Você coloca R$ 500 em tráfego. A headline é genérica, o criativo é mais do mesmo. CPM caro, CTR baixo, ROAS abaixo de 1. O problema não era o produto — era a copy do anúncio.</p>
+      </div>
+      <div class="card problem-card reveal reveal-d4">
+        <div class="problem-icon">⏰</div>
+        <h3>Tempo que nunca devolve</h3>
+        <p>Horas pesquisando referências no Google, salvando posts de concorrentes, tentando lembrar "aquele hook que funcionou". Um sistema de criação nunca foi construído de verdade.</p>
+      </div>
+    </div>
+
+    <div class="problem-callout reveal reveal-d1">
+      <span class="label">O diagnóstico real</span>
+      <blockquote>
+        "Não é fraqueza. É física.<br>
+        Ninguém cria conteúdo de alta qualidade<br>
+        do zero, sempre, <em>sem um sistema de referências.</em>"
+      </blockquote>
+      <p>A diferença entre criadores que crescem e os que estacionam não é talento nem dedicação. É ter um arsenal de referências curadas, prontas para usar — filtradas por formato, objetivo e nível de conversão.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 3: A OPORTUNIDADE ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal">A Virada</div>
+    <h2 class="section-title reveal reveal-d1">
+      Eles não criam mais.<br>
+      <span style="color: var(--blue);">Eles operam um sistema.</span>
+    </h2>
+
+    <div class="opportunity-split">
+      <div class="reveal reveal-d1">
+        <p style="font-size:17px; line-height:1.7; color:rgba(255,255,255,0.65); margin-bottom: 24px;">
+          Os criadores que dominam as redes em 2026 não são mais talentosos do que você.
+          Eles têm algo que você ainda não tem: uma biblioteca curada de referências que os tiram do zero para o rascunho em minutos.
+        </p>
+        <p style="font-size:17px; line-height:1.7; color:rgba(255,255,255,0.65); margin-bottom: 24px;">
+          <strong style="color:#fff;">Eles não postam mais. Eles não trabalham mais.</strong> Eles usam um sistema que entrega o hook certo, para o formato certo, com o ângulo certo — e adaptam para o próprio negócio em segundos.
+        </p>
+        <p style="font-size:17px; line-height:1.7; color:rgba(255,255,255,0.65);">
+          O Turbo GPT é esse sistema. Uma biblioteca de <strong style="color:#fff;">1.134 hooks, 690 prompts e 63 skills curadas</strong> — todas filtráveis, prontas para copiar e usar em qualquer LLM, rede social ou ferramenta de copy.
+        </p>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="diff-table">
+          <div class="diff-row">
+            <div class="diff-header bad-h">Sem sistema</div>
+            <div class="diff-sep"></div>
+            <div class="diff-header good-h">Com Turbo GPT</div>
+          </div>
+          <div class="diff-row">
+            <div class="diff-cell bad">Tela em branco toda semana</div>
+            <div class="diff-sep"></div>
+            <div class="diff-cell good">1.134 hooks para começar qualquer conteúdo</div>
+          </div>
+          <div class="diff-row">
+            <div class="diff-cell bad">Horas buscando referências</div>
+            <div class="diff-sep"></div>
+            <div class="diff-cell good">Filtro por formato e objetivo em 3 segundos</div>
+          </div>
+          <div class="diff-row">
+            <div class="diff-cell bad">Anúncios com copy genérica</div>
+            <div class="diff-sep"></div>
+            <div class="diff-cell good">Skills de ângulo, VSL e landing page prontas</div>
+          </div>
+          <div class="diff-row">
+            <div class="diff-cell bad">Inconsistência de publicação</div>
+            <div class="diff-sep"></div>
+            <div class="diff-cell good">Sistema de referências que acelera toda criação</div>
+          </div>
+          <div class="diff-row">
+            <div class="diff-cell bad">Conteúdo que não converte</div>
+            <div class="diff-sep"></div>
+            <div class="diff-cell good">Prompts de copy, SEO e vendas em PT-BR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 4: PARA QUEM É ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Para quem foi feito</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width:600px; margin:0 auto;">
+      Isso foi construído<br>especificamente para você
+    </h2>
+
+    <div class="personas">
+      <div class="card persona-card reveal reveal-d1">
+        <span class="persona-num">01 / Criador de Conteúdo</span>
+        <h3 class="persona-title">Criador que sabe que precisa postar, mas não sabe o quê</h3>
+        <p class="persona-pain">Você acompanha todos os criadores do seu nicho. Sabe que precisa de consistência. Mas quando senta pra criar, o cérebro esvazia e a hora passa.</p>
+        <div class="persona-want">Você quer ter ideias de conteúdo prontas para adaptar ao seu negócio — sem depender de inspiração.</div>
+      </div>
+      <div class="card persona-card reveal reveal-d2">
+        <span class="persona-num">02 / Profissional de Marketing</span>
+        <h3 class="persona-title">Copywriter ou gestor de tráfego que precisa de copy que converte</h3>
+        <p class="persona-pain">Você gerencia múltiplos clientes. Escrever copy diferente para cada nicho, do zero, é inviável. E você não pode errar — cada anúncio tem orçamento real.</p>
+        <div class="persona-want">Você quer um arsenal de hooks, ângulos e prompts de copy organizados por objetivo para acelerar a entrega sem perder qualidade.</div>
+      </div>
+      <div class="card persona-card reveal reveal-d3">
+        <span class="persona-num">03 / Dono de Negócio</span>
+        <h3 class="persona-title">Empreendedor que vende online e quer crescer sem depender de agência</h3>
+        <p class="persona-pain">Você sabe o que vende melhor do que qualquer agência. Mas escrever uma página de vendas, um roteiro de VSL ou uma sequência de e-mails do zero é fora do seu dia a dia.</p>
+        <div class="persona-want">Você quer as ferramentas para criar sua própria copy de vendas — anúncios, VSL, landing page — com a linguagem certa para o seu público.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 5: PROPOSTA DE VALOR ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">O que você acessa</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width:640px; margin:0 auto;">
+      Uma biblioteca que<br>trabalha por você
+    </h2>
+
+    <div class="benefits-grid">
+      <div class="card benefit-card reveal reveal-d1">
+        <span class="benefit-num">1.134</span>
+        <h3 class="benefit-title">Hooks que capturam atenção</h3>
+        <p class="benefit-body">Organizados por formato (Reels, Story, Carrossel, Anúncio, VSL), objetivo (atrai, engaja, vende, educa) e estilo (curiosidade, polêmica, urgência, storytelling, autoridade). Filtre em 3 segundos e encontre o gancho certo para cada post.</p>
+      </div>
+      <div class="card benefit-card reveal reveal-d2">
+        <span class="benefit-num">690</span>
+        <h3 class="benefit-title">Prompts de copy e marketing em PT-BR</h3>
+        <p class="benefit-body">Copywriting, SEO, Redes Sociais e Vendas & E-commerce. Cada prompt é um comando direto para qualquer LLM — ChatGPT, Claude, Gemini. Cole, adapte para o seu negócio, publique.</p>
+      </div>
+      <div class="card benefit-card reveal reveal-d3">
+        <span class="benefit-num">63</span>
+        <h3 class="benefit-title">Skills curadas para anúncios, VSL e SEO</h3>
+        <p class="benefit-body">Ângulos criativos para META Ads, roteiristas de VSL curto, geradores de landing page de alta conversão, estratégias de SEO e muito mais. Baixe em .txt ou .md e use em qualquer ferramenta.</p>
+      </div>
+      <div class="card benefit-card reveal reveal-d4">
+        <span class="benefit-num">0s</span>
+        <h3 class="benefit-title">Da busca ao uso em segundos</h3>
+        <p class="benefit-body">Interface em PT-BR com filtros combinados, busca local em tempo real, favoritos salvos e acesso offline. Um clique para copiar, um clique para salvar, um clique para baixar. Sem fricção, sem espera, sem geração de IA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 6: PROVA SOCIAL ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Quem já usa</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width:580px; margin:0 auto;">
+      Resultados de quem<br>parou de criar do zero
+    </h2>
+
+    <div class="testimonials">
+      <div class="card testimonial reveal reveal-d1">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-quote">"Usava 3 horas por semana só tentando encontrar ideias de conteúdo. Agora filtro por formato e objetivo, escolho um hook e adapto em 20 minutos. <strong>Minha consistência de publicação triplicou no primeiro mês.</strong>"</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div>
+            <div class="testimonial-name">Mariana C.</div>
+            <div class="testimonial-role">Criadora de Conteúdo — Nicho Fitness</div>
+          </div>
+        </div>
+      </div>
+      <div class="card testimonial reveal reveal-d2">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-quote">"Gestora de tráfego com 8 clientes ativos. Precisava de hooks diferentes por nicho todo mês. O Turbo GPT virou meu banco de referências principal. <strong>Reduzo o tempo de criação de criativos em 60%.</strong>"</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">R</div>
+          <div>
+            <div class="testimonial-name">Rodrigo F.</div>
+            <div class="testimonial-role">Gestor de Tráfego — Agência Digital</div>
+          </div>
+        </div>
+      </div>
+      <div class="card testimonial reveal reveal-d3">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-quote">"Precisava escrever minha primeira VSL e não sabia por onde começar. Usei a skill de VSL Curto Universal, adaptei para o meu produto em 40 minutos. <strong>A página converteu 4,2% na primeira semana.</strong>"</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">André L.</div>
+            <div class="testimonial-role">Infoprodutor — Curso de Finanças</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:20px; font-size:12px; color:var(--muted);">
+      * Depoimentos representativos. Resultados individuais podem variar conforme nicho, produto e aplicação.
+    </p>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 7: ORIGEM ── -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">A origem</div>
+
+    <div class="card origin reveal reveal-d1">
+      <p class="origin-quote">
+        "Vi criadores incríveis travarem por falta de referências —
+        não por falta de <em>talento.</em>"
+      </p>
+      <p>O problema não era o que eles tinham para dizer. Era o ponto de partida. Sentavam na frente do computador, a cabeça cheia de conhecimento, e não conseguiam transformar isso em conteúdo que engajasse — porque não tinham um sistema.</p>
+      <p>Testei ferramentas. Comprei cursos. Salvei milhares de posts de referência. Até que percebi que o que funcionava não era mais conteúdo, mas <strong>as estruturas certas de conteúdo</strong> — hooks que capturam, ângulos que vendem, formatos que retêm.</p>
+      <p>Passei meses curvando essa biblioteca: 1.134 hooks por categoria, 690 prompts por subcategoria de marketing, 63 skills de copy e estratégia — tudo organizado, filtrado e pronto para usar em PT-BR.</p>
+      <p>O Turbo GPT não é mais uma coleção aleatória de prompts. <strong>É um sistema de aceleração de conteúdo</strong> — construído para quem cria, vende e precisa de resultado consistente, sem improvisar do zero toda semana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 8: MÉTODO TURBO ── -->
+<section id="method" class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">O Sistema</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center;">
+      O Método <span style="color:var(--blue);">TURBO</span>
+    </h2>
+    <p class="section-sub centered reveal reveal-d2">
+      Em 5 passos você vai do zero ao conteúdo pronto para publicar — em minutos, não horas.
+    </p>
+
+    <div class="method-steps">
+      <div class="card method-step reveal reveal-d1">
+        <span class="method-letter">T</span>
+        <div class="method-name">Tema</div>
+        <p class="method-desc">Escolha o formato: Reels, Story, Carrossel, Anúncio, VSL, E-mail. A plataforma filtra automaticamente o que é mais relevante.</p>
+      </div>
+      <div class="card method-step reveal reveal-d2">
+        <span class="method-letter">U</span>
+        <div class="method-name">Use os Filtros</div>
+        <p class="method-desc">Defina objetivo (atrai, engaja, vende, educa), estilo (storytelling, urgência, polêmica) e nível de agressividade.</p>
+      </div>
+      <div class="card method-step reveal reveal-d3">
+        <span class="method-letter">R</span>
+        <div class="method-name">Remix</div>
+        <p class="method-desc">Copie o hook ou prompt em 1 clique. Cole no seu LLM favorito ou na ferramenta de copy. Adapte para o seu produto em segundos.</p>
+      </div>
+      <div class="card method-step reveal reveal-d4">
+        <span class="method-letter">B</span>
+        <div class="method-name">Biblioteca Pessoal</div>
+        <p class="method-desc">Salve os hooks e prompts que mais funcionam para o seu nicho. Sua biblioteca pessoal cresce junto com o seu negócio.</p>
+      </div>
+      <div class="card method-step reveal reveal-d5">
+        <span class="method-letter">O</span>
+        <div class="method-name">Output</div>
+        <p class="method-desc">Publique, teste, itere. Skills disponíveis para download em .txt e .md — use em qualquer plataforma de IA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 9: OFERTA E PREÇOS ── -->
+<section id="pricing" class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Investimento</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center;">
+      Escolha o seu arsenal
+    </h2>
+    <p class="section-sub centered reveal reveal-d2">
+      Acesso imediato, sem mensalidade, sem assinatura. Pague uma vez e use para sempre.
+    </p>
+
+    <div class="pricing-grid reveal reveal-d1">
+      <div class="card pricing-card">
+        <span class="pricing-badge base-b">Plano Prompts</span>
+        <div class="pricing-name">Arsenal de Prompts</div>
+        <p class="pricing-desc">Acesso completo à biblioteca de prompts de marketing — copywriting, SEO, redes sociais e vendas em PT-BR.</p>
+        <div class="pricing-price"><sup>R$</sup>[PREÇO]<small>/único</small></div>
+        <p class="pricing-period">Pagamento único — acesso vitalício</p>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 690 prompts curados em PT-BR</li>
+          <li><span class="check">✓</span> Filtros por Copywriting, SEO, Redes Sociais e Vendas</li>
+          <li><span class="check">✓</span> Busca local em tempo real</li>
+          <li><span class="check">✓</span> Favoritos e histórico recente</li>
+          <li><span class="check">✓</span> Copiar em 1 clique</li>
+          <li><span class="check">✓</span> Acesso via web, mobile e desktop</li>
+        </ul>
+        <a href="https://pay.hotmart.com/O104727779W" class="pricing-cta ghost">Quero os Prompts →</a>
+      </div>
+
+      <div class="card pricing-card featured">
+        <span class="pricing-badge featured-b">⚡ Mais Popular</span>
+        <div class="pricing-name">Arsenal Completo</div>
+        <p class="pricing-desc">Tudo do plano de prompts mais os 1.134 hooks organizados por categoria e as 63 skills curadas para anúncios, VSL e SEO.</p>
+        <div class="pricing-price"><sup>R$</sup>[PREÇO]<small>/único</small></div>
+        <p class="pricing-period">Pagamento único — acesso vitalício</p>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> Tudo do plano de Prompts</li>
+          <li><span class="check">✓</span> 1.134 hooks em 15 categorias</li>
+          <li><span class="check">✓</span> Filtros por formato, objetivo, estilo e agressividade</li>
+          <li><span class="check">✓</span> 63 skills de marketing curadas em PT-BR</li>
+          <li><span class="check">✓</span> Download de skills em .txt e .md</li>
+          <li><span class="check">✓</span> Usados recentemente para hooks</li>
+          <li><span class="check">✓</span> Favoritos de hooks, prompts e skills</li>
+        </ul>
+        <a href="https://pay.hotmart.com/O104727779W" class="pricing-cta">Quero o Arsenal Completo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 10: GARANTIA ── -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="card guarantee reveal reveal-d1">
+      <div class="guarantee-seal">
+        <strong>7</strong>
+        <span>dias de</span>
+        <span>garantia</span>
+      </div>
+      <div class="guarantee-content">
+        <h3>Garantia Turbo — Sem Letra Miúda</h3>
+        <p>Se em <strong>7 dias você não sentir que o Turbo GPT acelerou sua criação de conteúdo</strong>, devolvemos 100% do seu investimento. Sem perguntas, sem burocracia, sem demora.</p>
+        <p>Você não tem nada a perder — o risco é inteiramente nosso. Nós carregamos esse peso porque <strong>confiamos no sistema que construímos</strong> e no impacto que ele gera na criação de quem o usa de verdade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 11: VISÃO DE FUTURO ── -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Dois Caminhos</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width:620px; margin:0 auto;">
+      90 dias a partir de hoje.<br>Você escolhe qual.
+    </h2>
+
+    <div class="vision-split">
+      <div class="card vision-card positive reveal reveal-d1">
+        <span class="vision-tag">Com o Turbo GPT</span>
+        <h3>A criação virou rotina. O crescimento virou previsível.</h3>
+        <ul class="vision-list">
+          <li>Você acorda na segunda com a semana de conteúdo já planejada — em 30 minutos</li>
+          <li>Seu anúncio tem um hook que para o scroll porque veio de uma estrutura que já funciona</li>
+          <li>A VSL do seu produto foi escrita usando a skill certa, com a estrutura de conversão certa</li>
+          <li>Você para de terceirizar sua voz para agência — você mesmo escreve, com sistema</li>
+          <li>A consistência que você sempre quis finalmente virou parte do seu negócio</li>
+        </ul>
+      </div>
+      <div class="card vision-card negative reveal reveal-d2">
+        <span class="vision-tag">Sem o sistema</span>
+        <h3>A mesma semana. O mesmo travamento. O mesmo resultado.</h3>
+        <ul class="vision-list">
+          <li>A tela em branco continua sendo a sua segunda-feira toda semana</li>
+          <li>Os concorrentes — com produtos piores que os seus — continuam crescendo</li>
+          <li>Cada mês sem sistema é mais um mês de conteúdo inconsistente e anúncios caros</li>
+          <li>Você continua delegando copy para quem não conhece o seu negócio como você</li>
+          <li>A oportunidade de se posicionar passa para quem decidiu agir antes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="vision-closer reveal reveal-d1">
+      <p>
+        A questão não é se você <em>pode se dar ao luxo</em> de investir nisso.<br>
+        É se você pode se dar ao luxo de <em>continuar criando do zero</em>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 12: FAQ ESTRATÉGICO ── -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Objeções Reais</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center;">
+      As perguntas que<br>estão na sua cabeça
+    </h2>
+
+    <div class="faq-list reveal reveal-d2">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>"Já comprei cursos de copywriting e não funcionou."</span>
+          <span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Faz todo sentido desconfiar. A maioria dos cursos ensina teoria — o que você precisa são referências prontas para usar agora. O Turbo GPT não é um curso. Não tem aula, módulo, nem certificado. É uma biblioteca operacional: você abre, filtra, copia e usa. Se em 7 dias não agregar valor real à sua criação, devolvemos tudo.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>"Meu nicho é muito específico. Isso vai funcionar pra mim?"</span>
+          <span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Hooks e estruturas de copy são agnósticos de nicho — a psicologia de atenção e persuasão é a mesma para fitness, finanças, moda, B2B ou educação. O que você faz é pegar a estrutura certa (ex: hook de "Choque + Surpresa") e inserir a realidade do seu negócio. As 63 skills incluem inclusive um Gerador de Ângulos Criativos para Anúncios que extrai a estratégia certa do DNA do seu produto específico.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>"Não tenho tempo para aprender uma nova ferramenta."</span>
+          <span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>O Turbo GPT não tem curva de aprendizado. Você entra, clica em "Hooks", seleciona o formato de conteúdo que vai criar, define o objetivo — e a plataforma filtra o que é relevante. Copie em 1 clique e use onde quiser. Se alguém consegue usar o Google para buscar "hooks de Reels", consegue usar o Turbo GPT em menos de 2 minutos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>"Funciona sem saber escrever copy?"</span>
+          <span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Sim — e é exatamente esse o ponto. Você não precisa saber copywriting para usar copywriting. Os hooks e prompts já têm a estrutura psicológica embutida. Você pega o framework, insere seu produto, sua oferta e seu avatar. O Gerador de Ângulos Criativos, por exemplo, produz 5 ângulos completos com copy real quando você descreve sua oferta — sem precisar saber o que é PAS, AIDA ou pattern interrupt.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>"Isso é IA gerando o conteúdo por mim automaticamente?"</span>
+          <span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Não — e isso é uma vantagem. O Turbo GPT não gera conteúdo automaticamente. Ele é uma biblioteca curada de referências que você usa como ponto de partida. O conteúdo final é <strong>seu</strong>, com sua voz, seu posicionamento e o contexto real do seu negócio. As skills são comandos de alta qualidade para usar em ChatGPT, Claude ou qualquer LLM — mas a inteligência do resultado vem de você combinado com a ferramenta certa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEÇÃO 13: FAQ OPERACIONAL + CTA FINAL ── -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="eyebrow section-eyebrow reveal" style="text-align:center;">Perguntas Rápidas</div>
+    <h2 class="section-title reveal reveal-d1" style="text-align:center; max-width: 500px; margin: 0 auto;">
+      Últimas dúvidas antes<br>de começar
+    </h2>
+
+    <div class="faq-list reveal reveal-d2" style="margin-top:32px;">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Quanto tempo leva para ter acesso?</span><span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Imediato. Após a confirmação do pagamento, você recebe acesso à plataforma na mesma hora. Sem espera, sem aprovação manual.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Funciona no celular?</span><span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Sim. A interface é totalmente responsiva. Você pode filtrar, copiar e salvar hooks direto do celular — inclusive exportar skills para o Notes antes de gravar um vídeo.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Precisa instalar algum aplicativo?</span><span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Não. O Turbo GPT é 100% web — acessa pelo navegador. Nenhum download necessário.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>O conteúdo é atualizado?</span><span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Sim. A biblioteca recebe novos hooks, prompts e skills periodicamente. Quem adquiriu acesso recebe as atualizações sem custo adicional.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Como dou o próximo passo?</span><span class="q-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Clique no botão abaixo, escolha o plano que faz sentido para o seu momento e complete o pagamento. Em minutos você já terá acesso à biblioteca completa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<div class="wrap">
+  <div class="final-cta reveal">
+    <div class="eyebrow" style="display:inline-flex;">⚡ Turbo GPT</div>
+    <h2 class="section-title" style="max-width:700px; margin:20px auto 0;">
+      Pare de criar do zero.<br>
+      <span style="color:var(--blue);">Comece a criar com sistema.</span>
+    </h2>
+    <p class="section-sub centered" style="margin-top:20px; margin-bottom:40px;">
+      1.134 hooks. 690 prompts. 63 skills. Filtros inteligentes. PT-BR.<br>
+      Um investimento único. Acesso vitalício.
+    </p>
+    <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+      <a href="https://pay.hotmart.com/O104727779W" class="btn-primary" style="font-size:16px; padding:18px 44px;">
+        Quero o Arsenal Completo →
+      </a>
+    </div>
+    <p style="margin-top:20px; font-size:13px; color:var(--muted);">
+      Garantia de 7 dias — sem perguntas, sem burocracia
+    </p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="nav-brand" style="justify-content:center;">
+      <div class="nav-logo" style="width:32px;height:32px;border-radius:10px;font-size:14px;">⚡</div>
+      <span class="nav-name" style="font-size:15px;">Turbo GPT</span>
+    </div>
+    <p class="footer-copy">
+      © 2026 Turbo GPT. Todos os direitos reservados.<br>
+      A plataforma não garante resultados específicos. Resultados dependem do uso, aplicação e contexto de cada usuário.
+    </p>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // ── Scroll Reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── Counter Animation ──
+  const counters = document.querySelectorAll('[data-count]');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = +entry.target.dataset.count;
+        let current = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          entry.target.textContent = current.toLocaleString('pt-BR');
+          if (current >= target) clearInterval(timer);
+        }, 20);
+        countObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => countObserver.observe(el));
+
+  // ── FAQ Toggle ──
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-a.open').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q.open').forEach(q => q.classList.remove('open'));
+
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+
+  // ── Init Lucide ──
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>
