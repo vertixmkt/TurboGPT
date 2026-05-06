@@ -688,16 +688,18 @@ function PromptCard(props) {
 
   return (
     <article
-      className="flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
+      className="flex min-h-[280px] flex-col justify-between rounded-lg p-5 transition-all hover:-translate-y-1"
       style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
       onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
       onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
-      <button type="button" onClick={onOpen} className="flex-1 block w-full text-left">
-        <span className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(255,255,255,0.06)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>{getPromptLabel(item.subcategory)}</span>
-        <h3 className="mt-4 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
-        {item.description ? <p className="mt-2 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
+      <button type="button" onClick={onOpen} className="flex min-h-0 flex-1 flex-col text-left">
+        <span className="self-start rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(255,255,255,0.06)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>{getPromptLabel(item.subcategory)}</span>
+        <span className="block pt-6">
+          <h3 className="line-clamp-2 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
+          {item.description ? <p className="mt-2 line-clamp-4 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
+        </span>
       </button>
-      <div className="mt-5 grid grid-cols-2 gap-2">
+      <div className="mt-6 grid grid-cols-2 gap-2">
         <SimpleCopyButton text={text} label="Copiar prompt" />
         <SaveButton saved={saved} onToggle={onToggleSave} />
       </div>
