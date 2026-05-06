@@ -17,10 +17,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DATA_FILE = join(ROOT, 'skills-data.js');
 const PROGRESS_FILE = join(ROOT, 'scripts', '.translate-progress.json');
+const ENV_FILE = join(ROOT, '.env');
 
-const apiKey = process.env.ANTHROPIC_API_KEY;
+function readEnvApiKey() {
+  if (!existsSync(ENV_FILE)) return '';
+  const env = readFileSync(ENV_FILE, 'utf8');
+  const line = env.split(/\r?\n/).find(entry => entry.trim().startsWith('ANTHROPIC_API_KEY='));
+  if (!line) return '';
+  return line.split('=').slice(1).join('=').trim().replace(/^['"]|['"]$/g, '');
+}
+
+const apiKey = process.env.ANTHROPIC_API_KEY || readEnvApiKey();
 if (!apiKey) {
-  console.error('Defina ANTHROPIC_API_KEY antes de rodar o script.');
+  console.error('Defina ANTHROPIC_API_KEY no ambiente ou em .env antes de rodar o script.');
   process.exit(1);
 }
 

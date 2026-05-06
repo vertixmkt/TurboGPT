@@ -2,3 +2,6 @@
 .DS_Store
 tmp/
 .superpowers/
+node_modules/
+.env
+scripts/.translate-progress.json
