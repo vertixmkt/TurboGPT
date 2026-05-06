@@ -1213,15 +1213,17 @@ function App() {
             })}
           </section>
 
-          <section className="surface-card mt-6 rounded-lg p-4" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <ContentTypeToggle
-                contentType={contentType}
-                onChange={function(nextType) {
-                  setContentType(nextType);
-                  setViewMode("all");
-                }} />
+          <section className="mt-6 flex justify-start">
+            <ContentTypeToggle
+              contentType={contentType}
+              onChange={function(nextType) {
+                setContentType(nextType);
+                setViewMode("all");
+              }} />
+          </section>
 
+          <section className="surface-card mt-4 rounded-lg p-4" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex gap-2 overflow-x-auto pb-1">
                 <ViewModeButton active={viewMode === "all"} label="Todos" icon="layout-grid" onClick={function() { setViewMode("all"); }} />
                 <ViewModeButton active={viewMode === "favorites"} label="Favoritos" icon="bookmark" count={contentType === "hooks" ? favoriteIds.length : promptFavoriteIds.length} onClick={function() { setViewMode("favorites"); }} />

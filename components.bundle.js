@@ -3043,20 +3043,22 @@ function App() {
       }
     });
   })), React.createElement("section", {
-    className: "surface-card mt-6 rounded-lg p-4",
-    style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
-      border: '2px solid rgba(255,255,255,0.10)'
-    }
-  }, React.createElement("div", {
-    className: "flex flex-wrap items-center justify-between gap-3"
+    className: "mt-6 flex justify-start"
   }, React.createElement(ContentTypeToggle, {
     contentType: contentType,
     onChange: function (nextType) {
       setContentType(nextType);
       setViewMode("all");
     }
-  }), React.createElement("div", {
+  })), React.createElement("section", {
+    className: "surface-card mt-4 rounded-lg p-4",
+    style: {
+      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      border: '2px solid rgba(255,255,255,0.10)'
+    }
+  }, React.createElement("div", {
+    className: "flex flex-wrap items-center justify-between gap-3"
+  }, React.createElement("div", {
     className: "flex gap-2 overflow-x-auto pb-1"
   }, React.createElement(ViewModeButton, {
     active: viewMode === "all",
