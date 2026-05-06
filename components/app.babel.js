@@ -701,6 +701,19 @@ function PromptCard(props) {
   );
 }
 
+function downloadSkill(item, ext) {
+  var filename = item.id + "." + ext;
+  var blob = new Blob([item.content], { type: "text/plain;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function SkillCard(props) {
   var item = props.item;
   var saved = props.saved;
@@ -718,8 +731,26 @@ function SkillCard(props) {
         {item.description ? <p className="mt-2 text-sm leading-relaxed line-clamp-3" style={{ color: '#888' }}>{item.description}</p> : null}
       </div>
       <div className="mt-5 grid grid-cols-2 gap-2">
-        <SimpleCopyButton text={item.content} label="Copiar skill" />
+        <SimpleCopyButton text={item.content} label="Copiar" />
         <SaveButton saved={saved} onToggle={onToggleSave} />
+      </div>
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={function() { downloadSkill(item, "txt"); }}
+          className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
+          style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <i data-lucide="download" className="h-3.5 w-3.5" />
+          .txt
+        </button>
+        <button
+          type="button"
+          onClick={function() { downloadSkill(item, "md"); }}
+          className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
+          style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <i data-lucide="download" className="h-3.5 w-3.5" />
+          .md
+        </button>
       </div>
     </article>
   );

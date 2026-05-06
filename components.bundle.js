@@ -2270,6 +2270,20 @@ function PromptCard(props) {
     onToggle: onToggleSave
   })));
 }
+function downloadSkill(item, ext) {
+  var filename = item.id + "." + ext;
+  var blob = new Blob([item.content], {
+    type: "text/plain;charset=utf-8"
+  });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 function SkillCard(props) {
   var item = props.item;
   var saved = props.saved;
@@ -2311,11 +2325,41 @@ function SkillCard(props) {
     className: "mt-5 grid grid-cols-2 gap-2"
   }, React.createElement(SimpleCopyButton, {
     text: item.content,
-    label: "Copiar skill"
+    label: "Copiar"
   }), React.createElement(SaveButton, {
     saved: saved,
     onToggle: onToggleSave
-  })));
+  })), React.createElement("div", {
+    className: "mt-2 grid grid-cols-2 gap-2"
+  }, React.createElement("button", {
+    type: "button",
+    onClick: function () {
+      downloadSkill(item, "txt");
+    },
+    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    style: {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
+  }, React.createElement("i", {
+    "data-lucide": "download",
+    className: "h-3.5 w-3.5"
+  }), ".txt"), React.createElement("button", {
+    type: "button",
+    onClick: function () {
+      downloadSkill(item, "md");
+    },
+    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    style: {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
+  }, React.createElement("i", {
+    "data-lucide": "download",
+    className: "h-3.5 w-3.5"
+  }), ".md")));
 }
 function DetailModal(props) {
   var item = props.item;
