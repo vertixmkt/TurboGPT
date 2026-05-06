@@ -22,7 +22,7 @@ var SKILL_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-skills";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 
 var GLASS_ACTIVE_BG = 'linear-gradient(180deg, rgba(47,85,223,0.88) 0%, rgba(23,44,140,0.78) 48%, rgba(5,5,5,0.62) 100%)';
-var GLASS_CONTROL_BG = 'linear-gradient(180deg, rgba(36,36,36,0.74) 0%, rgba(15,15,15,0.58) 100%)';
+var GLASS_CONTROL_BG = 'rgba(255,255,255,0.07)';
 var GLASS_SURFACE_BG = 'linear-gradient(180deg, rgba(25,25,25,0.74) 0%, rgba(8,8,8,0.58) 100%)';
 var GLASS_PANEL_BG = 'linear-gradient(180deg, rgba(10,10,12,0.92) 0%, rgba(2,2,3,0.86) 100%)';
 
