@@ -229,7 +229,7 @@ function LoginModal(props) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.80)' }} onClick={onClose}>
-      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }} onClick={function(e) { e.stopPropagation(); }}>
+      <div className="surface-card modal-in w-full max-w-sm overflow-hidden rounded-2xl" onClick={function(e) { e.stopPropagation(); }}>
 
         <div className="px-6 pt-6 pb-4">
           <div className="flex items-start justify-between">
@@ -321,7 +321,7 @@ function ResetPasswordModal(props) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.80)' }}>
-      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }}>
+      <div className="surface-card modal-in w-full max-w-sm overflow-hidden rounded-2xl">
         <div className="px-6 pt-6 pb-4">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
             <i data-lucide="lock-keyhole" className="h-5 w-5" />
@@ -704,7 +704,7 @@ function HookCard(props) {
       className="surface-card group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
       style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)', minHeight: '316px' }}>
       <div className={"surface-rail absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass} />
-      <button type="button" onClick={onOpen} className="flex-1 block w-full text-left">
+      <button type="button" onClick={onOpen} className="flex min-h-0 flex-1 flex-col text-left">
         <div className="flex items-start justify-between gap-3">
           <span className={"inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] " + styleMeta.badgeClass}>
             <span className={"h-2 w-2 rounded-full " + styleMeta.dotClass} />
@@ -712,8 +712,8 @@ function HookCard(props) {
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>{item.categoryLabel}</span>
         </div>
-        <h3 className="mt-5 text-xl font-bold leading-snug tracking-normal md:text-[21px]" style={{ color: '#fff' }}>{item.text}</h3>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <h3 className="mt-5 line-clamp-4 min-h-[112px] text-xl font-bold leading-snug tracking-normal md:text-[21px]" style={{ color: '#fff' }}>{item.text}</h3>
+        <div className="mt-auto flex min-h-[28px] flex-wrap items-end gap-2 pt-4">
           {badges.map(function(badge) {
             return <span key={badge} className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.08)', color: '#888' }}>{badge}</span>;
           })}
@@ -799,7 +799,7 @@ function DetailModal(props) {
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.82)' }} onClick={onClose}>
-      <div className="modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }} onClick={function(event) { event.stopPropagation(); }}>
+      <div className="surface-card modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5" onClick={function(event) { event.stopPropagation(); }}>
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
             <span className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#888' }}>{label}</span>

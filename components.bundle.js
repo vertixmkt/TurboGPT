@@ -1573,12 +1573,7 @@ function LoginModal(props) {
     },
     onClick: onClose
   }, React.createElement("div", {
-    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl",
-    style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.10)',
-      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
-    },
+    className: "surface-card modal-in w-full max-w-sm overflow-hidden rounded-2xl",
     onClick: function (e) {
       e.stopPropagation();
     }
@@ -1762,12 +1757,7 @@ function ResetPasswordModal(props) {
       background: 'rgba(0,0,0,0.80)'
     }
   }, React.createElement("div", {
-    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl",
-    style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.10)',
-      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
-    }
+    className: "surface-card modal-in w-full max-w-sm overflow-hidden rounded-2xl"
   }, React.createElement("div", {
     className: "px-6 pt-6 pb-4"
   }, React.createElement("span", {
@@ -2271,7 +2261,7 @@ function HookCard(props) {
   }), React.createElement("button", {
     type: "button",
     onClick: onOpen,
-    className: "flex-1 block w-full text-left"
+    className: "flex min-h-0 flex-1 flex-col text-left"
   }, React.createElement("div", {
     className: "flex items-start justify-between gap-3"
   }, React.createElement("span", {
@@ -2284,12 +2274,12 @@ function HookCard(props) {
       color: '#888'
     }
   }, item.categoryLabel)), React.createElement("h3", {
-    className: "mt-5 text-xl font-bold leading-snug tracking-normal md:text-[21px]",
+    className: "mt-5 line-clamp-4 min-h-[112px] text-xl font-bold leading-snug tracking-normal md:text-[21px]",
     style: {
       color: '#fff'
     }
   }, item.text), React.createElement("div", {
-    className: "mt-4 flex flex-wrap gap-2"
+    className: "mt-auto flex min-h-[28px] flex-wrap items-end gap-2 pt-4"
   }, badges.map(function (badge) {
     return React.createElement("span", {
       key: badge,
@@ -2427,12 +2417,7 @@ function DetailModal(props) {
     },
     onClick: onClose
   }, React.createElement("div", {
-    className: "modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5",
-    style: {
-      background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.10)',
-      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
-    },
+    className: "surface-card modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5",
     onClick: function (event) {
       event.stopPropagation();
     }
