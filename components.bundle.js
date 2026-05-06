@@ -7,54 +7,21 @@
 var LangContext = window.LangContext;
 window.Background = function Background() {
   return React.createElement("div", {
-    className: "fixed inset-0 z-0 pointer-events-none"
-  }, React.createElement("div", {
-    className: "absolute inset-0 bg-[var(--bg)]"
-  }), React.createElement("div", {
-    className: "absolute inset-0 bg-grid opacity-80"
-  }), React.createElement("div", {
-    className: "absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_50%_0%,rgba(0,118,223,0.20),transparent_46%)]"
-  }), React.createElement("div", {
-    className: "absolute left-[-12%] top-[34%] h-[360px] w-[520px] rotate-[-18deg] rounded-full border border-[#23e893]/20 opacity-40 blur-sm"
-  }), React.createElement("div", {
-    className: "absolute right-[-12%] top-[18%] h-[420px] w-[520px] rotate-[22deg] rounded-full border border-[#0076df]/20 opacity-45 blur-sm"
-  }));
-};
-window.Navbar = function Navbar() {
-  return React.createElement("header", {
-    className: "sticky top-0 z-50 border-b border-[var(--border-strong)] bg-black/82 backdrop-blur-md"
-  }, React.createElement("div", {
-    className: "mx-auto flex max-w-[1400px] items-center justify-between px-4 py-5 md:px-6"
-  }, React.createElement("div", {
-    className: "flex items-center gap-5"
-  }, React.createElement("a", {
-    href: "#hero",
-    className: "text-[11px] font-medium uppercase tracking-[0.22em] text-stone-600 transition-colors hover:text-stone-900"
-  }, "Vis\xE3o"), React.createElement("a", {
-    href: "#acesso",
-    className: "text-[11px] font-medium uppercase tracking-[0.22em] text-stone-600 transition-colors hover:text-stone-900"
-  }, "Acesso"), React.createElement("a", {
-    href: "#biblioteca",
-    className: "hidden text-[11px] font-medium uppercase tracking-[0.22em] text-stone-600 transition-colors hover:text-stone-900 md:block"
-  }, "Biblioteca")), React.createElement("div", {
-    className: "absolute left-1/2 flex -translate-x-1/2 items-center gap-3"
-  }, React.createElement("div", {
-    className: "wescale-gradient flex h-9 w-9 items-center justify-center rounded-full text-white"
-  }, React.createElement("i", {
-    "data-lucide": "sparkles",
-    className: "h-4 w-4"
-  })), React.createElement("span", {
-    className: "font-display text-lg font-semibold tracking-[-0.04em] text-stone-900"
-  }, "Turbo GPT")), React.createElement("div", {
-    className: "flex items-center gap-3"
-  }, React.createElement("span", {
-    className: "rounded-full border border-stone-900/10 bg-white/60 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-stone-600"
-  }, "PT-BR"))));
+    className: "pointer-events-none fixed inset-0 -z-10",
+    style: {
+      background: "#000"
+    }
+  });
 };
 window.Footer = function Footer() {
   var tr = React.useContext(LangContext).tr;
   return React.createElement("footer", {
-    className: "relative z-10 border-t border-[var(--border-strong)] bg-black/72 px-6 py-8 text-center text-xs uppercase tracking-[0.22em] text-stone-500 backdrop-blur-sm"
+    className: "relative z-10 px-6 py-8 text-center text-xs uppercase tracking-[0.22em] backdrop-blur-sm",
+    style: {
+      borderTop: '1px solid rgba(255,255,255,0.08)',
+      background: '#000',
+      color: '#888'
+    }
   }, tr.footer);
 };
 
@@ -1141,6 +1108,7 @@ var supabaseClient = window.supabaseClient;
 var Background = window.Background;
 var Footer = window.Footer;
 var FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-hooks";
+var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 var CONTENT_FORMATS = [{
   id: "reels",
@@ -1347,33 +1315,79 @@ function UserAccountMenu(props) {
   }, React.createElement("button", {
     type: "button",
     onClick: onToggle,
-    className: "wescale-glass inline-flex min-h-10 max-w-[220px] items-center gap-2 rounded-full border border-stone-900/10 px-2.5 text-left text-sm font-bold text-stone-900 transition-all hover:border-[#23e893]/40",
+    className: "inline-flex min-h-10 max-w-[220px] items-center gap-2 rounded-full px-2.5 text-left text-sm font-bold transition-all",
+    style: {
+      background: 'rgba(255,255,255,0.05)',
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#fff'
+    },
     title: email || displayName
   }, React.createElement("span", {
-    className: "wescale-gradient flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black text-white"
+    className: "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, getUserInitials(user)), React.createElement("span", {
     className: "hidden min-w-0 md:block"
   }, React.createElement("span", {
-    className: "block truncate"
+    className: "block truncate",
+    style: {
+      color: '#fff'
+    }
   }, displayName), email ? React.createElement("span", {
-    className: "block truncate text-[11px] font-semibold uppercase tracking-[0.08em] text-stone-500"
+    className: "block truncate text-[11px] font-semibold uppercase tracking-[0.08em]",
+    style: {
+      color: '#888'
+    }
   }, email) : null), React.createElement("i", {
     "data-lucide": "chevron-down",
-    className: "h-4 w-4 shrink-0 text-stone-500 transition-transform " + (open ? "rotate-180" : "")
+    className: "h-4 w-4 shrink-0 transition-transform " + (open ? "rotate-180" : ""),
+    style: {
+      color: '#888'
+    }
   })), open ? React.createElement("div", {
-    className: "absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_22px_50px_rgba(0,118,223,0.18)]"
+    className: "absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      boxShadow: '0 22px 50px rgba(0,0,0,0.6)'
+    }
   }, React.createElement("div", {
-    className: "border-b border-stone-900/10 px-4 py-3"
+    className: "px-4 py-3",
+    style: {
+      borderBottom: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("p", {
-    className: "truncate text-sm font-black text-stone-950"
+    className: "truncate text-sm font-black",
+    style: {
+      color: '#fff'
+    }
   }, displayName), email ? React.createElement("p", {
-    className: "mt-1 truncate text-xs font-medium text-stone-500"
+    className: "mt-1 truncate text-xs font-medium",
+    style: {
+      color: '#888'
+    }
   }, email) : React.createElement("p", {
-    className: "mt-1 text-xs font-medium text-stone-500"
+    className: "mt-1 text-xs font-medium",
+    style: {
+      color: '#888'
+    }
   }, "Sess\xE3o n\xE3o encontrada")), React.createElement("button", {
     type: "button",
     onClick: onSignOut,
-    className: "flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold text-stone-800 transition-colors hover:bg-stone-100"
+    className: "flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors",
+    style: {
+      color: '#888'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+      e.currentTarget.style.color = '#fff';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.background = 'transparent';
+      e.currentTarget.style.color = '#888';
+    }
   }, React.createElement("i", {
     "data-lucide": "log-out",
     className: "h-4 w-4"
@@ -1386,16 +1400,32 @@ function AuthInput(props) {
     onChange: props.onChange,
     placeholder: props.placeholder,
     required: props.required,
+    className: "w-full rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none",
     style: {
-      color: "#0c0a09"
+      background: '#161616',
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#ffffff',
+      caretColor: '#62FFB3'
     },
-    className: "w-full rounded-lg border border-stone-900/15 bg-stone-50 px-3 py-2.5 text-sm font-medium placeholder:text-stone-400 focus:border-[#0076df] focus:outline-none focus:ring-2 focus:ring-[#0076df]/20"
+    onFocus: function (e) {
+      e.target.style.borderColor = '#62FFB3';
+      e.target.style.boxShadow = '0 0 0 3px rgba(98,255,179,0.15)';
+    },
+    onBlur: function (e) {
+      e.target.style.borderColor = 'rgba(255,255,255,0.10)';
+      e.target.style.boxShadow = 'none';
+    }
   });
 }
 function AuthError(props) {
   if (!props.msg) return null;
   return React.createElement("div", {
-    className: "flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700"
+    className: "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium",
+    style: {
+      background: 'rgba(239,68,68,0.10)',
+      border: '1px solid rgba(239,68,68,0.20)',
+      color: '#ff6b6b'
+    }
   }, React.createElement("i", {
     "data-lucide": "alert-circle",
     className: "h-4 w-4 shrink-0"
@@ -1404,7 +1434,12 @@ function AuthError(props) {
 function AuthSuccess(props) {
   if (!props.msg) return null;
   return React.createElement("div", {
-    className: "flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-700"
+    className: "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium",
+    style: {
+      background: 'rgba(98,255,179,0.10)',
+      border: '1px solid rgba(98,255,179,0.20)',
+      color: '#62FFB3'
+    }
   }, React.createElement("i", {
     "data-lucide": "check-circle",
     className: "h-4 w-4 shrink-0"
@@ -1487,10 +1522,18 @@ function LoginModal(props) {
     resetState();
   };
   return React.createElement("div", {
-    className: "fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md",
+    className: "fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md",
+    style: {
+      background: 'rgba(0,0,0,0.80)'
+    },
     onClick: onClose
   }, React.createElement("div", {
-    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_30px_90px_rgba(0,118,223,0.22)]",
+    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
+    },
     onClick: function (e) {
       e.stopPropagation();
     }
@@ -1499,18 +1542,33 @@ function LoginModal(props) {
   }, React.createElement("div", {
     className: "flex items-start justify-between"
   }, React.createElement("div", null, React.createElement("span", {
-    className: "wescale-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-white mb-3"
+    className: "inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": view === "login" ? "zap" : "key-round",
     className: "h-5 w-5"
   })), React.createElement("h2", {
-    className: "text-xl font-black text-stone-950"
+    className: "text-xl font-black",
+    style: {
+      color: '#fff'
+    }
   }, view === "login" ? "Entrar na plataforma" : "Recuperar senha"), React.createElement("p", {
-    className: "mt-1 text-sm text-stone-500"
+    className: "mt-1 text-sm",
+    style: {
+      color: '#888'
+    }
   }, view === "login" ? "Acesse sua biblioteca de hooks e prompts." : "Enviaremos um link de redefinição para seu email.")), React.createElement("button", {
     type: "button",
     onClick: onClose,
-    className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-stone-900/10 text-stone-500 hover:text-stone-900"
+    className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full",
+    style: {
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#888',
+      background: 'transparent'
+    }
   }, React.createElement("i", {
     "data-lucide": "x",
     className: "h-4 w-4"
@@ -1518,7 +1576,10 @@ function LoginModal(props) {
     onSubmit: handleLogin,
     className: "px-6 pb-6 space-y-3"
   }, React.createElement("div", null, React.createElement("label", {
-    className: "block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5"
+    className: "block text-xs font-bold uppercase tracking-[0.12em] mb-1.5",
+    style: {
+      color: '#888'
+    }
   }, "Email"), React.createElement(AuthInput, {
     type: "email",
     value: email,
@@ -1531,13 +1592,19 @@ function LoginModal(props) {
   })), React.createElement("div", null, React.createElement("div", {
     className: "flex items-center justify-between mb-1.5"
   }, React.createElement("label", {
-    className: "block text-xs font-bold uppercase tracking-[0.12em] text-stone-600"
+    className: "block text-xs font-bold uppercase tracking-[0.12em]",
+    style: {
+      color: '#888'
+    }
   }, "Senha"), React.createElement("button", {
     type: "button",
     onClick: function () {
       switchView("forgot");
     },
-    className: "text-xs font-semibold text-[#0076df] hover:underline"
+    className: "text-xs font-semibold hover:underline",
+    style: {
+      color: '#62FFB3'
+    }
   }, "Esqueci minha senha")), React.createElement(AuthInput, {
     type: "password",
     value: password,
@@ -1552,12 +1619,19 @@ function LoginModal(props) {
   }), React.createElement("button", {
     type: "submit",
     disabled: loading,
-    className: "wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0"
+    className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, loading ? "Entrando…" : "Entrar")) : React.createElement("form", {
     onSubmit: handleForgot,
     className: "px-6 pb-6 space-y-3"
   }, React.createElement("div", null, React.createElement("label", {
-    className: "block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5"
+    className: "block text-xs font-bold uppercase tracking-[0.12em] mb-1.5",
+    style: {
+      color: '#888'
+    }
   }, "Email"), React.createElement(AuthInput, {
     type: "email",
     value: email,
@@ -1574,13 +1648,22 @@ function LoginModal(props) {
   }), !successMsg ? React.createElement("button", {
     type: "submit",
     disabled: loading,
-    className: "wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0"
+    className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, loading ? "Enviando…" : "Enviar link de recuperação") : null, React.createElement("button", {
     type: "button",
     onClick: function () {
       switchView("login");
     },
-    className: "w-full rounded-lg border border-stone-900/10 px-4 py-2.5 text-sm font-bold text-stone-700 transition-colors hover:bg-stone-50"
+    className: "w-full rounded-lg px-4 py-2.5 text-sm font-bold transition-colors",
+    style: {
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#888',
+      background: 'transparent'
+    }
   }, "Voltar para o login"))));
 }
 function ResetPasswordModal(props) {
@@ -1629,25 +1712,46 @@ function ResetPasswordModal(props) {
     }
   };
   return React.createElement("div", {
-    className: "fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md"
+    className: "fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md",
+    style: {
+      background: 'rgba(0,0,0,0.80)'
+    }
   }, React.createElement("div", {
-    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_30px_90px_rgba(0,118,223,0.22)]"
+    className: "modal-in w-full max-w-sm overflow-hidden rounded-2xl",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
+    }
   }, React.createElement("div", {
     className: "px-6 pt-6 pb-4"
   }, React.createElement("span", {
-    className: "wescale-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-white mb-3"
+    className: "inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "lock-keyhole",
     className: "h-5 w-5"
   })), React.createElement("h2", {
-    className: "text-xl font-black text-stone-950"
+    className: "text-xl font-black",
+    style: {
+      color: '#fff'
+    }
   }, "Definir nova senha"), React.createElement("p", {
-    className: "mt-1 text-sm text-stone-500"
+    className: "mt-1 text-sm",
+    style: {
+      color: '#888'
+    }
   }, "Escolha uma senha segura para sua conta.")), React.createElement("form", {
     onSubmit: handleSubmit,
     className: "px-6 pb-6 space-y-3"
   }, React.createElement("div", null, React.createElement("label", {
-    className: "block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5"
+    className: "block text-xs font-bold uppercase tracking-[0.12em] mb-1.5",
+    style: {
+      color: '#888'
+    }
   }, "Nova senha"), React.createElement(AuthInput, {
     type: "password",
     value: password,
@@ -1658,7 +1762,10 @@ function ResetPasswordModal(props) {
     placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
     required: true
   })), React.createElement("div", null, React.createElement("label", {
-    className: "block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5"
+    className: "block text-xs font-bold uppercase tracking-[0.12em] mb-1.5",
+    style: {
+      color: '#888'
+    }
   }, "Confirmar senha"), React.createElement(AuthInput, {
     type: "password",
     value: confirm,
@@ -1675,7 +1782,11 @@ function ResetPasswordModal(props) {
   }) : React.createElement("button", {
     type: "submit",
     disabled: loading,
-    className: "wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0"
+    className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, loading ? "Salvando…" : "Salvar nova senha"))));
 }
 function readStoredList(key) {
@@ -1794,7 +1905,16 @@ function SimpleCopyButton(props) {
   return React.createElement("button", {
     type: "button",
     onClick: handleCopy,
-    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition-all active:scale-[0.98] " + (copied ? "scale-[1.03] border-lime-300 bg-lime-300 text-stone-950 shadow-[0_10px_24px_rgba(132,204,22,0.24)]" : "border-stone-900/10 bg-white text-stone-900 hover:-translate-y-0.5 hover:bg-stone-950 hover:text-white"),
+    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
+    style: copied ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: '#161616',
+      color: '#fff',
+      border: '1px solid rgba(255,255,255,0.10)'
+    },
     title: copied ? "Copiado" : label
   }, React.createElement("i", {
     "data-lucide": copied ? "check" : "copy",
@@ -1810,7 +1930,16 @@ function SaveButton(props) {
       event.stopPropagation();
       onToggle();
     },
-    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition-all active:scale-[0.98] " + (saved ? "border-stone-950 bg-stone-950 text-white" : "border-stone-900/10 bg-white text-stone-800 hover:-translate-y-0.5 hover:border-stone-300"),
+    className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
+    style: saved ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.10)'
+    },
     title: saved ? "Remover dos favoritos" : "Salvar"
   }, React.createElement("i", {
     "data-lucide": saved ? "bookmark-check" : "bookmark",
@@ -1822,20 +1951,37 @@ function ResultRow(props) {
   var onOpen = props.onOpen;
   var isHook = item.type === "hook";
   var label = isHook ? item.categoryLabel : getPromptLabel(item.subcategory);
-  var text = isHook ? item.text : getPromptText(item);
   return React.createElement("button", {
     type: "button",
     onClick: function () {
       onOpen(item);
     },
-    className: "group grid w-full grid-cols-[1fr_auto] gap-3 border-b border-stone-900/10 px-4 py-3 text-left transition-colors hover:bg-white/80"
+    className: "group grid w-full grid-cols-[1fr_auto] gap-3 px-4 py-3 text-left transition-colors",
+    style: {
+      borderBottom: '1px solid rgba(255,255,255,0.06)'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.background = 'transparent';
+    }
   }, React.createElement("span", null, React.createElement("span", {
-    className: "block text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500"
+    className: "block text-[11px] font-semibold uppercase tracking-[0.14em]",
+    style: {
+      color: '#888'
+    }
   }, isHook ? "Hook" : "Prompt", " \xB7 ", label), React.createElement("span", {
-    className: "mt-1 line-clamp-2 block text-sm leading-relaxed text-stone-900"
+    className: "mt-1 line-clamp-2 block text-sm leading-relaxed",
+    style: {
+      color: '#fff'
+    }
   }, isHook ? item.text : item.name)), React.createElement("i", {
     "data-lucide": "arrow-up-right",
-    className: "mt-2 h-4 w-4 text-stone-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+    className: "mt-2 h-4 w-4",
+    style: {
+      color: '#888'
+    }
   }));
 }
 function FilterChip(props) {
@@ -1846,7 +1992,16 @@ function FilterChip(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all active:scale-[0.97] " + (active ? "border-stone-950 bg-stone-950 text-white shadow-[0_12px_28px_rgba(28,25,23,0.16)]" : "border-stone-900/10 bg-white/82 text-stone-700 hover:-translate-y-0.5 hover:border-stone-300 hover:text-stone-950")
+    className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
+    style: active ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, icon ? React.createElement("i", {
     "data-lucide": icon,
     className: "h-4 w-4"
@@ -1867,7 +2022,11 @@ function ContentTypeToggle(props) {
     hint: "comandos"
   }];
   return React.createElement("div", {
-    className: "grid w-full grid-cols-2 gap-2 rounded-2xl border border-stone-900/10 bg-black/18 p-1.5 sm:w-auto"
+    className: "grid w-full grid-cols-2 gap-2 rounded-2xl p-1.5 sm:w-auto",
+    style: {
+      background: 'rgba(255,255,255,0.04)',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, options.map(function (option) {
     var active = contentType === option.id;
     return React.createElement("button", {
@@ -1876,9 +2035,22 @@ function ContentTypeToggle(props) {
       onClick: function () {
         onChange(option.id);
       },
-      className: "group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98] " + (active ? "wescale-gradient text-white shadow-[0_16px_34px_rgba(0,118,223,0.22)]" : "text-stone-700 hover:bg-white/80 hover:text-stone-950")
+      className: "group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]",
+      style: active ? {
+        background: '#62FFB3',
+        color: '#000'
+      } : {
+        color: '#888'
+      }
     }, React.createElement("span", {
-      className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-all " + (active ? "border-white/24 bg-white/14" : "border-stone-900/10 bg-stone-100 group-hover:border-[#23e893]/30")
+      className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all",
+      style: active ? {
+        background: 'rgba(0,0,0,0.15)',
+        border: '1px solid rgba(0,0,0,0.15)'
+      } : {
+        background: 'rgba(255,255,255,0.06)',
+        border: '1px solid rgba(255,255,255,0.08)'
+      }
     }, React.createElement("i", {
       "data-lucide": option.icon,
       className: "h-4.5 w-4.5"
@@ -1887,7 +2059,12 @@ function ContentTypeToggle(props) {
     }, React.createElement("span", {
       className: "block text-sm font-black leading-tight"
     }, option.label), React.createElement("span", {
-      className: "mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em] " + (active ? "text-white/72" : "text-stone-500")
+      className: "mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em]",
+      style: active ? {
+        color: 'rgba(0,0,0,0.6)'
+      } : {
+        color: '#666'
+      }
     }, option.hint)));
   }));
 }
@@ -1900,14 +2077,33 @@ function ViewModeButton(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full border px-3 pr-4 text-sm font-black transition-all active:scale-[0.97] " + (active ? "wescale-gradient border-[#23e893]/40 text-white shadow-[0_16px_34px_rgba(0,118,223,0.20)]" : "border-stone-900/10 bg-white/78 text-stone-700 hover:-translate-y-0.5 hover:bg-white hover:text-stone-950")
+    className: "group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]",
+    style: active ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("span", {
-    className: "inline-flex h-8 w-8 items-center justify-center rounded-full border " + (active ? "border-white/24 bg-white/14" : "border-stone-900/10 bg-stone-100 group-hover:border-[#23e893]/30")
+    className: "inline-flex h-8 w-8 items-center justify-center rounded-full",
+    style: active ? {
+      background: 'rgba(0,0,0,0.15)',
+      border: '1px solid rgba(0,0,0,0.15)'
+    } : {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("i", {
     "data-lucide": icon,
     className: "h-4 w-4"
   })), React.createElement("span", null, label), typeof count === "number" ? React.createElement("span", {
-    className: "rounded-full bg-black/10 px-2 py-0.5 text-xs"
+    className: "rounded-full px-2 py-0.5 text-xs",
+    style: {
+      background: 'rgba(0,0,0,0.15)'
+    }
   }, count) : null);
 }
 function ContentFormatCard(props) {
@@ -1917,16 +2113,37 @@ function ContentFormatCard(props) {
   return React.createElement("button", {
     type: "button",
     onClick: onClick,
-    className: "group min-h-[132px] min-w-0 rounded-lg border p-4 text-left transition-all active:scale-[0.98] " + (active ? "border-stone-950 bg-stone-950 text-white shadow-[0_22px_50px_rgba(28,25,23,0.22)]" : "border-stone-900/10 bg-white/78 text-stone-900 hover:-translate-y-1 hover:bg-white hover:shadow-[0_18px_38px_rgba(28,25,23,0.10)]")
+    className: "group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1",
+    style: active ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: '#0f0f0f',
+      color: '#fff',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("span", {
-    className: "inline-flex h-10 w-10 items-center justify-center rounded-md border " + (active ? "border-white/20 bg-white/12" : "border-stone-900/10 bg-stone-100")
+    className: "inline-flex h-10 w-10 items-center justify-center rounded-md",
+    style: active ? {
+      background: 'rgba(0,0,0,0.15)',
+      border: '1px solid rgba(0,0,0,0.15)'
+    } : {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("i", {
     "data-lucide": format.icon,
     className: "h-5 w-5"
   })), React.createElement("span", {
     className: "mt-4 block break-words text-xl font-bold leading-tight"
   }, format.label), React.createElement("span", {
-    className: "mt-1 block text-sm " + (active ? "text-white/70" : "text-stone-500")
+    className: "mt-1 block text-sm",
+    style: active ? {
+      color: 'rgba(0,0,0,0.6)'
+    } : {
+      color: '#888'
+    }
   }, format.hint));
 }
 function HookCard(props) {
@@ -1938,7 +2155,17 @@ function HookCard(props) {
   var styleMeta = getHookStyleMeta(item);
   var badges = getHighlightBadges(item);
   return React.createElement("article", {
-    className: "group relative min-h-[236px] overflow-hidden rounded-lg border border-stone-900/10 bg-white p-5 shadow-[0_1px_0_rgba(28,25,23,0.06)] transition-all hover:-translate-y-1 hover:border-stone-900/18 hover:shadow-[0_24px_50px_rgba(28,25,23,0.13)]"
+    className: "group relative min-h-[236px] overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+    }
   }, React.createElement("div", {
     className: "absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass
   }), React.createElement("button", {
@@ -1952,15 +2179,25 @@ function HookCard(props) {
   }, React.createElement("span", {
     className: "h-2 w-2 rounded-full " + styleMeta.dotClass
   }), styleMeta.label), React.createElement("span", {
-    className: "text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500"
+    className: "text-[11px] font-semibold uppercase tracking-[0.14em]",
+    style: {
+      color: '#888'
+    }
   }, item.categoryLabel)), React.createElement("h3", {
-    className: "mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal text-stone-950 md:text-[21px]"
+    className: "mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal md:text-[21px]",
+    style: {
+      color: '#fff'
+    }
   }, item.text), React.createElement("div", {
     className: "mt-4 flex flex-wrap gap-2"
   }, badges.map(function (badge) {
     return React.createElement("span", {
       key: badge,
-      className: "rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700"
+      className: "rounded-full px-3 py-1 text-xs font-semibold",
+      style: {
+        background: 'rgba(255,255,255,0.08)',
+        color: '#888'
+      }
     }, badge);
   }))), React.createElement("div", {
     className: "mt-5 grid grid-cols-2 gap-2"
@@ -1976,24 +2213,50 @@ function HookCard(props) {
 function PromptCard(props) {
   var item = props.item;
   var onOpen = props.onOpen;
+  var saved = props.saved;
+  var onToggleSave = props.onToggleSave;
   var text = getPromptText(item);
   return React.createElement("article", {
-    className: "rounded-lg border border-stone-900/10 bg-white p-5 transition-all hover:-translate-y-1 hover:shadow-[0_20px_42px_rgba(28,25,23,0.10)]"
+    className: "rounded-lg p-5 transition-all hover:-translate-y-1",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+    }
   }, React.createElement("button", {
     type: "button",
     onClick: onOpen,
     className: "block w-full text-left"
   }, React.createElement("span", {
-    className: "rounded-full border border-stone-900/10 bg-stone-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-stone-600"
+    className: "rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, getPromptLabel(item.subcategory)), React.createElement("h3", {
-    className: "mt-4 line-clamp-3 text-lg font-bold leading-snug text-stone-950"
+    className: "mt-4 line-clamp-3 text-lg font-bold leading-snug",
+    style: {
+      color: '#fff'
+    }
   }, item.name), item.description ? React.createElement("p", {
-    className: "mt-2 line-clamp-2 text-sm leading-relaxed text-stone-600"
+    className: "mt-2 line-clamp-2 text-sm leading-relaxed",
+    style: {
+      color: '#888'
+    }
   }, item.description) : null), React.createElement("div", {
-    className: "mt-5"
+    className: "mt-5 grid grid-cols-2 gap-2"
   }, React.createElement(SimpleCopyButton, {
     text: text,
     label: "Copiar prompt"
+  }), React.createElement(SaveButton, {
+    saved: saved,
+    onToggle: onToggleSave
   })));
 }
 function DetailModal(props) {
@@ -2014,33 +2277,64 @@ function DetailModal(props) {
   var title = isHook ? "Hook" : item.name;
   var body = isHook ? item.text : getPromptText(item);
   return React.createElement("div", {
-    className: "fixed inset-0 z-[80] flex items-center justify-center bg-black/82 p-4 backdrop-blur-md",
+    className: "fixed inset-0 z-[80] flex items-center justify-center p-4 backdrop-blur-md",
+    style: {
+      background: 'rgba(0,0,0,0.82)'
+    },
     onClick: onClose
   }, React.createElement("div", {
-    className: "modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl border border-stone-900/10 bg-white p-5 shadow-[0_30px_90px_rgba(0,118,223,0.22)]",
+    className: "modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      boxShadow: '0 30px 90px rgba(0,0,0,0.8)'
+    },
     onClick: function (event) {
       event.stopPropagation();
     }
   }, React.createElement("div", {
     className: "mb-4 flex items-start justify-between gap-4"
   }, React.createElement("div", null, React.createElement("span", {
-    className: "rounded-full border border-stone-900/10 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-stone-600"
+    className: "rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      color: '#888'
+    }
   }, label), React.createElement("h2", {
-    className: "mt-3 text-2xl font-bold text-stone-950"
+    className: "mt-3 text-2xl font-bold",
+    style: {
+      color: '#fff'
+    }
   }, title), !isHook && item.description ? React.createElement("p", {
-    className: "mt-2 text-sm leading-relaxed text-stone-600"
+    className: "mt-2 text-sm leading-relaxed",
+    style: {
+      color: '#888'
+    }
   }, item.description) : null), React.createElement("button", {
     type: "button",
     onClick: onClose,
-    className: "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-900/10 bg-white/80 text-stone-600 hover:text-stone-900",
+    className: "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full",
+    style: {
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#888',
+      background: 'transparent'
+    },
     title: "Fechar"
   }, React.createElement("i", {
     "data-lucide": "x",
     className: "h-4 w-4"
   }))), React.createElement("div", {
-    className: "rounded-lg border border-stone-900/10 bg-white/88 p-4"
+    className: "rounded-lg p-4",
+    style: {
+      background: 'rgba(255,255,255,0.03)',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("pre", {
-    className: "max-h-[52vh] whitespace-pre-wrap text-base leading-relaxed text-stone-900"
+    className: "max-h-[52vh] whitespace-pre-wrap text-base leading-relaxed",
+    style: {
+      color: '#fff'
+    }
   }, body), React.createElement("div", {
     className: "mt-4 flex justify-end"
   }, React.createElement(SimpleCopyButton, {
@@ -2084,6 +2378,11 @@ function App() {
   });
   var favoriteIds = stateFavorites[0],
     setFavoriteIds = stateFavorites[1];
+  var statePromptFavorites = React.useState(function () {
+    return readStoredList(PROMPT_FAVORITES_STORAGE_KEY);
+  });
+  var promptFavoriteIds = statePromptFavorites[0],
+    setPromptFavoriteIds = statePromptFavorites[1];
   var stateRecents = React.useState(function () {
     return readStoredList(RECENTS_STORAGE_KEY);
   });
@@ -2161,6 +2460,7 @@ function App() {
         activeIntent: "all",
         activeSubcategory: activePromptCategory
       }).filter(function (item) {
+        if (viewMode === "favorites" && promptFavoriteIds.indexOf(item.id) === -1) return false;
         if (!matchesPromptRule(item, activeFormatRule)) return false;
         if (!matchesPromptRule(item, activeObjectiveRule)) return false;
         if (!matchesPromptRule(item, activeStyleRule)) return false;
@@ -2191,7 +2491,7 @@ function App() {
       var scoreB = getHookRuleScore(b, activeFormatRule) + getHookRuleScore(b, activeObjectiveRule) + getHookRuleScore(b, activeStyleRule) + getHookRuleScore(b, activeAggressionRule);
       return scoreB - scoreA;
     });
-  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, recentIds]);
+  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, recentIds]);
   var searchResults = React.useMemo(function () {
     if (!search.trim()) return [];
     if (contentType === "prompts") {
@@ -2218,6 +2518,9 @@ function App() {
   React.useEffect(function () {
     writeStoredList(FAVORITES_STORAGE_KEY, favoriteIds);
   }, [favoriteIds]);
+  React.useEffect(function () {
+    writeStoredList(PROMPT_FAVORITES_STORAGE_KEY, promptFavoriteIds);
+  }, [promptFavoriteIds]);
   React.useEffect(function () {
     writeStoredList(RECENTS_STORAGE_KEY, recentIds);
   }, [recentIds]);
@@ -2280,6 +2583,11 @@ function App() {
       return toggleListItem(current, item.id);
     });
   };
+  var togglePromptFavorite = function (item) {
+    setPromptFavoriteIds(function (current) {
+      return toggleListItem(current, item.id);
+    });
+  };
   var handleSignOut = async function () {
     setUserMenuOpen(false);
     setSessionUser(null);
@@ -2300,9 +2608,16 @@ function App() {
       tr: tr
     }
   }, React.createElement("div", {
-    className: "turbo-dark relative min-h-screen overflow-x-hidden text-[var(--text)]"
+    className: "relative min-h-screen overflow-x-hidden",
+    style: {
+      color: '#fff'
+    }
   }, React.createElement(Background, null), React.createElement("header", {
-    className: "sticky top-0 z-50 border-b border-[var(--border-strong)] bg-black/82 backdrop-blur-xl"
+    className: "sticky top-0 z-50 backdrop-blur-xl",
+    style: {
+      background: 'rgba(0,0,0,0.90)',
+      borderBottom: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("div", {
     className: "mx-auto flex max-w-[1240px] flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:px-6"
   }, React.createElement("div", {
@@ -2315,42 +2630,89 @@ function App() {
     },
     className: "flex min-w-0 items-center gap-3 text-left"
   }, React.createElement("span", {
-    className: "wescale-gradient flex h-10 w-10 items-center justify-center rounded-xl text-white"
+    className: "flex h-10 w-10 items-center justify-center rounded-xl",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "zap",
     className: "h-5 w-5"
   })), React.createElement("span", {
     className: "min-w-0"
   }, React.createElement("span", {
-    className: "block text-lg font-black tracking-normal text-stone-950"
+    className: "block text-lg font-black tracking-normal",
+    style: {
+      color: '#fff'
+    }
   }, "Turbo GPT"), React.createElement("span", {
-    className: "block text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500"
+    className: "block text-[11px] font-semibold uppercase tracking-[0.14em]",
+    style: {
+      color: '#888'
+    }
   }, "Hooks e prompts"))), sessionUser ? React.createElement("div", {
-    className: "md:hidden"
+    className: "md:hidden relative"
   }, React.createElement("button", {
     type: "button",
     onClick: function () {
       setUserMenuOpen(!userMenuOpen);
     },
-    className: "wescale-glass inline-flex min-h-10 items-center gap-2 rounded-full border border-stone-900/10 px-2.5 text-sm font-bold text-stone-900 transition-all",
+    className: "inline-flex min-h-10 items-center gap-2 rounded-full px-2.5 text-sm font-bold transition-all",
+    style: {
+      background: 'rgba(255,255,255,0.05)',
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#fff'
+    },
     title: sessionUser.email
   }, React.createElement("span", {
-    className: "wescale-gradient flex h-8 w-8 items-center justify-center rounded-full text-xs font-black text-white"
+    className: "flex h-8 w-8 items-center justify-center rounded-full text-xs font-black",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, getUserInitials(sessionUser)), React.createElement("i", {
     "data-lucide": "chevron-down",
-    className: "h-4 w-4 text-stone-500 transition-transform " + (userMenuOpen ? "rotate-180" : "")
+    className: "h-4 w-4 transition-transform " + (userMenuOpen ? "rotate-180" : ""),
+    style: {
+      color: '#888'
+    }
   })), userMenuOpen ? React.createElement("div", {
-    className: "absolute right-4 top-[64px] z-[90] w-[260px] overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_22px_50px_rgba(0,118,223,0.18)]"
+    className: "absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      boxShadow: '0 22px 50px rgba(0,0,0,0.6)'
+    }
   }, React.createElement("div", {
-    className: "border-b border-stone-900/10 px-4 py-3"
+    className: "px-4 py-3",
+    style: {
+      borderBottom: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("p", {
-    className: "truncate text-sm font-black text-stone-950"
+    className: "truncate text-sm font-black",
+    style: {
+      color: '#fff'
+    }
   }, getUserDisplayName(sessionUser)), React.createElement("p", {
-    className: "mt-1 truncate text-xs font-medium text-stone-500"
+    className: "mt-1 truncate text-xs font-medium",
+    style: {
+      color: '#888'
+    }
   }, sessionUser.email)), React.createElement("button", {
     type: "button",
     onClick: handleSignOut,
-    className: "flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold text-stone-800 transition-colors hover:bg-stone-100"
+    className: "flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors",
+    style: {
+      color: '#888'
+    },
+    onMouseEnter: function (e) {
+      e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+      e.currentTarget.style.color = '#fff';
+    },
+    onMouseLeave: function (e) {
+      e.currentTarget.style.background = 'transparent';
+      e.currentTarget.style.color = '#888';
+    }
   }, React.createElement("i", {
     "data-lucide": "log-out",
     className: "h-4 w-4"
@@ -2359,28 +2721,45 @@ function App() {
     onClick: function () {
       setLoginModalOpen(true);
     },
-    className: "wescale-gradient md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black text-white shadow-[0_8px_20px_rgba(0,118,223,0.28)]"
+    className: "md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black transition-all hover:-translate-y-0.5",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "log-in",
     className: "h-4 w-4"
   }), "Entrar")), React.createElement("div", {
-    className: "wescale-glass flex w-full min-w-0 flex-1 items-center gap-2 rounded-full border border-stone-900/10 px-4 py-2 md:mx-4"
+    className: "flex w-full min-w-0 flex-1 items-center gap-2 rounded-full px-4 py-2 md:mx-4",
+    style: {
+      background: 'rgba(255,255,255,0.05)',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("i", {
     "data-lucide": "search",
-    className: "h-5 w-5 shrink-0 text-stone-500"
+    className: "h-5 w-5 shrink-0",
+    style: {
+      color: '#888'
+    }
   }), React.createElement("input", {
     value: search,
     onChange: function (event) {
       setSearch(event.target.value);
     },
     placeholder: "Buscar por palavra, categoria ou tipo de hook",
-    className: "min-h-9 min-w-0 w-full bg-transparent text-base font-medium text-stone-950 placeholder:text-stone-400 focus:outline-none"
+    className: "min-h-9 min-w-0 w-full bg-transparent text-base font-medium focus:outline-none",
+    style: {
+      color: '#fff'
+    }
   }), search ? React.createElement("button", {
     type: "button",
     onClick: function () {
       setSearch("");
     },
-    className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-stone-500 hover:bg-stone-100 hover:text-stone-950",
+    className: "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md",
+    style: {
+      color: '#888'
+    },
     title: "Limpar busca"
   }, React.createElement("i", {
     "data-lucide": "x",
@@ -2393,12 +2772,24 @@ function App() {
       setViewMode(viewMode === "favorites" ? "all" : "favorites");
       setContentType("hooks");
     },
-    className: "inline-flex min-h-10 items-center gap-2 rounded-md border px-3 text-sm font-bold transition-all " + (viewMode === "favorites" ? "border-stone-950 bg-stone-950 text-white" : "border-stone-900/10 bg-white/80 text-stone-800 hover:bg-white")
+    className: "inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-bold transition-all",
+    style: viewMode === "favorites" ? {
+      background: '#62FFB3',
+      color: '#000',
+      border: '1px solid #62FFB3'
+    } : {
+      background: 'rgba(255,255,255,0.05)',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("i", {
     "data-lucide": "bookmark",
     className: "h-4 w-4"
   }), "Favoritos", React.createElement("span", {
-    className: "rounded-full bg-black/10 px-2 py-0.5 text-xs"
+    className: "rounded-full px-2 py-0.5 text-xs",
+    style: {
+      background: 'rgba(255,255,255,0.10)'
+    }
   }, favoriteIds.length)), sessionUser ? React.createElement(UserAccountMenu, {
     user: sessionUser,
     open: userMenuOpen,
@@ -2411,14 +2802,23 @@ function App() {
     onClick: function () {
       setLoginModalOpen(true);
     },
-    className: "wescale-gradient inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black text-white shadow-[0_8px_20px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5"
+    className: "inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black transition-all hover:-translate-y-0.5",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "log-in",
     className: "h-4 w-4"
   }), "Entrar"))), search.trim() ? React.createElement("div", {
     className: "mx-auto max-w-[1240px] px-4 pb-3 md:px-6"
   }, React.createElement("div", {
-    className: "overflow-hidden rounded-lg border border-stone-900/10 bg-white shadow-[0_18px_42px_rgba(28,25,23,0.10)]"
+    className: "overflow-hidden rounded-lg",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)',
+      boxShadow: '0 18px 42px rgba(0,0,0,0.6)'
+    }
   }, searchResults.length ? searchResults.map(function (item) {
     return React.createElement(ResultRow, {
       key: item.type + "-" + item.id,
@@ -2426,24 +2826,48 @@ function App() {
       onOpen: handleOpenItem
     });
   }) : React.createElement("div", {
-    className: "px-4 py-4 text-sm font-medium text-stone-500"
+    className: "px-4 py-4 text-sm font-medium",
+    style: {
+      color: '#888'
+    }
   }, "Nenhum resultado encontrado."))) : null), React.createElement("main", {
     className: "relative mx-auto min-h-screen max-w-[1240px] px-4 py-6 md:px-6 md:py-8"
   }, React.createElement("section", {
     className: "grid gap-4 md:grid-cols-[1fr_auto] md:items-end"
   }, React.createElement("div", null, React.createElement("div", {
-    className: "inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-stone-600"
+    className: "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]",
+    style: {
+      background: 'rgba(255,255,255,0.06)',
+      border: '1px solid rgba(255,255,255,0.08)',
+      color: '#888'
+    }
   }, React.createElement("i", {
     "data-lucide": "trophy",
-    className: "h-4 w-4 text-lime-600"
+    className: "h-4 w-4",
+    style: {
+      color: '#62FFB3'
+    }
   }), "Top criador da semana"), React.createElement("h1", {
-    className: "mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal text-stone-950 sm:max-w-none md:text-5xl"
+    className: "mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl",
+    style: {
+      color: '#fff'
+    }
   }, "O que voc\xEA quer criar hoje?")), React.createElement("div", {
-    className: "rounded-lg border border-stone-900/10 bg-white/82 px-4 py-3"
+    className: "rounded-lg px-4 py-3",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("p", {
-    className: "text-sm font-bold text-stone-950"
-  }, "Voc\xEA j\xE1 salvou ", favoriteIds.length, " ideias"), React.createElement("p", {
-    className: "mt-1 text-xs font-medium uppercase tracking-[0.12em] text-stone-500"
+    className: "text-sm font-bold",
+    style: {
+      color: '#fff'
+    }
+  }, "Voc\xEA j\xE1 salvou ", favoriteIds.length + promptFavoriteIds.length, " ideias"), React.createElement("p", {
+    className: "mt-1 text-xs font-medium uppercase tracking-[0.12em]",
+    style: {
+      color: '#888'
+    }
   }, activeItems.length, " resultados prontos"))), React.createElement("section", {
     className: "mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-5"
   }, CONTENT_FORMATS.map(function (format) {
@@ -2457,7 +2881,11 @@ function App() {
       }
     });
   })), React.createElement("section", {
-    className: "mt-6 rounded-lg border border-stone-900/10 bg-white/70 p-4"
+    className: "mt-6 rounded-lg p-4",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("div", {
     className: "flex flex-wrap items-center justify-between gap-3"
   }, React.createElement(ContentTypeToggle, {
@@ -2466,7 +2894,7 @@ function App() {
       setContentType(nextType);
       if (nextType === "prompts") setViewMode("all");
     }
-  }), contentType === "hooks" ? React.createElement("div", {
+  }), React.createElement("div", {
     className: "flex gap-2 overflow-x-auto pb-1"
   }, React.createElement(ViewModeButton, {
     active: viewMode === "all",
@@ -2479,21 +2907,24 @@ function App() {
     active: viewMode === "favorites",
     label: "Favoritos",
     icon: "bookmark",
-    count: favoriteIds.length,
+    count: contentType === "hooks" ? favoriteIds.length : promptFavoriteIds.length,
     onClick: function () {
       setViewMode("favorites");
     }
-  }), React.createElement(ViewModeButton, {
+  }), contentType === "hooks" ? React.createElement(ViewModeButton, {
     active: viewMode === "recent",
     label: "Usados recentemente",
     icon: "history",
     onClick: function () {
       setViewMode("recent");
     }
-  })) : null), React.createElement("div", {
+  }) : null)), React.createElement("div", {
     className: "mt-5 space-y-4"
   }, React.createElement("div", null, React.createElement("p", {
-    className: "mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500"
+    className: "mb-2 text-xs font-black uppercase tracking-[0.16em]",
+    style: {
+      color: '#888'
+    }
   }, "Objetivo do conte\xFAdo"), React.createElement("div", {
     className: "-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
   }, OBJECTIVE_FILTERS.map(function (filter) {
@@ -2507,7 +2938,10 @@ function App() {
       }
     });
   }))), React.createElement("div", null, React.createElement("p", {
-    className: "mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500"
+    className: "mb-2 text-xs font-black uppercase tracking-[0.16em]",
+    style: {
+      color: '#888'
+    }
   }, "Estilo ", contentType === "prompts" ? "do prompt" : "do hook"), React.createElement("div", {
     className: "-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
   }, React.createElement(FilterChip, {
@@ -2527,7 +2961,10 @@ function App() {
       }
     });
   }))), React.createElement("div", null, React.createElement("p", {
-    className: "mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500"
+    className: "mb-2 text-xs font-black uppercase tracking-[0.16em]",
+    style: {
+      color: '#888'
+    }
   }, "N\xEDvel de agressividade"), React.createElement("div", {
     className: "-mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
   }, React.createElement(FilterChip, {
@@ -2558,29 +2995,59 @@ function App() {
       onClick: function () {
         handleCategorySelect(category.id);
       },
-      className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all active:scale-[0.97] " + (selectedCategory ? "wescale-gradient border-[#23e893]/40 text-white" : "border-stone-900/10 bg-white/78 text-stone-700 hover:bg-white hover:text-stone-950")
+      className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
+      style: selectedCategory ? {
+        background: '#62FFB3',
+        color: '#000',
+        border: '1px solid #62FFB3'
+      } : {
+        background: '#161616',
+        color: '#888',
+        border: '1px solid rgba(255,255,255,0.08)'
+      }
     }, category.icon ? React.createElement("span", null, category.icon) : null, category.label, React.createElement("span", {
-      className: "rounded-full bg-black/10 px-2 py-0.5 text-[11px]"
+      className: "rounded-full px-2 py-0.5 text-[11px]",
+      style: {
+        background: 'rgba(255,255,255,0.10)'
+      }
     }, category.count));
   }))), React.createElement("section", {
     className: "mt-6 pb-12"
   }, !sessionUser ? React.createElement("div", {
-    className: "flex flex-col items-center justify-center rounded-2xl border border-stone-900/10 bg-white/80 px-6 py-16 text-center shadow-[0_1px_0_rgba(28,25,23,0.06)]"
+    className: "flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("span", {
-    className: "wescale-gradient mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-[0_12px_28px_rgba(0,118,223,0.28)]"
+    className: "mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "lock",
     className: "h-6 w-6"
   })), React.createElement("h2", {
-    className: "text-xl font-black text-stone-950"
+    className: "text-xl font-black",
+    style: {
+      color: '#fff'
+    }
   }, "Acesso exclusivo para membros"), React.createElement("p", {
-    className: "mt-2 max-w-sm text-sm leading-relaxed text-stone-500"
+    className: "mt-2 max-w-sm text-sm leading-relaxed",
+    style: {
+      color: '#888'
+    }
   }, "Fa\xE7a login para acessar a biblioteca completa de ", allHooks.length, " hooks e ", allPromptItems.length, " prompts."), React.createElement("button", {
     type: "button",
     onClick: function () {
       setLoginModalOpen(true);
     },
-    className: "wescale-gradient mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5"
+    className: "mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5",
+    style: {
+      background: '#62FFB3',
+      color: '#000'
+    }
   }, React.createElement("i", {
     "data-lucide": "log-in",
     className: "h-4 w-4"
@@ -2591,6 +3058,10 @@ function App() {
       return React.createElement(PromptCard, {
         key: "prompt-" + item.id,
         item: item,
+        saved: promptFavoriteIds.indexOf(item.id) !== -1,
+        onToggleSave: function () {
+          togglePromptFavorite(item);
+        },
         onOpen: function () {
           handleOpenItem(Object.assign({
             type: "prompt"
@@ -2617,11 +3088,21 @@ function App() {
       }
     });
   })) : React.createElement("div", {
-    className: "rounded-lg border border-stone-900/10 bg-white/75 px-5 py-10 text-center"
+    className: "rounded-lg px-5 py-10 text-center",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
   }, React.createElement("p", {
-    className: "text-lg font-bold text-stone-950"
+    className: "text-lg font-bold",
+    style: {
+      color: '#fff'
+    }
   }, "Nenhum item encontrado."), React.createElement("p", {
-    className: "mt-2 text-sm text-stone-500"
+    className: "mt-2 text-sm",
+    style: {
+      color: '#888'
+    }
   }, "Ajuste a busca ou remova um filtro para ampliar os resultados.")), activeItems.length > visibleItems.length ? React.createElement("div", {
     className: "mt-8 flex justify-center"
   }, React.createElement("button", {
@@ -2629,7 +3110,12 @@ function App() {
     onClick: function () {
       setVisibleCount(visibleCount + 36);
     },
-    className: "rounded-md border border-stone-900/10 bg-white px-6 py-3 text-sm font-bold text-stone-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(28,25,23,0.10)]"
+    className: "rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5",
+    style: {
+      background: '#0f0f0f',
+      border: '1px solid rgba(255,255,255,0.10)',
+      color: '#fff'
+    }
   }, "Mostrar mais")) : null)), React.createElement(Footer, null), React.createElement(DetailModal, {
     item: selected,
     onClose: function () {

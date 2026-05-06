@@ -17,6 +17,7 @@ var Background                    = window.Background;
 var Footer                        = window.Footer;
 
 var FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-hooks";
+var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 
 var CONTENT_FORMATS = [
@@ -95,28 +96,32 @@ function UserAccountMenu(props) {
       <button
         type="button"
         onClick={onToggle}
-        className="wescale-glass inline-flex min-h-10 max-w-[220px] items-center gap-2 rounded-full border border-stone-900/10 px-2.5 text-left text-sm font-bold text-stone-900 transition-all hover:border-[#23e893]/40"
+        className="inline-flex min-h-10 max-w-[220px] items-center gap-2 rounded-full px-2.5 text-left text-sm font-bold transition-all"
+        style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: '#fff' }}
         title={email || displayName}>
-        <span className="wescale-gradient flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black text-white">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black" style={{ background: '#62FFB3', color: '#000' }}>
           {getUserInitials(user)}
         </span>
         <span className="hidden min-w-0 md:block">
-          <span className="block truncate">{displayName}</span>
-          {email ? <span className="block truncate text-[11px] font-semibold uppercase tracking-[0.08em] text-stone-500">{email}</span> : null}
+          <span className="block truncate" style={{ color: '#fff' }}>{displayName}</span>
+          {email ? <span className="block truncate text-[11px] font-semibold uppercase tracking-[0.08em]" style={{ color: '#888' }}>{email}</span> : null}
         </span>
-        <i data-lucide="chevron-down" className={"h-4 w-4 shrink-0 text-stone-500 transition-transform " + (open ? "rotate-180" : "")} />
+        <i data-lucide="chevron-down" className={"h-4 w-4 shrink-0 transition-transform " + (open ? "rotate-180" : "")} style={{ color: '#888' }} />
       </button>
 
       {open ? (
-        <div className="absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_22px_50px_rgba(0,118,223,0.18)]">
-          <div className="border-b border-stone-900/10 px-4 py-3">
-            <p className="truncate text-sm font-black text-stone-950">{displayName}</p>
-            {email ? <p className="mt-1 truncate text-xs font-medium text-stone-500">{email}</p> : <p className="mt-1 text-xs font-medium text-stone-500">Sessão não encontrada</p>}
+        <div className="absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 22px 50px rgba(0,0,0,0.6)' }}>
+          <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+            <p className="truncate text-sm font-black" style={{ color: '#fff' }}>{displayName}</p>
+            {email ? <p className="mt-1 truncate text-xs font-medium" style={{ color: '#888' }}>{email}</p> : <p className="mt-1 text-xs font-medium" style={{ color: '#888' }}>Sessão não encontrada</p>}
           </div>
           <button
             type="button"
             onClick={onSignOut}
-            className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold text-stone-800 transition-colors hover:bg-stone-100">
+            className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors"
+            style={{ color: '#888' }}
+            onMouseEnter={function(e) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={function(e) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#888'; }}>
             <i data-lucide="log-out" className="h-4 w-4" />
             Sair da plataforma
           </button>
@@ -134,15 +139,17 @@ function AuthInput(props) {
       onChange={props.onChange}
       placeholder={props.placeholder}
       required={props.required}
-      style={{ color: "#0c0a09" }}
-      className="w-full rounded-lg border border-stone-900/15 bg-stone-50 px-3 py-2.5 text-sm font-medium placeholder:text-stone-400 focus:border-[#0076df] focus:outline-none focus:ring-2 focus:ring-[#0076df]/20" />
+      className="w-full rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none"
+      style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.10)', color: '#ffffff', caretColor: '#62FFB3' }}
+      onFocus={function(e) { e.target.style.borderColor = '#62FFB3'; e.target.style.boxShadow = '0 0 0 3px rgba(98,255,179,0.15)'; }}
+      onBlur={function(e) { e.target.style.borderColor = 'rgba(255,255,255,0.10)'; e.target.style.boxShadow = 'none'; }} />
   );
 }
 
 function AuthError(props) {
   if (!props.msg) return null;
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700">
+    <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium" style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.20)', color: '#ff6b6b' }}>
       <i data-lucide="alert-circle" className="h-4 w-4 shrink-0" />
       {props.msg}
     </div>
@@ -152,7 +159,7 @@ function AuthError(props) {
 function AuthSuccess(props) {
   if (!props.msg) return null;
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-700">
+    <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium" style={{ background: 'rgba(98,255,179,0.10)', border: '1px solid rgba(98,255,179,0.20)', color: '#62FFB3' }}>
       <i data-lucide="check-circle" className="h-4 w-4 shrink-0" />
       {props.msg}
     </div>
@@ -210,23 +217,23 @@ function LoginModal(props) {
   var switchView = function(next) { setView(next); resetState(); };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md" onClick={onClose}>
-      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_30px_90px_rgba(0,118,223,0.22)]" onClick={function(e) { e.stopPropagation(); }}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.80)' }} onClick={onClose}>
+      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }} onClick={function(e) { e.stopPropagation(); }}>
 
         <div className="px-6 pt-6 pb-4">
           <div className="flex items-start justify-between">
             <div>
-              <span className="wescale-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-white mb-3">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: '#62FFB3', color: '#000' }}>
                 <i data-lucide={view === "login" ? "zap" : "key-round"} className="h-5 w-5" />
               </span>
-              <h2 className="text-xl font-black text-stone-950">
+              <h2 className="text-xl font-black" style={{ color: '#fff' }}>
                 {view === "login" ? "Entrar na plataforma" : "Recuperar senha"}
               </h2>
-              <p className="mt-1 text-sm text-stone-500">
+              <p className="mt-1 text-sm" style={{ color: '#888' }}>
                 {view === "login" ? "Acesse sua biblioteca de hooks e prompts." : "Enviaremos um link de redefinição para seu email."}
               </p>
             </div>
-            <button type="button" onClick={onClose} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-stone-900/10 text-stone-500 hover:text-stone-900">
+            <button type="button" onClick={onClose} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ border: '1px solid rgba(255,255,255,0.10)', color: '#888', background: 'transparent' }}>
               <i data-lucide="x" className="h-4 w-4" />
             </button>
           </div>
@@ -235,37 +242,37 @@ function LoginModal(props) {
         {view === "login" ? (
           <form onSubmit={handleLogin} className="px-6 pb-6 space-y-3">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5">Email</label>
+              <label className="block text-xs font-bold uppercase tracking-[0.12em] mb-1.5" style={{ color: '#888' }}>Email</label>
               <AuthInput type="email" value={email} onChange={function(e) { setEmail(e.target.value); resetState(); }} placeholder="seu@email.com" required={true} />
             </div>
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold uppercase tracking-[0.12em] text-stone-600">Senha</label>
-                <button type="button" onClick={function() { switchView("forgot"); }} className="text-xs font-semibold text-[#0076df] hover:underline">
+                <label className="block text-xs font-bold uppercase tracking-[0.12em]" style={{ color: '#888' }}>Senha</label>
+                <button type="button" onClick={function() { switchView("forgot"); }} className="text-xs font-semibold hover:underline" style={{ color: '#62FFB3' }}>
                   Esqueci minha senha
                 </button>
               </div>
               <AuthInput type="password" value={password} onChange={function(e) { setPassword(e.target.value); resetState(); }} placeholder="••••••••" required={true} />
             </div>
             <AuthError msg={errorMsg} />
-            <button type="submit" disabled={loading} className="wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0">
+            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
               {loading ? "Entrando…" : "Entrar"}
             </button>
           </form>
         ) : (
           <form onSubmit={handleForgot} className="px-6 pb-6 space-y-3">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5">Email</label>
+              <label className="block text-xs font-bold uppercase tracking-[0.12em] mb-1.5" style={{ color: '#888' }}>Email</label>
               <AuthInput type="email" value={email} onChange={function(e) { setEmail(e.target.value); resetState(); }} placeholder="seu@email.com" required={true} />
             </div>
             <AuthError msg={errorMsg} />
             <AuthSuccess msg={successMsg} />
             {!successMsg ? (
-              <button type="submit" disabled={loading} className="wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0">
+              <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
                 {loading ? "Enviando…" : "Enviar link de recuperação"}
               </button>
             ) : null}
-            <button type="button" onClick={function() { switchView("login"); }} className="w-full rounded-lg border border-stone-900/10 px-4 py-2.5 text-sm font-bold text-stone-700 transition-colors hover:bg-stone-50">
+            <button type="button" onClick={function() { switchView("login"); }} className="w-full rounded-lg px-4 py-2.5 text-sm font-bold transition-colors" style={{ border: '1px solid rgba(255,255,255,0.10)', color: '#888', background: 'transparent' }}>
               Voltar para o login
             </button>
           </form>
@@ -302,29 +309,29 @@ function ResetPasswordModal(props) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md">
-      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_30px_90px_rgba(0,118,223,0.22)]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.80)' }}>
+      <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }}>
         <div className="px-6 pt-6 pb-4">
-          <span className="wescale-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-white mb-3">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: '#62FFB3', color: '#000' }}>
             <i data-lucide="lock-keyhole" className="h-5 w-5" />
           </span>
-          <h2 className="text-xl font-black text-stone-950">Definir nova senha</h2>
-          <p className="mt-1 text-sm text-stone-500">Escolha uma senha segura para sua conta.</p>
+          <h2 className="text-xl font-black" style={{ color: '#fff' }}>Definir nova senha</h2>
+          <p className="mt-1 text-sm" style={{ color: '#888' }}>Escolha uma senha segura para sua conta.</p>
         </div>
         <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-3">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5">Nova senha</label>
+            <label className="block text-xs font-bold uppercase tracking-[0.12em] mb-1.5" style={{ color: '#888' }}>Nova senha</label>
             <AuthInput type="password" value={password} onChange={function(e) { setPassword(e.target.value); setError(""); }} placeholder="••••••••" required={true} />
           </div>
           <div>
-            <label className="block text-xs font-bold uppercase tracking-[0.12em] text-stone-600 mb-1.5">Confirmar senha</label>
+            <label className="block text-xs font-bold uppercase tracking-[0.12em] mb-1.5" style={{ color: '#888' }}>Confirmar senha</label>
             <AuthInput type="password" value={confirm} onChange={function(e) { setConfirm(e.target.value); setError(""); }} placeholder="••••••••" required={true} />
           </div>
           <AuthError msg={errorMsg} />
           {success ? (
             <AuthSuccess msg="Senha redefinida com sucesso! Redirecionando…" />
           ) : (
-            <button type="submit" disabled={loading} className="wescale-gradient mt-1 w-full rounded-lg px-4 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0">
+            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
               {loading ? "Salvando…" : "Salvar nova senha"}
             </button>
           )}
@@ -469,7 +476,10 @@ function SimpleCopyButton(props) {
     <button
       type="button"
       onClick={handleCopy}
-      className={"inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition-all active:scale-[0.98] " + (copied ? "scale-[1.03] border-lime-300 bg-lime-300 text-stone-950 shadow-[0_10px_24px_rgba(132,204,22,0.24)]" : "border-stone-900/10 bg-white text-stone-900 hover:-translate-y-0.5 hover:bg-stone-950 hover:text-white")}
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
+      style={copied
+        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        : { background: '#161616', color: '#fff', border: '1px solid rgba(255,255,255,0.10)' }}
       title={copied ? "Copiado" : label}>
       <i data-lucide={copied ? "check" : "copy"} className="h-4 w-4" />
       <span>{copied ? "Copiado!" : label}</span>
@@ -485,7 +495,10 @@ function SaveButton(props) {
     <button
       type="button"
       onClick={function(event) { event.stopPropagation(); onToggle(); }}
-      className={"inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 text-sm font-semibold transition-all active:scale-[0.98] " + (saved ? "border-stone-950 bg-stone-950 text-white" : "border-stone-900/10 bg-white text-stone-800 hover:-translate-y-0.5 hover:border-stone-300")}
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
+      style={saved
+        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.10)' }}
       title={saved ? "Remover dos favoritos" : "Salvar"}>
       <i data-lucide={saved ? "bookmark-check" : "bookmark"} className="h-4 w-4" />
       <span>{saved ? "Salvo" : "Salvar"}</span>
@@ -498,18 +511,20 @@ function ResultRow(props) {
   var onOpen = props.onOpen;
   var isHook = item.type === "hook";
   var label = isHook ? item.categoryLabel : getPromptLabel(item.subcategory);
-  var text = isHook ? item.text : getPromptText(item);
 
   return (
     <button
       type="button"
       onClick={function() { onOpen(item); }}
-      className="group grid w-full grid-cols-[1fr_auto] gap-3 border-b border-stone-900/10 px-4 py-3 text-left transition-colors hover:bg-white/80">
+      className="group grid w-full grid-cols-[1fr_auto] gap-3 px-4 py-3 text-left transition-colors"
+      style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+      onMouseEnter={function(e) { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.background = 'transparent'; }}>
       <span>
-        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">{isHook ? "Hook" : "Prompt"} · {label}</span>
-        <span className="mt-1 line-clamp-2 block text-sm leading-relaxed text-stone-900">{isHook ? item.text : item.name}</span>
+        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>{isHook ? "Hook" : "Prompt"} · {label}</span>
+        <span className="mt-1 line-clamp-2 block text-sm leading-relaxed" style={{ color: '#fff' }}>{isHook ? item.text : item.name}</span>
       </span>
-      <i data-lucide="arrow-up-right" className="mt-2 h-4 w-4 text-stone-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <i data-lucide="arrow-up-right" className="mt-2 h-4 w-4" style={{ color: '#888' }} />
     </button>
   );
 }
@@ -524,7 +539,10 @@ function FilterChip(props) {
     <button
       type="button"
       onClick={onClick}
-      className={"inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all active:scale-[0.97] " + (active ? "border-stone-950 bg-stone-950 text-white shadow-[0_12px_28px_rgba(28,25,23,0.16)]" : "border-stone-900/10 bg-white/82 text-stone-700 hover:-translate-y-0.5 hover:border-stone-300 hover:text-stone-950")}>
+      className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
+      style={active
+        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
       {icon ? <i data-lucide={icon} className="h-4 w-4" /> : null}
       {label}
     </button>
@@ -540,7 +558,7 @@ function ContentTypeToggle(props) {
   ];
 
   return (
-    <div className="grid w-full grid-cols-2 gap-2 rounded-2xl border border-stone-900/10 bg-black/18 p-1.5 sm:w-auto">
+    <div className="grid w-full grid-cols-2 gap-2 rounded-2xl p-1.5 sm:w-auto" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
       {options.map(function(option) {
         var active = contentType === option.id;
         return (
@@ -548,13 +566,16 @@ function ContentTypeToggle(props) {
             key={option.id}
             type="button"
             onClick={function() { onChange(option.id); }}
-            className={"group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98] " + (active ? "wescale-gradient text-white shadow-[0_16px_34px_rgba(0,118,223,0.22)]" : "text-stone-700 hover:bg-white/80 hover:text-stone-950")}>
-            <span className={"inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-all " + (active ? "border-white/24 bg-white/14" : "border-stone-900/10 bg-stone-100 group-hover:border-[#23e893]/30")}>
+            className="group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]"
+            style={active ? { background: '#62FFB3', color: '#000' } : { color: '#888' }}>
+            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all" style={active
+              ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
+              : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
               <i data-lucide={option.icon} className="h-4.5 w-4.5" />
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-black leading-tight">{option.label}</span>
-              <span className={"mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em] " + (active ? "text-white/72" : "text-stone-500")}>{option.hint}</span>
+              <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em]" style={active ? { color: 'rgba(0,0,0,0.6)' } : { color: '#666' }}>{option.hint}</span>
             </span>
           </button>
         );
@@ -574,12 +595,17 @@ function ViewModeButton(props) {
     <button
       type="button"
       onClick={onClick}
-      className={"group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full border px-3 pr-4 text-sm font-black transition-all active:scale-[0.97] " + (active ? "wescale-gradient border-[#23e893]/40 text-white shadow-[0_16px_34px_rgba(0,118,223,0.20)]" : "border-stone-900/10 bg-white/78 text-stone-700 hover:-translate-y-0.5 hover:bg-white hover:text-stone-950")}>
-      <span className={"inline-flex h-8 w-8 items-center justify-center rounded-full border " + (active ? "border-white/24 bg-white/14" : "border-stone-900/10 bg-stone-100 group-hover:border-[#23e893]/30")}>
+      className="group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]"
+      style={active
+        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full" style={active
+        ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
+        : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <i data-lucide={icon} className="h-4 w-4" />
       </span>
       <span>{label}</span>
-      {typeof count === "number" ? <span className="rounded-full bg-black/10 px-2 py-0.5 text-xs">{count}</span> : null}
+      {typeof count === "number" ? <span className="rounded-full px-2 py-0.5 text-xs" style={{ background: 'rgba(0,0,0,0.15)' }}>{count}</span> : null}
     </button>
   );
 }
@@ -593,12 +619,17 @@ function ContentFormatCard(props) {
     <button
       type="button"
       onClick={onClick}
-      className={"group min-h-[132px] min-w-0 rounded-lg border p-4 text-left transition-all active:scale-[0.98] " + (active ? "border-stone-950 bg-stone-950 text-white shadow-[0_22px_50px_rgba(28,25,23,0.22)]" : "border-stone-900/10 bg-white/78 text-stone-900 hover:-translate-y-1 hover:bg-white hover:shadow-[0_18px_38px_rgba(28,25,23,0.10)]")}>
-      <span className={"inline-flex h-10 w-10 items-center justify-center rounded-md border " + (active ? "border-white/20 bg-white/12" : "border-stone-900/10 bg-stone-100")}>
+      className="group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1"
+      style={active
+        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        : { background: '#0f0f0f', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <span className="inline-flex h-10 w-10 items-center justify-center rounded-md" style={active
+        ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
+        : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <i data-lucide={format.icon} className="h-5 w-5" />
       </span>
       <span className="mt-4 block break-words text-xl font-bold leading-tight">{format.label}</span>
-      <span className={"mt-1 block text-sm " + (active ? "text-white/70" : "text-stone-500")}>{format.hint}</span>
+      <span className="mt-1 block text-sm" style={active ? { color: 'rgba(0,0,0,0.6)' } : { color: '#888' }}>{format.hint}</span>
     </button>
   );
 }
@@ -614,7 +645,10 @@ function HookCard(props) {
 
   return (
     <article
-      className="group relative min-h-[236px] overflow-hidden rounded-lg border border-stone-900/10 bg-white p-5 shadow-[0_1px_0_rgba(28,25,23,0.06)] transition-all hover:-translate-y-1 hover:border-stone-900/18 hover:shadow-[0_24px_50px_rgba(28,25,23,0.13)]">
+      className="group relative min-h-[236px] overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
+      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
+      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>
       <div className={"absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass} />
       <button type="button" onClick={onOpen} className="block w-full text-left">
         <div className="flex items-start justify-between gap-3">
@@ -622,18 +656,15 @@ function HookCard(props) {
             <span className={"h-2 w-2 rounded-full " + styleMeta.dotClass} />
             {styleMeta.label}
           </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">{item.categoryLabel}</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>{item.categoryLabel}</span>
         </div>
-
-        <h3 className="mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal text-stone-950 md:text-[21px]">{item.text}</h3>
-
+        <h3 className="mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal md:text-[21px]" style={{ color: '#fff' }}>{item.text}</h3>
         <div className="mt-4 flex flex-wrap gap-2">
           {badges.map(function(badge) {
-            return <span key={badge} className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-700">{badge}</span>;
+            return <span key={badge} className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.08)', color: '#888' }}>{badge}</span>;
           })}
         </div>
       </button>
-
       <div className="mt-5 grid grid-cols-2 gap-2">
         <SimpleCopyButton text={item.text} label="Copiar" onCopied={onCopy} />
         <SaveButton saved={saved} onToggle={onToggleSave} />
@@ -645,17 +676,24 @@ function HookCard(props) {
 function PromptCard(props) {
   var item = props.item;
   var onOpen = props.onOpen;
+  var saved = props.saved;
+  var onToggleSave = props.onToggleSave;
   var text = getPromptText(item);
 
   return (
-    <article className="rounded-lg border border-stone-900/10 bg-white p-5 transition-all hover:-translate-y-1 hover:shadow-[0_20px_42px_rgba(28,25,23,0.10)]">
+    <article
+      className="rounded-lg p-5 transition-all hover:-translate-y-1"
+      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
+      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>
       <button type="button" onClick={onOpen} className="block w-full text-left">
-        <span className="rounded-full border border-stone-900/10 bg-stone-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-stone-600">{getPromptLabel(item.subcategory)}</span>
-        <h3 className="mt-4 line-clamp-3 text-lg font-bold leading-snug text-stone-950">{item.name}</h3>
-        {item.description ? <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-stone-600">{item.description}</p> : null}
+        <span className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(255,255,255,0.06)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>{getPromptLabel(item.subcategory)}</span>
+        <h3 className="mt-4 line-clamp-3 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
+        {item.description ? <p className="mt-2 line-clamp-2 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
       </button>
-      <div className="mt-5">
+      <div className="mt-5 grid grid-cols-2 gap-2">
         <SimpleCopyButton text={text} label="Copiar prompt" />
+        <SaveButton saved={saved} onToggle={onToggleSave} />
       </div>
     </article>
   );
@@ -681,20 +719,20 @@ function DetailModal(props) {
   var body = isHook ? item.text : getPromptText(item);
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/82 p-4 backdrop-blur-md" onClick={onClose}>
-      <div className="modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl border border-stone-900/10 bg-white p-5 shadow-[0_30px_90px_rgba(0,118,223,0.22)]" onClick={function(event) { event.stopPropagation(); }}>
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.82)' }} onClick={onClose}>
+      <div className="modal-in max-h-[88vh] w-full max-w-2xl overflow-auto rounded-2xl p-5" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }} onClick={function(event) { event.stopPropagation(); }}>
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
-            <span className="rounded-full border border-stone-900/10 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-stone-600">{label}</span>
-            <h2 className="mt-3 text-2xl font-bold text-stone-950">{title}</h2>
-            {!isHook && item.description ? <p className="mt-2 text-sm leading-relaxed text-stone-600">{item.description}</p> : null}
+            <span className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#888' }}>{label}</span>
+            <h2 className="mt-3 text-2xl font-bold" style={{ color: '#fff' }}>{title}</h2>
+            {!isHook && item.description ? <p className="mt-2 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
           </div>
-          <button type="button" onClick={onClose} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-900/10 bg-white/80 text-stone-600 hover:text-stone-900" title="Fechar">
+          <button type="button" onClick={onClose} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ border: '1px solid rgba(255,255,255,0.10)', color: '#888', background: 'transparent' }} title="Fechar">
             <i data-lucide="x" className="h-4 w-4" />
           </button>
         </div>
-        <div className="rounded-lg border border-stone-900/10 bg-white/88 p-4">
-          <pre className="max-h-[52vh] whitespace-pre-wrap text-base leading-relaxed text-stone-900">{body}</pre>
+        <div className="rounded-lg p-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <pre className="max-h-[52vh] whitespace-pre-wrap text-base leading-relaxed" style={{ color: '#fff' }}>{body}</pre>
           <div className="mt-4 flex justify-end">
             <SimpleCopyButton text={body} label="Copiar" />
           </div>
@@ -729,6 +767,8 @@ function App() {
   var viewMode = stateViewMode[0], setViewMode = stateViewMode[1];
   var stateFavorites = React.useState(function() { return readStoredList(FAVORITES_STORAGE_KEY); });
   var favoriteIds = stateFavorites[0], setFavoriteIds = stateFavorites[1];
+  var statePromptFavorites = React.useState(function() { return readStoredList(PROMPT_FAVORITES_STORAGE_KEY); });
+  var promptFavoriteIds = statePromptFavorites[0], setPromptFavoriteIds = statePromptFavorites[1];
   var stateRecents = React.useState(function() { return readStoredList(RECENTS_STORAGE_KEY); });
   var recentIds = stateRecents[0], setRecentIds = stateRecents[1];
   var stateSessionUser = React.useState(null);
@@ -789,6 +829,7 @@ function App() {
         activeSubcategory: activePromptCategory,
       })
         .filter(function(item) {
+          if (viewMode === "favorites" && promptFavoriteIds.indexOf(item.id) === -1) return false;
           if (!matchesPromptRule(item, activeFormatRule)) return false;
           if (!matchesPromptRule(item, activeObjectiveRule)) return false;
           if (!matchesPromptRule(item, activeStyleRule)) return false;
@@ -824,7 +865,7 @@ function App() {
         var scoreB = getHookRuleScore(b, activeFormatRule) + getHookRuleScore(b, activeObjectiveRule) + getHookRuleScore(b, activeStyleRule) + getHookRuleScore(b, activeAggressionRule);
         return scoreB - scoreA;
       });
-  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, recentIds]);
+  }, [contentType, allPromptItems, hookGroups, activePromptCategory, activeHookCategory, search, activeFormat, activeObjective, activeStyle, activeAggression, viewMode, favoriteIds, promptFavoriteIds, recentIds]);
 
   var searchResults = React.useMemo(function() {
     if (!search.trim()) return [];
@@ -851,6 +892,10 @@ function App() {
   React.useEffect(function() {
     writeStoredList(FAVORITES_STORAGE_KEY, favoriteIds);
   }, [favoriteIds]);
+
+  React.useEffect(function() {
+    writeStoredList(PROMPT_FAVORITES_STORAGE_KEY, promptFavoriteIds);
+  }, [promptFavoriteIds]);
 
   React.useEffect(function() {
     writeStoredList(RECENTS_STORAGE_KEY, recentIds);
@@ -917,6 +962,10 @@ function App() {
     setFavoriteIds(function(current) { return toggleListItem(current, item.id); });
   };
 
+  var togglePromptFavorite = function(item) {
+    setPromptFavoriteIds(function(current) { return toggleListItem(current, item.id); });
+  };
+
   var handleSignOut = async function() {
     setUserMenuOpen(false);
     setSessionUser(null);
@@ -931,41 +980,44 @@ function App() {
 
   return (
     <LangContext.Provider value={{ lang: lang, setLang: function() {}, tr: tr }}>
-      <div className="turbo-dark relative min-h-screen overflow-x-hidden text-[var(--text)]">
+      <div className="relative min-h-screen overflow-x-hidden" style={{ color: '#fff' }}>
         <Background />
 
-        <header className="sticky top-0 z-50 border-b border-[var(--border-strong)] bg-black/82 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 backdrop-blur-xl" style={{ background: 'rgba(0,0,0,0.90)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
           <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:px-6">
             <div className="flex w-full items-center justify-between gap-3 md:w-auto">
               <button type="button" onClick={function() { setViewMode("all"); setContentType("hooks"); }} className="flex min-w-0 items-center gap-3 text-left">
-                <span className="wescale-gradient flex h-10 w-10 items-center justify-center rounded-xl text-white">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: '#62FFB3', color: '#000' }}>
                   <i data-lucide="zap" className="h-5 w-5" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-lg font-black tracking-normal text-stone-950">Turbo GPT</span>
-                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">Hooks e prompts</span>
+                  <span className="block text-lg font-black tracking-normal" style={{ color: '#fff' }}>Turbo GPT</span>
+                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>Hooks e prompts</span>
                 </span>
               </button>
 
               {sessionUser ? (
-                <div className="md:hidden">
+                <div className="md:hidden relative">
                   <button
                     type="button"
                     onClick={function() { setUserMenuOpen(!userMenuOpen); }}
-                    className="wescale-glass inline-flex min-h-10 items-center gap-2 rounded-full border border-stone-900/10 px-2.5 text-sm font-bold text-stone-900 transition-all"
+                    className="inline-flex min-h-10 items-center gap-2 rounded-full px-2.5 text-sm font-bold transition-all"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: '#fff' }}
                     title={sessionUser.email}>
-                    <span className="wescale-gradient flex h-8 w-8 items-center justify-center rounded-full text-xs font-black text-white">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-black" style={{ background: '#62FFB3', color: '#000' }}>
                       {getUserInitials(sessionUser)}
                     </span>
-                    <i data-lucide="chevron-down" className={"h-4 w-4 text-stone-500 transition-transform " + (userMenuOpen ? "rotate-180" : "")} />
+                    <i data-lucide="chevron-down" className={"h-4 w-4 transition-transform " + (userMenuOpen ? "rotate-180" : "")} style={{ color: '#888' }} />
                   </button>
                   {userMenuOpen ? (
-                    <div className="absolute right-4 top-[64px] z-[90] w-[260px] overflow-hidden rounded-2xl border border-stone-900/10 bg-white shadow-[0_22px_50px_rgba(0,118,223,0.18)]">
-                      <div className="border-b border-stone-900/10 px-4 py-3">
-                        <p className="truncate text-sm font-black text-stone-950">{getUserDisplayName(sessionUser)}</p>
-                        <p className="mt-1 truncate text-xs font-medium text-stone-500">{sessionUser.email}</p>
+                    <div className="absolute right-0 top-[calc(100%+8px)] z-[90] w-[260px] overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 22px 50px rgba(0,0,0,0.6)' }}>
+                      <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                        <p className="truncate text-sm font-black" style={{ color: '#fff' }}>{getUserDisplayName(sessionUser)}</p>
+                        <p className="mt-1 truncate text-xs font-medium" style={{ color: '#888' }}>{sessionUser.email}</p>
                       </div>
-                      <button type="button" onClick={handleSignOut} className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold text-stone-800 transition-colors hover:bg-stone-100">
+                      <button type="button" onClick={handleSignOut} className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors" style={{ color: '#888' }}
+                        onMouseEnter={function(e) { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#fff'; }}
+                        onMouseLeave={function(e) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#888'; }}>
                         <i data-lucide="log-out" className="h-4 w-4" />
                         Sair da plataforma
                       </button>
@@ -976,23 +1028,24 @@ function App() {
                 <button
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
-                  className="wescale-gradient md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black text-white shadow-[0_8px_20px_rgba(0,118,223,0.28)]">
+                  className="md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black transition-all hover:-translate-y-0.5"
+                  style={{ background: '#62FFB3', color: '#000' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar
                 </button>
               )}
-
             </div>
 
-            <div className="wescale-glass flex w-full min-w-0 flex-1 items-center gap-2 rounded-full border border-stone-900/10 px-4 py-2 md:mx-4">
-              <i data-lucide="search" className="h-5 w-5 shrink-0 text-stone-500" />
+            <div className="flex w-full min-w-0 flex-1 items-center gap-2 rounded-full px-4 py-2 md:mx-4" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <i data-lucide="search" className="h-5 w-5 shrink-0" style={{ color: '#888' }} />
               <input
                 value={search}
                 onChange={function(event) { setSearch(event.target.value); }}
                 placeholder="Buscar por palavra, categoria ou tipo de hook"
-                className="min-h-9 min-w-0 w-full bg-transparent text-base font-medium text-stone-950 placeholder:text-stone-400 focus:outline-none" />
+                className="min-h-9 min-w-0 w-full bg-transparent text-base font-medium focus:outline-none"
+                style={{ color: '#fff' }} />
               {search ? (
-                <button type="button" onClick={function() { setSearch(""); }} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-stone-500 hover:bg-stone-100 hover:text-stone-950" title="Limpar busca">
+                <button type="button" onClick={function() { setSearch(""); }} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md" style={{ color: '#888' }} title="Limpar busca">
                   <i data-lucide="x" className="h-4 w-4" />
                 </button>
               ) : null}
@@ -1002,10 +1055,13 @@ function App() {
               <button
                 type="button"
                 onClick={function() { setViewMode(viewMode === "favorites" ? "all" : "favorites"); setContentType("hooks"); }}
-                className={"inline-flex min-h-10 items-center gap-2 rounded-md border px-3 text-sm font-bold transition-all " + (viewMode === "favorites" ? "border-stone-950 bg-stone-950 text-white" : "border-stone-900/10 bg-white/80 text-stone-800 hover:bg-white")}>
+                className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-bold transition-all"
+                style={viewMode === "favorites"
+                  ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+                  : { background: 'rgba(255,255,255,0.05)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <i data-lucide="bookmark" className="h-4 w-4" />
                 Favoritos
-                <span className="rounded-full bg-black/10 px-2 py-0.5 text-xs">{favoriteIds.length}</span>
+                <span className="rounded-full px-2 py-0.5 text-xs" style={{ background: 'rgba(255,255,255,0.10)' }}>{favoriteIds.length}</span>
               </button>
               {sessionUser ? (
                 <UserAccountMenu
@@ -1017,7 +1073,8 @@ function App() {
                 <button
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
-                  className="wescale-gradient inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black text-white shadow-[0_8px_20px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5">
+                  className="inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black transition-all hover:-translate-y-0.5"
+                  style={{ background: '#62FFB3', color: '#000' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar
                 </button>
@@ -1027,10 +1084,10 @@ function App() {
 
           {search.trim() ? (
             <div className="mx-auto max-w-[1240px] px-4 pb-3 md:px-6">
-              <div className="overflow-hidden rounded-lg border border-stone-900/10 bg-white shadow-[0_18px_42px_rgba(28,25,23,0.10)]">
+              <div className="overflow-hidden rounded-lg" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 18px 42px rgba(0,0,0,0.6)' }}>
                 {searchResults.length ? searchResults.map(function(item) {
                   return <ResultRow key={item.type + "-" + item.id} item={item} onOpen={handleOpenItem} />;
-                }) : <div className="px-4 py-4 text-sm font-medium text-stone-500">Nenhum resultado encontrado.</div>}
+                }) : <div className="px-4 py-4 text-sm font-medium" style={{ color: '#888' }}>Nenhum resultado encontrado.</div>}
               </div>
             </div>
           ) : null}
@@ -1039,15 +1096,15 @@ function App() {
         <main className="relative mx-auto min-h-screen max-w-[1240px] px-4 py-6 md:px-6 md:py-8">
           <section className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-stone-900/10 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-stone-600">
-                <i data-lucide="trophy" className="h-4 w-4 text-lime-600" />
+              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#888' }}>
+                <i data-lucide="trophy" className="h-4 w-4" style={{ color: '#62FFB3' }} />
                 Top criador da semana
               </div>
-              <h1 className="mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal text-stone-950 sm:max-w-none md:text-5xl">O que você quer criar hoje?</h1>
+              <h1 className="mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl" style={{ color: '#fff' }}>O que você quer criar hoje?</h1>
             </div>
-            <div className="rounded-lg border border-stone-900/10 bg-white/82 px-4 py-3">
-              <p className="text-sm font-bold text-stone-950">Você já salvou {favoriteIds.length} ideias</p>
-              <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em] text-stone-500">{activeItems.length} resultados prontos</p>
+            <div className="rounded-lg px-4 py-3" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <p className="text-sm font-bold" style={{ color: '#fff' }}>Você já salvou {favoriteIds.length + promptFavoriteIds.length} ideias</p>
+              <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em]" style={{ color: '#888' }}>{activeItems.length} resultados prontos</p>
             </div>
           </section>
 
@@ -1063,7 +1120,7 @@ function App() {
             })}
           </section>
 
-          <section className="mt-6 rounded-lg border border-stone-900/10 bg-white/70 p-4">
+          <section className="mt-6 rounded-lg p-4" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <ContentTypeToggle
                 contentType={contentType}
@@ -1072,18 +1129,18 @@ function App() {
                   if (nextType === "prompts") setViewMode("all");
                 }} />
 
-              {contentType === "hooks" ? (
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  <ViewModeButton active={viewMode === "all"} label="Todos" icon="layout-grid" onClick={function() { setViewMode("all"); }} />
-                  <ViewModeButton active={viewMode === "favorites"} label="Favoritos" icon="bookmark" count={favoriteIds.length} onClick={function() { setViewMode("favorites"); }} />
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                <ViewModeButton active={viewMode === "all"} label="Todos" icon="layout-grid" onClick={function() { setViewMode("all"); }} />
+                <ViewModeButton active={viewMode === "favorites"} label="Favoritos" icon="bookmark" count={contentType === "hooks" ? favoriteIds.length : promptFavoriteIds.length} onClick={function() { setViewMode("favorites"); }} />
+                {contentType === "hooks" ? (
                   <ViewModeButton active={viewMode === "recent"} label="Usados recentemente" icon="history" onClick={function() { setViewMode("recent"); }} />
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
 
             <div className="mt-5 space-y-4">
               <div>
-                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500">Objetivo do conteúdo</p>
+                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em]" style={{ color: '#888' }}>Objetivo do conteúdo</p>
                 <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                   {OBJECTIVE_FILTERS.map(function(filter) {
                     return <FilterChip key={filter.id} active={activeObjective === filter.id} label={filter.label} icon={filter.icon} onClick={function() { setActiveObjective(activeObjective === filter.id ? "all" : filter.id); }} />;
@@ -1092,7 +1149,7 @@ function App() {
               </div>
 
               <div>
-                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500">Estilo {contentType === "prompts" ? "do prompt" : "do hook"}</p>
+                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em]" style={{ color: '#888' }}>Estilo {contentType === "prompts" ? "do prompt" : "do hook"}</p>
                 <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                   <FilterChip active={activeStyle === "all"} label="Todos" icon="sparkles" onClick={function() { setActiveStyle("all"); }} />
                   {STYLE_FILTERS.map(function(filter) {
@@ -1102,7 +1159,7 @@ function App() {
               </div>
 
               <div>
-                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em] text-stone-500">Nível de agressividade</p>
+                <p className="mb-2 text-xs font-black uppercase tracking-[0.16em]" style={{ color: '#888' }}>Nível de agressividade</p>
                 <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                   <FilterChip active={activeAggression === "all"} label="Todos" icon="sliders-horizontal" onClick={function() { setActiveAggression("all"); }} />
                   {AGGRESSION_FILTERS.map(function(filter) {
@@ -1122,10 +1179,13 @@ function App() {
                     type="button"
                     key={category.id}
                     onClick={function() { handleCategorySelect(category.id); }}
-                    className={"inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-all active:scale-[0.97] " + (selectedCategory ? "wescale-gradient border-[#23e893]/40 text-white" : "border-stone-900/10 bg-white/78 text-stone-700 hover:bg-white hover:text-stone-950")}>
+                    className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
+                    style={selectedCategory
+                      ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+                      : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
                     {category.icon ? <span>{category.icon}</span> : null}
                     {category.label}
-                    <span className="rounded-full bg-black/10 px-2 py-0.5 text-[11px]">{category.count}</span>
+                    <span className="rounded-full px-2 py-0.5 text-[11px]" style={{ background: 'rgba(255,255,255,0.10)' }}>{category.count}</span>
                   </button>
                 );
               })}
@@ -1134,16 +1194,17 @@ function App() {
 
           <section className="mt-6 pb-12">
             {!sessionUser ? (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-stone-900/10 bg-white/80 px-6 py-16 text-center shadow-[0_1px_0_rgba(28,25,23,0.06)]">
-                <span className="wescale-gradient mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-[0_12px_28px_rgba(0,118,223,0.28)]">
+              <div className="flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <span className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: '#62FFB3', color: '#000' }}>
                   <i data-lucide="lock" className="h-6 w-6" />
                 </span>
-                <h2 className="text-xl font-black text-stone-950">Acesso exclusivo para membros</h2>
-                <p className="mt-2 max-w-sm text-sm leading-relaxed text-stone-500">Faça login para acessar a biblioteca completa de {allHooks.length} hooks e {allPromptItems.length} prompts.</p>
+                <h2 className="text-xl font-black" style={{ color: '#fff' }}>Acesso exclusivo para membros</h2>
+                <p className="mt-2 max-w-sm text-sm leading-relaxed" style={{ color: '#888' }}>Faça login para acessar a biblioteca completa de {allHooks.length} hooks e {allPromptItems.length} prompts.</p>
                 <button
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
-                  className="wescale-gradient mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black text-white shadow-[0_8px_24px_rgba(0,118,223,0.28)] transition-all hover:-translate-y-0.5">
+                  className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5"
+                  style={{ background: '#62FFB3', color: '#000' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar na plataforma
                 </button>
@@ -1152,7 +1213,7 @@ function App() {
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {visibleItems.map(function(item) {
                   if (contentType === "prompts") {
-                    return <PromptCard key={"prompt-" + item.id} item={item} onOpen={function() { handleOpenItem(Object.assign({ type: "prompt" }, item)); }} />;
+                    return <PromptCard key={"prompt-" + item.id} item={item} saved={promptFavoriteIds.indexOf(item.id) !== -1} onToggleSave={function() { togglePromptFavorite(item); }} onOpen={function() { handleOpenItem(Object.assign({ type: "prompt" }, item)); }} />;
                   }
                   return (
                     <HookCard
@@ -1166,9 +1227,9 @@ function App() {
                 })}
               </div>
             ) : (
-              <div className="rounded-lg border border-stone-900/10 bg-white/75 px-5 py-10 text-center">
-                <p className="text-lg font-bold text-stone-950">Nenhum item encontrado.</p>
-                <p className="mt-2 text-sm text-stone-500">Ajuste a busca ou remova um filtro para ampliar os resultados.</p>
+              <div className="rounded-lg px-5 py-10 text-center" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <p className="text-lg font-bold" style={{ color: '#fff' }}>Nenhum item encontrado.</p>
+                <p className="mt-2 text-sm" style={{ color: '#888' }}>Ajuste a busca ou remova um filtro para ampliar os resultados.</p>
               </div>
             )}
 
@@ -1177,7 +1238,8 @@ function App() {
                 <button
                   type="button"
                   onClick={function() { setVisibleCount(visibleCount + 36); }}
-                  className="rounded-md border border-stone-900/10 bg-white px-6 py-3 text-sm font-bold text-stone-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(28,25,23,0.10)]">
+                  className="rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5"
+                  style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', color: '#fff' }}>
                   Mostrar mais
                 </button>
               </div>
