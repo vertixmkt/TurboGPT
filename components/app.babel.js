@@ -27,6 +27,8 @@ var CONTENT_FORMATS = [
   { id: "carousel", label: "Post carrossel", icon: "panels-top-left", hint: "ideia em sequência", categoryIds: ["4-listas-numerados", "9-problema-dor", "10-tutorial-howto-soluo", "12-desafio-engajamento-interativo"], promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"], terms: ["carrossel", "carousel", "post", "slides", "sequencia", "passo", "lista", "dicas", "erros", "como"] },
   { id: "ad", label: "Anúncio", icon: "megaphone", hint: "clique e oferta", categoryIds: ["8-urgncia-cta-direto", "9-problema-dor", "13-resultado-transformao", "1-segredo-informao-oculta"], promptSubcategories: ["Copywriting", "Sales & E-commerce", "Social Media"], terms: ["anuncio", "ad", "ads", "campanha", "criativo", "comprar", "resultado", "oferta", "solucao", "agora"] },
   { id: "vsl", label: "VSL", icon: "square-play", hint: "retenção e venda", categoryIds: ["1-segredo-informao-oculta", "3-polmica-contrariao", "6-storytelling-histria-pessoal", "9-problema-dor", "13-resultado-transformao"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["vsl", "sales video", "video sales", "pitch", "webinar", "segredo", "historia", "verdade", "problema", "resultado"] },
+  { id: "email", label: "E-mail", icon: "mail", hint: "assunto e conversão", categoryIds: ["1-segredo-informao-oculta", "5-perguntas-curiosidade", "8-urgncia-cta-direto", "9-problema-dor"], promptSubcategories: ["Copywriting", "Sales & E-commerce"], terms: ["email", "e-mail", "newsletter", "assunto", "subject", "sequence", "sequencia", "cold outreach", "follow-up", "cta", "click"] },
+  { id: "youtube", label: "Vídeo YouTube", icon: "youtube", hint: "título, roteiro e retenção", categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"], promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"], terms: ["youtube", "video", "vídeo", "roteiro", "script", "titulo", "title", "thumbnail", "miniatura", "retencao", "canal", "shorts"] },
 ];
 
 var OBJECTIVE_FILTERS = [
@@ -1188,7 +1190,7 @@ function App() {
             </div>
           </section>
 
-          <section className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-5">
+          <section className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
             {CONTENT_FORMATS.map(function(format) {
               return (
                 <ContentFormatCard

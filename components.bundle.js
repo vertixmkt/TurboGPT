@@ -1151,6 +1151,22 @@ var CONTENT_FORMATS = [{
   categoryIds: ["1-segredo-informao-oculta", "3-polmica-contrariao", "6-storytelling-histria-pessoal", "9-problema-dor", "13-resultado-transformao"],
   promptSubcategories: ["Copywriting", "Sales & E-commerce"],
   terms: ["vsl", "sales video", "video sales", "pitch", "webinar", "segredo", "historia", "verdade", "problema", "resultado"]
+}, {
+  id: "email",
+  label: "E-mail",
+  icon: "mail",
+  hint: "assunto e conversão",
+  categoryIds: ["1-segredo-informao-oculta", "5-perguntas-curiosidade", "8-urgncia-cta-direto", "9-problema-dor"],
+  promptSubcategories: ["Copywriting", "Sales & E-commerce"],
+  terms: ["email", "e-mail", "newsletter", "assunto", "subject", "sequence", "sequencia", "cold outreach", "follow-up", "cta", "click"]
+}, {
+  id: "youtube",
+  label: "Vídeo YouTube",
+  icon: "youtube",
+  hint: "título, roteiro e retenção",
+  categoryIds: ["2-choque-surpresa", "4-listas-numerados", "6-storytelling-histria-pessoal", "10-tutorial-howto-soluo", "13-resultado-transformao"],
+  promptSubcategories: ["Social Media", "SEO & Content", "Copywriting"],
+  terms: ["youtube", "video", "vídeo", "roteiro", "script", "titulo", "title", "thumbnail", "miniatura", "retencao", "canal", "shorts"]
 }];
 var OBJECTIVE_FILTERS = [{
   id: "atrai",
@@ -2995,7 +3011,7 @@ function App() {
       color: '#888'
     }
   }, activeItems.length, " resultados prontos"))), React.createElement("section", {
-    className: "mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-5"
+    className: "mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7"
   }, CONTENT_FORMATS.map(function (format) {
     return React.createElement(ContentFormatCard, {
       key: format.id,
