@@ -552,6 +552,44 @@ function FilterChip(props) {
   );
 }
 
+function downloadTextFile(filename, content) {
+  var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function DownloadButtons(props) {
+  var item = props.item;
+  var content = props.content || "";
+
+  return (
+    <div className="mt-2 grid grid-cols-2 gap-2">
+      <button
+        type="button"
+        onClick={function() { downloadTextFile(item.id + ".txt", content); }}
+        className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
+        style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <i data-lucide="download" className="h-3.5 w-3.5" />
+        .txt
+      </button>
+      <button
+        type="button"
+        onClick={function() { downloadTextFile(item.id + ".md", content); }}
+        className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
+        style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <i data-lucide="download" className="h-3.5 w-3.5" />
+        .md
+      </button>
+    </div>
+  );
+}
+
 function ContentTypeToggle(props) {
   var contentType = props.contentType;
   var onChange = props.onChange;
@@ -652,7 +690,7 @@ function HookCard(props) {
   return (
     <article
       className="group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
-      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)', minHeight: '236px' }}
+      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)', minHeight: '316px' }}
       onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
       onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
       <div className={"absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass} />
@@ -675,6 +713,7 @@ function HookCard(props) {
         <SimpleCopyButton text={item.text} label="Copiar" onCopied={onCopy} />
         <SaveButton saved={saved} onToggle={onToggleSave} />
       </div>
+      <DownloadButtons item={item} content={item.text} />
     </article>
   );
 }
@@ -688,7 +727,7 @@ function PromptCard(props) {
 
   return (
     <article
-      className="flex min-h-[280px] flex-col justify-between rounded-lg p-5 transition-all hover:-translate-y-1"
+      className="flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
       style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
       onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
       onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
@@ -703,21 +742,9 @@ function PromptCard(props) {
         <SimpleCopyButton text={text} label="Copiar prompt" />
         <SaveButton saved={saved} onToggle={onToggleSave} />
       </div>
+      <DownloadButtons item={item} content={text} />
     </article>
   );
-}
-
-function downloadSkill(item, ext) {
-  var filename = item.id + "." + ext;
-  var blob = new Blob([item.content], { type: "text/plain;charset=utf-8" });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 function SkillCard(props) {
@@ -740,24 +767,7 @@ function SkillCard(props) {
         <SimpleCopyButton text={item.content} label="Copiar" />
         <SaveButton saved={saved} onToggle={onToggleSave} />
       </div>
-      <div className="mt-2 grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={function() { downloadSkill(item, "txt"); }}
-          className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
-          style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
-          <i data-lucide="download" className="h-3.5 w-3.5" />
-          .txt
-        </button>
-        <button
-          type="button"
-          onClick={function() { downloadSkill(item, "md"); }}
-          className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
-          style={{ background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
-          <i data-lucide="download" className="h-3.5 w-3.5" />
-          .md
-        </button>
-      </div>
+      <DownloadButtons item={item} content={item.content} />
     </article>
   );
 }

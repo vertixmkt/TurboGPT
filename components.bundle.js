@@ -2024,6 +2024,54 @@ function FilterChip(props) {
     className: "h-4 w-4"
   }) : null, label);
 }
+function downloadTextFile(filename, content) {
+  var blob = new Blob([content], {
+    type: "text/plain;charset=utf-8"
+  });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function DownloadButtons(props) {
+  var item = props.item;
+  var content = props.content || "";
+  return React.createElement("div", {
+    className: "mt-2 grid grid-cols-2 gap-2"
+  }, React.createElement("button", {
+    type: "button",
+    onClick: function () {
+      downloadTextFile(item.id + ".txt", content);
+    },
+    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    style: {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
+  }, React.createElement("i", {
+    "data-lucide": "download",
+    className: "h-3.5 w-3.5"
+  }), ".txt"), React.createElement("button", {
+    type: "button",
+    onClick: function () {
+      downloadTextFile(item.id + ".md", content);
+    },
+    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
+    style: {
+      background: '#161616',
+      color: '#888',
+      border: '1px solid rgba(255,255,255,0.08)'
+    }
+  }, React.createElement("i", {
+    "data-lucide": "download",
+    className: "h-3.5 w-3.5"
+  }), ".md"));
+}
 function ContentTypeToggle(props) {
   var contentType = props.contentType;
   var onChange = props.onChange;
@@ -2183,7 +2231,7 @@ function HookCard(props) {
     style: {
       background: '#0f0f0f',
       border: '1px solid rgba(255,255,255,0.08)',
-      minHeight: '236px'
+      minHeight: '316px'
     },
     onMouseEnter: function (e) {
       e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
@@ -2235,7 +2283,10 @@ function HookCard(props) {
   }), React.createElement(SaveButton, {
     saved: saved,
     onToggle: onToggleSave
-  })));
+  })), React.createElement(DownloadButtons, {
+    item: item,
+    content: item.text
+  }));
 }
 function PromptCard(props) {
   var item = props.item;
@@ -2244,7 +2295,7 @@ function PromptCard(props) {
   var onToggleSave = props.onToggleSave;
   var text = getPromptText(item);
   return React.createElement("article", {
-    className: "flex min-h-[280px] flex-col justify-between rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
       background: '#0f0f0f',
       border: '1px solid rgba(255,255,255,0.08)'
@@ -2288,21 +2339,10 @@ function PromptCard(props) {
   }), React.createElement(SaveButton, {
     saved: saved,
     onToggle: onToggleSave
-  })));
-}
-function downloadSkill(item, ext) {
-  var filename = item.id + "." + ext;
-  var blob = new Blob([item.content], {
-    type: "text/plain;charset=utf-8"
-  });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  })), React.createElement(DownloadButtons, {
+    item: item,
+    content: text
+  }));
 }
 function SkillCard(props) {
   var item = props.item;
@@ -2349,37 +2389,10 @@ function SkillCard(props) {
   }), React.createElement(SaveButton, {
     saved: saved,
     onToggle: onToggleSave
-  })), React.createElement("div", {
-    className: "mt-2 grid grid-cols-2 gap-2"
-  }, React.createElement("button", {
-    type: "button",
-    onClick: function () {
-      downloadSkill(item, "txt");
-    },
-    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
-    style: {
-      background: '#161616',
-      color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
-    }
-  }, React.createElement("i", {
-    "data-lucide": "download",
-    className: "h-3.5 w-3.5"
-  }), ".txt"), React.createElement("button", {
-    type: "button",
-    onClick: function () {
-      downloadSkill(item, "md");
-    },
-    className: "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
-    style: {
-      background: '#161616',
-      color: '#888',
-      border: '1px solid rgba(255,255,255,0.08)'
-    }
-  }, React.createElement("i", {
-    "data-lucide": "download",
-    className: "h-3.5 w-3.5"
-  }), ".md")));
+  })), React.createElement(DownloadButtons, {
+    item: item,
+    content: item.content
+  }));
 }
 function DetailModal(props) {
   var item = props.item;
