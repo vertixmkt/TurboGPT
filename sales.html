@@ -380,7 +380,9 @@
     .method-desc { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.50); }
 
     /* ── Pricing ── */
-    .pricing-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; margin-top: 56px; align-items: start; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; margin-top: 56px; align-items: stretch; }
+    .pricing-card { display: flex; flex-direction: column; }
+    .pricing-card .pricing-features { flex: 1; }
     .pricing-card { padding: 40px 36px; border-radius: var(--r-xl); }
     .pricing-card.featured {
       border-color: rgba(59,130,246,0.40) !important;
