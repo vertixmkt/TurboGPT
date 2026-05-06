@@ -1231,7 +1231,7 @@ function App() {
               }} />
           </section>
 
-          <section className="surface-card surface-panel mt-4 rounded-lg p-4" style={{ background: GLASS_PANEL_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
+          <section className="mt-4 rounded-lg p-4" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.07)' }}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex gap-2 overflow-x-auto pb-1">
                 <ViewModeButton active={viewMode === "all"} label="Todos" icon="layout-grid" onClick={function() { setViewMode("all"); }} />

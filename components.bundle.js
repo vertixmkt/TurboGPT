@@ -3042,10 +3042,10 @@ function App() {
       setViewMode("all");
     }
   })), React.createElement("section", {
-    className: "surface-card surface-panel mt-4 rounded-lg p-4",
+    className: "mt-4 rounded-lg p-4",
     style: {
-      background: GLASS_PANEL_BG,
-      border: '2px solid rgba(255,255,255,0.10)'
+      background: 'transparent',
+      border: '1px solid rgba(255,255,255,0.07)'
     }
   }, React.createElement("div", {
     className: "flex flex-wrap items-center justify-between gap-3"
