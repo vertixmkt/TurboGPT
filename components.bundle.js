@@ -1325,8 +1325,8 @@ function UserAccountMenu(props) {
   }, React.createElement("span", {
     className: "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, getUserInitials(user)), React.createElement("span", {
     className: "hidden min-w-0 md:block"
@@ -1405,11 +1405,11 @@ function AuthInput(props) {
       background: '#161616',
       border: '1px solid rgba(255,255,255,0.10)',
       color: '#ffffff',
-      caretColor: '#62FFB3'
+      caretColor: '#3b82f6'
     },
     onFocus: function (e) {
-      e.target.style.borderColor = '#62FFB3';
-      e.target.style.boxShadow = '0 0 0 3px rgba(98,255,179,0.15)';
+      e.target.style.borderColor = '#3b82f6';
+      e.target.style.boxShadow = '0 0 0 3px rgba(59,130,246,0.15)';
     },
     onBlur: function (e) {
       e.target.style.borderColor = 'rgba(255,255,255,0.10)';
@@ -1436,9 +1436,9 @@ function AuthSuccess(props) {
   return React.createElement("div", {
     className: "flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium",
     style: {
-      background: 'rgba(98,255,179,0.10)',
-      border: '1px solid rgba(98,255,179,0.20)',
-      color: '#62FFB3'
+      background: 'rgba(59,130,246,0.10)',
+      border: '1px solid rgba(59,130,246,0.20)',
+      color: '#3b82f6'
     }
   }, React.createElement("i", {
     "data-lucide": "check-circle",
@@ -1544,8 +1544,8 @@ function LoginModal(props) {
   }, React.createElement("div", null, React.createElement("span", {
     className: "inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": view === "login" ? "zap" : "key-round",
@@ -1603,7 +1603,7 @@ function LoginModal(props) {
     },
     className: "text-xs font-semibold hover:underline",
     style: {
-      color: '#62FFB3'
+      color: '#3b82f6'
     }
   }, "Esqueci minha senha")), React.createElement(AuthInput, {
     type: "password",
@@ -1621,8 +1621,8 @@ function LoginModal(props) {
     disabled: loading,
     className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, loading ? "Entrando…" : "Entrar")) : React.createElement("form", {
     onSubmit: handleForgot,
@@ -1650,8 +1650,8 @@ function LoginModal(props) {
     disabled: loading,
     className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, loading ? "Enviando…" : "Enviar link de recuperação") : null, React.createElement("button", {
     type: "button",
@@ -1728,8 +1728,8 @@ function ResetPasswordModal(props) {
   }, React.createElement("span", {
     className: "inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "lock-keyhole",
@@ -1784,8 +1784,8 @@ function ResetPasswordModal(props) {
     disabled: loading,
     className: "mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, loading ? "Salvando…" : "Salvar nova senha"))));
 }
@@ -1907,9 +1907,9 @@ function SimpleCopyButton(props) {
     onClick: handleCopy,
     className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: copied ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: '#161616',
       color: '#fff',
@@ -1932,9 +1932,9 @@ function SaveButton(props) {
     },
     className: "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: saved ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: '#161616',
       color: '#888',
@@ -1994,9 +1994,9 @@ function FilterChip(props) {
     onClick: onClick,
     className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
     style: active ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: '#161616',
       color: '#888',
@@ -2037,8 +2037,8 @@ function ContentTypeToggle(props) {
       },
       className: "group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]",
       style: active ? {
-        background: '#62FFB3',
-        color: '#000'
+        background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+        color: '#fff'
       } : {
         color: '#888'
       }
@@ -2061,7 +2061,7 @@ function ContentTypeToggle(props) {
     }, option.label), React.createElement("span", {
       className: "mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em]",
       style: active ? {
-        color: 'rgba(0,0,0,0.6)'
+        color: 'rgba(255,255,255,0.6)'
       } : {
         color: '#666'
       }
@@ -2079,9 +2079,9 @@ function ViewModeButton(props) {
     onClick: onClick,
     className: "group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]",
     style: active ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: '#161616',
       color: '#888',
@@ -2115,9 +2115,9 @@ function ContentFormatCard(props) {
     onClick: onClick,
     className: "group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1",
     style: active ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: '#0f0f0f',
       color: '#fff',
@@ -2140,7 +2140,7 @@ function ContentFormatCard(props) {
   }, format.label), React.createElement("span", {
     className: "mt-1 block text-sm",
     style: active ? {
-      color: 'rgba(0,0,0,0.6)'
+      color: 'rgba(255,255,255,0.6)'
     } : {
       color: '#888'
     }
@@ -2155,23 +2155,26 @@ function HookCard(props) {
   var styleMeta = getHookStyleMeta(item);
   var badges = getHighlightBadges(item);
   return React.createElement("article", {
-    className: "group relative min-h-[236px] overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
       background: '#0f0f0f',
-      border: '1px solid rgba(255,255,255,0.08)'
+      border: '1px solid rgba(255,255,255,0.08)',
+      minHeight: '236px'
     },
     onMouseEnter: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
+      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
     },
     onMouseLeave: function (e) {
       e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+      e.currentTarget.style.boxShadow = 'none';
     }
   }, React.createElement("div", {
     className: "absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass
   }), React.createElement("button", {
     type: "button",
     onClick: onOpen,
-    className: "block w-full text-left"
+    className: "flex-1 block w-full text-left"
   }, React.createElement("div", {
     className: "flex items-start justify-between gap-3"
   }, React.createElement("span", {
@@ -2184,7 +2187,7 @@ function HookCard(props) {
       color: '#888'
     }
   }, item.categoryLabel)), React.createElement("h3", {
-    className: "mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal md:text-[21px]",
+    className: "mt-5 text-xl font-bold leading-snug tracking-normal md:text-[21px]",
     style: {
       color: '#fff'
     }
@@ -2217,21 +2220,23 @@ function PromptCard(props) {
   var onToggleSave = props.onToggleSave;
   var text = getPromptText(item);
   return React.createElement("article", {
-    className: "rounded-lg p-5 transition-all hover:-translate-y-1",
+    className: "flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
       background: '#0f0f0f',
       border: '1px solid rgba(255,255,255,0.08)'
     },
     onMouseEnter: function (e) {
-      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+      e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)';
+      e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)';
     },
     onMouseLeave: function (e) {
       e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+      e.currentTarget.style.boxShadow = 'none';
     }
   }, React.createElement("button", {
     type: "button",
     onClick: onOpen,
-    className: "block w-full text-left"
+    className: "flex-1 block w-full text-left"
   }, React.createElement("span", {
     className: "rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]",
     style: {
@@ -2240,12 +2245,12 @@ function PromptCard(props) {
       border: '1px solid rgba(255,255,255,0.08)'
     }
   }, getPromptLabel(item.subcategory)), React.createElement("h3", {
-    className: "mt-4 line-clamp-3 text-lg font-bold leading-snug",
+    className: "mt-4 text-lg font-bold leading-snug",
     style: {
       color: '#fff'
     }
   }, item.name), item.description ? React.createElement("p", {
-    className: "mt-2 line-clamp-2 text-sm leading-relaxed",
+    className: "mt-2 text-sm leading-relaxed",
     style: {
       color: '#888'
     }
@@ -2632,8 +2637,8 @@ function App() {
   }, React.createElement("span", {
     className: "flex h-10 w-10 items-center justify-center rounded-xl",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "zap",
@@ -2667,8 +2672,8 @@ function App() {
   }, React.createElement("span", {
     className: "flex h-8 w-8 items-center justify-center rounded-full text-xs font-black",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, getUserInitials(sessionUser)), React.createElement("i", {
     "data-lucide": "chevron-down",
@@ -2723,8 +2728,8 @@ function App() {
     },
     className: "md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black transition-all hover:-translate-y-0.5",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "log-in",
@@ -2774,9 +2779,9 @@ function App() {
     },
     className: "inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-bold transition-all",
     style: viewMode === "favorites" ? {
-      background: '#62FFB3',
-      color: '#000',
-      border: '1px solid #62FFB3'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff',
+      border: '1px solid rgba(59,130,246,0.35)'
     } : {
       background: 'rgba(255,255,255,0.05)',
       color: '#888',
@@ -2804,8 +2809,8 @@ function App() {
     },
     className: "inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black transition-all hover:-translate-y-0.5",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "log-in",
@@ -2845,7 +2850,7 @@ function App() {
     "data-lucide": "trophy",
     className: "h-4 w-4",
     style: {
-      color: '#62FFB3'
+      color: '#3b82f6'
     }
   }), "Top criador da semana"), React.createElement("h1", {
     className: "mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl",
@@ -2997,9 +3002,9 @@ function App() {
       },
       className: "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
       style: selectedCategory ? {
-        background: '#62FFB3',
-        color: '#000',
-        border: '1px solid #62FFB3'
+        background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+        color: '#fff',
+        border: '1px solid rgba(59,130,246,0.35)'
       } : {
         background: '#161616',
         color: '#888',
@@ -3022,8 +3027,8 @@ function App() {
   }, React.createElement("span", {
     className: "mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "lock",
@@ -3045,8 +3050,8 @@ function App() {
     },
     className: "mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5",
     style: {
-      background: '#62FFB3',
-      color: '#000'
+      background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)',
+      color: '#fff'
     }
   }, React.createElement("i", {
     "data-lucide": "log-in",

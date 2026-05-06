@@ -99,7 +99,7 @@ function UserAccountMenu(props) {
         className="inline-flex min-h-10 max-w-[220px] items-center gap-2 rounded-full px-2.5 text-left text-sm font-bold transition-all"
         style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: '#fff' }}
         title={email || displayName}>
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black" style={{ background: '#62FFB3', color: '#000' }}>
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
           {getUserInitials(user)}
         </span>
         <span className="hidden min-w-0 md:block">
@@ -140,8 +140,8 @@ function AuthInput(props) {
       placeholder={props.placeholder}
       required={props.required}
       className="w-full rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none"
-      style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.10)', color: '#ffffff', caretColor: '#62FFB3' }}
-      onFocus={function(e) { e.target.style.borderColor = '#62FFB3'; e.target.style.boxShadow = '0 0 0 3px rgba(98,255,179,0.15)'; }}
+      style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.10)', color: '#ffffff', caretColor: '#3b82f6' }}
+      onFocus={function(e) { e.target.style.borderColor = '#3b82f6'; e.target.style.boxShadow = '0 0 0 3px rgba(59,130,246,0.15)'; }}
       onBlur={function(e) { e.target.style.borderColor = 'rgba(255,255,255,0.10)'; e.target.style.boxShadow = 'none'; }} />
   );
 }
@@ -159,7 +159,7 @@ function AuthError(props) {
 function AuthSuccess(props) {
   if (!props.msg) return null;
   return (
-    <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium" style={{ background: 'rgba(98,255,179,0.10)', border: '1px solid rgba(98,255,179,0.20)', color: '#62FFB3' }}>
+    <div className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium" style={{ background: 'rgba(59,130,246,0.10)', border: '1px solid rgba(59,130,246,0.20)', color: '#3b82f6' }}>
       <i data-lucide="check-circle" className="h-4 w-4 shrink-0" />
       {props.msg}
     </div>
@@ -223,7 +223,7 @@ function LoginModal(props) {
         <div className="px-6 pt-6 pb-4">
           <div className="flex items-start justify-between">
             <div>
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: '#62FFB3', color: '#000' }}>
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                 <i data-lucide={view === "login" ? "zap" : "key-round"} className="h-5 w-5" />
               </span>
               <h2 className="text-xl font-black" style={{ color: '#fff' }}>
@@ -248,14 +248,14 @@ function LoginModal(props) {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-bold uppercase tracking-[0.12em]" style={{ color: '#888' }}>Senha</label>
-                <button type="button" onClick={function() { switchView("forgot"); }} className="text-xs font-semibold hover:underline" style={{ color: '#62FFB3' }}>
+                <button type="button" onClick={function() { switchView("forgot"); }} className="text-xs font-semibold hover:underline" style={{ color: '#3b82f6' }}>
                   Esqueci minha senha
                 </button>
               </div>
               <AuthInput type="password" value={password} onChange={function(e) { setPassword(e.target.value); resetState(); }} placeholder="••••••••" required={true} />
             </div>
             <AuthError msg={errorMsg} />
-            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
+            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
               {loading ? "Entrando…" : "Entrar"}
             </button>
           </form>
@@ -268,7 +268,7 @@ function LoginModal(props) {
             <AuthError msg={errorMsg} />
             <AuthSuccess msg={successMsg} />
             {!successMsg ? (
-              <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
+              <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                 {loading ? "Enviando…" : "Enviar link de recuperação"}
               </button>
             ) : null}
@@ -312,7 +312,7 @@ function ResetPasswordModal(props) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md" style={{ background: 'rgba(0,0,0,0.80)' }}>
       <div className="modal-in w-full max-w-sm overflow-hidden rounded-2xl" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 30px 90px rgba(0,0,0,0.8)' }}>
         <div className="px-6 pt-6 pb-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: '#62FFB3', color: '#000' }}>
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
             <i data-lucide="lock-keyhole" className="h-5 w-5" />
           </span>
           <h2 className="text-xl font-black" style={{ color: '#fff' }}>Definir nova senha</h2>
@@ -331,7 +331,7 @@ function ResetPasswordModal(props) {
           {success ? (
             <AuthSuccess msg="Senha redefinida com sucesso! Redirecionando…" />
           ) : (
-            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: '#62FFB3', color: '#000' }}>
+            <button type="submit" disabled={loading} className="mt-1 w-full rounded-lg px-4 py-3 text-sm font-black transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
               {loading ? "Salvando…" : "Salvar nova senha"}
             </button>
           )}
@@ -478,7 +478,7 @@ function SimpleCopyButton(props) {
       onClick={handleCopy}
       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
       style={copied
-        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#161616', color: '#fff', border: '1px solid rgba(255,255,255,0.10)' }}
       title={copied ? "Copiado" : label}>
       <i data-lucide={copied ? "check" : "copy"} className="h-4 w-4" />
@@ -497,7 +497,7 @@ function SaveButton(props) {
       onClick={function(event) { event.stopPropagation(); onToggle(); }}
       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
       style={saved
-        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.10)' }}
       title={saved ? "Remover dos favoritos" : "Salvar"}>
       <i data-lucide={saved ? "bookmark-check" : "bookmark"} className="h-4 w-4" />
@@ -541,7 +541,7 @@ function FilterChip(props) {
       onClick={onClick}
       className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
       style={active
-        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
       {icon ? <i data-lucide={icon} className="h-4 w-4" /> : null}
       {label}
@@ -567,7 +567,7 @@ function ContentTypeToggle(props) {
             type="button"
             onClick={function() { onChange(option.id); }}
             className="group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]"
-            style={active ? { background: '#62FFB3', color: '#000' } : { color: '#888' }}>
+            style={active ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' } : { color: '#888' }}>
             <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all" style={active
               ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
               : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -575,7 +575,7 @@ function ContentTypeToggle(props) {
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-black leading-tight">{option.label}</span>
-              <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em]" style={active ? { color: 'rgba(0,0,0,0.6)' } : { color: '#666' }}>{option.hint}</span>
+              <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.10em]" style={active ? { color: 'rgba(255,255,255,0.6)' } : { color: '#666' }}>{option.hint}</span>
             </span>
           </button>
         );
@@ -597,7 +597,7 @@ function ViewModeButton(props) {
       onClick={onClick}
       className="group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]"
       style={active
-        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
       <span className="inline-flex h-8 w-8 items-center justify-center rounded-full" style={active
         ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
@@ -621,7 +621,7 @@ function ContentFormatCard(props) {
       onClick={onClick}
       className="group min-h-[132px] min-w-0 rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1"
       style={active
-        ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+        ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
         : { background: '#0f0f0f', color: '#fff', border: '1px solid rgba(255,255,255,0.08)' }}>
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-md" style={active
         ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
@@ -629,7 +629,7 @@ function ContentFormatCard(props) {
         <i data-lucide={format.icon} className="h-5 w-5" />
       </span>
       <span className="mt-4 block break-words text-xl font-bold leading-tight">{format.label}</span>
-      <span className="mt-1 block text-sm" style={active ? { color: 'rgba(0,0,0,0.6)' } : { color: '#888' }}>{format.hint}</span>
+      <span className="mt-1 block text-sm" style={active ? { color: 'rgba(255,255,255,0.6)' } : { color: '#888' }}>{format.hint}</span>
     </button>
   );
 }
@@ -645,12 +645,12 @@ function HookCard(props) {
 
   return (
     <article
-      className="group relative min-h-[236px] overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
-      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
-      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
-      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>
+      className="group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
+      style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)', minHeight: '236px' }}
+      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
       <div className={"absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass} />
-      <button type="button" onClick={onOpen} className="block w-full text-left">
+      <button type="button" onClick={onOpen} className="flex-1 block w-full text-left">
         <div className="flex items-start justify-between gap-3">
           <span className={"inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] " + styleMeta.badgeClass}>
             <span className={"h-2 w-2 rounded-full " + styleMeta.dotClass} />
@@ -658,7 +658,7 @@ function HookCard(props) {
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>{item.categoryLabel}</span>
         </div>
-        <h3 className="mt-5 line-clamp-4 text-xl font-bold leading-snug tracking-normal md:text-[21px]" style={{ color: '#fff' }}>{item.text}</h3>
+        <h3 className="mt-5 text-xl font-bold leading-snug tracking-normal md:text-[21px]" style={{ color: '#fff' }}>{item.text}</h3>
         <div className="mt-4 flex flex-wrap gap-2">
           {badges.map(function(badge) {
             return <span key={badge} className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.08)', color: '#888' }}>{badge}</span>;
@@ -682,14 +682,14 @@ function PromptCard(props) {
 
   return (
     <article
-      className="rounded-lg p-5 transition-all hover:-translate-y-1"
+      className="flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
       style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}
-      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
-      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>
-      <button type="button" onClick={onOpen} className="block w-full text-left">
+      onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.40)'; e.currentTarget.style.boxShadow = '0 0 0 1px rgba(59,130,246,0.20), 0 8px 32px rgba(59,130,246,0.15)'; }}
+      onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none'; }}>
+      <button type="button" onClick={onOpen} className="flex-1 block w-full text-left">
         <span className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(255,255,255,0.06)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>{getPromptLabel(item.subcategory)}</span>
-        <h3 className="mt-4 line-clamp-3 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
-        {item.description ? <p className="mt-2 line-clamp-2 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
+        <h3 className="mt-4 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
+        {item.description ? <p className="mt-2 text-sm leading-relaxed" style={{ color: '#888' }}>{item.description}</p> : null}
       </button>
       <div className="mt-5 grid grid-cols-2 gap-2">
         <SimpleCopyButton text={text} label="Copiar prompt" />
@@ -987,7 +987,7 @@ function App() {
           <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:px-6">
             <div className="flex w-full items-center justify-between gap-3 md:w-auto">
               <button type="button" onClick={function() { setViewMode("all"); setContentType("hooks"); }} className="flex min-w-0 items-center gap-3 text-left">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: '#62FFB3', color: '#000' }}>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="zap" className="h-5 w-5" />
                 </span>
                 <span className="min-w-0">
@@ -1004,7 +1004,7 @@ function App() {
                     className="inline-flex min-h-10 items-center gap-2 rounded-full px-2.5 text-sm font-bold transition-all"
                     style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: '#fff' }}
                     title={sessionUser.email}>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-black" style={{ background: '#62FFB3', color: '#000' }}>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-black" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                       {getUserInitials(sessionUser)}
                     </span>
                     <i data-lucide="chevron-down" className={"h-4 w-4 transition-transform " + (userMenuOpen ? "rotate-180" : "")} style={{ color: '#888' }} />
@@ -1029,7 +1029,7 @@ function App() {
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
                   className="md:hidden inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-black transition-all hover:-translate-y-0.5"
-                  style={{ background: '#62FFB3', color: '#000' }}>
+                  style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar
                 </button>
@@ -1057,7 +1057,7 @@ function App() {
                 onClick={function() { setViewMode(viewMode === "favorites" ? "all" : "favorites"); setContentType("hooks"); }}
                 className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-bold transition-all"
                 style={viewMode === "favorites"
-                  ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+                  ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
                   : { background: 'rgba(255,255,255,0.05)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <i data-lucide="bookmark" className="h-4 w-4" />
                 Favoritos
@@ -1074,7 +1074,7 @@ function App() {
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
                   className="inline-flex min-h-10 items-center gap-2 rounded-full px-5 text-sm font-black transition-all hover:-translate-y-0.5"
-                  style={{ background: '#62FFB3', color: '#000' }}>
+                  style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar
                 </button>
@@ -1097,7 +1097,7 @@ function App() {
           <section className="grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', color: '#888' }}>
-                <i data-lucide="trophy" className="h-4 w-4" style={{ color: '#62FFB3' }} />
+                <i data-lucide="trophy" className="h-4 w-4" style={{ color: '#3b82f6' }} />
                 Top criador da semana
               </div>
               <h1 className="mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl" style={{ color: '#fff' }}>O que você quer criar hoje?</h1>
@@ -1181,7 +1181,7 @@ function App() {
                     onClick={function() { handleCategorySelect(category.id); }}
                     className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
                     style={selectedCategory
-                      ? { background: '#62FFB3', color: '#000', border: '1px solid #62FFB3' }
+                      ? { background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff', border: '1px solid rgba(59,130,246,0.35)' }
                       : { background: '#161616', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>
                     {category.icon ? <span>{category.icon}</span> : null}
                     {category.label}
@@ -1195,7 +1195,7 @@ function App() {
           <section className="mt-6 pb-12">
             {!sessionUser ? (
               <div className="flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center" style={{ background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <span className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: '#62FFB3', color: '#000' }}>
+                <span className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="lock" className="h-6 w-6" />
                 </span>
                 <h2 className="text-xl font-black" style={{ color: '#fff' }}>Acesso exclusivo para membros</h2>
@@ -1204,7 +1204,7 @@ function App() {
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
                   className="mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5"
-                  style={{ background: '#62FFB3', color: '#000' }}>
+                  style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar na plataforma
                 </button>
