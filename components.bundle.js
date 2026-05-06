@@ -1111,6 +1111,9 @@ var FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-hooks";
 var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
 var SKILL_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-skills";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
+var GLASS_ACTIVE_BG = 'linear-gradient(180deg, rgba(47,85,223,0.88) 0%, rgba(23,44,140,0.78) 48%, rgba(5,5,5,0.62) 100%)';
+var GLASS_CONTROL_BG = 'linear-gradient(180deg, rgba(36,36,36,0.74) 0%, rgba(15,15,15,0.58) 100%)';
+var GLASS_SURFACE_BG = 'linear-gradient(180deg, rgba(25,25,25,0.74) 0%, rgba(8,8,8,0.58) 100%)';
 var CONTENT_FORMATS = [{
   id: "reels",
   label: "Reels",
@@ -1948,11 +1951,11 @@ function SimpleCopyButton(props) {
     onClick: handleCopy,
     className: "surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: copied ? {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#fff',
       border: '2px solid rgba(255,255,255,0.12)'
     },
@@ -1973,11 +1976,11 @@ function SaveButton(props) {
     },
     className: "surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]",
     style: saved ? {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#888',
       border: '2px solid rgba(255,255,255,0.12)'
     },
@@ -2035,11 +2038,11 @@ function FilterChip(props) {
     onClick: onClick,
     className: "surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
     style: active ? {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#888',
       border: '2px solid rgba(255,255,255,0.10)'
     }
@@ -2073,7 +2076,7 @@ function DownloadButtons(props) {
     },
     className: "surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
     style: {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#888',
       border: '2px solid rgba(255,255,255,0.10)'
     }
@@ -2087,7 +2090,7 @@ function DownloadButtons(props) {
     },
     className: "surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all",
     style: {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#888',
       border: '2px solid rgba(255,255,255,0.10)'
     }
@@ -2131,11 +2134,11 @@ function ContentTypeToggle(props) {
       },
       className: "surface-card group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]",
       style: active ? {
-        background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+        background: GLASS_ACTIVE_BG,
         color: '#fff',
         border: '2px solid rgba(78,119,255,0.58)'
       } : {
-        background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+        background: GLASS_CONTROL_BG,
         color: '#888',
         border: '2px solid rgba(255,255,255,0.10)'
       }
@@ -2176,11 +2179,11 @@ function ViewModeButton(props) {
     onClick: onClick,
     className: "surface-card group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]",
     style: active ? {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+      background: GLASS_CONTROL_BG,
       color: '#888',
       border: '2px solid rgba(255,255,255,0.10)'
     }
@@ -2212,11 +2215,11 @@ function ContentFormatCard(props) {
     onClick: onClick,
     className: "surface-card group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]",
     style: active ? {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     } : {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       color: '#fff',
       border: '2px solid rgba(255,255,255,0.10)'
     }
@@ -2256,7 +2259,7 @@ function HookCard(props) {
   return React.createElement("article", {
     className: "surface-card group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)',
       minHeight: '316px'
     }
@@ -2316,7 +2319,7 @@ function PromptCard(props) {
   return React.createElement("article", {
     className: "surface-card flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("button", {
@@ -2362,7 +2365,7 @@ function SkillCard(props) {
   return React.createElement("article", {
     className: "surface-card flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("div", {
@@ -2812,7 +2815,7 @@ function App() {
     style: {
       color: '#888'
     }
-  }, "Hooks e prompts"))), sessionUser ? React.createElement("div", {
+  }, "viraliza\xE7\xE3o de conte\xFAdo"))), sessionUser ? React.createElement("div", {
     className: "md:hidden relative"
   }, React.createElement("button", {
     type: "button",
@@ -2977,7 +2980,7 @@ function App() {
   }, React.createElement("div", {
     className: "surface-card overflow-hidden rounded-lg",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)',
       boxShadow: '0 18px 42px rgba(0,0,0,0.6)'
     }
@@ -3017,7 +3020,7 @@ function App() {
   }, "O que voc\xEA quer criar hoje?")), React.createElement("div", {
     className: "surface-card rounded-lg px-4 py-3",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("p", {
@@ -3053,7 +3056,7 @@ function App() {
   })), React.createElement("section", {
     className: "surface-card mt-4 rounded-lg p-4",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("div", {
@@ -3161,11 +3164,11 @@ function App() {
       },
       className: "surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]",
       style: selectedCategory ? {
-        background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+        background: GLASS_ACTIVE_BG,
         color: '#fff',
         border: '2px solid rgba(78,119,255,0.58)'
       } : {
-        background: 'linear-gradient(180deg, #181818 0%, #121212 100%)',
+        background: GLASS_CONTROL_BG,
         color: '#888',
         border: '2px solid rgba(255,255,255,0.10)'
       }
@@ -3180,7 +3183,7 @@ function App() {
   }, !sessionUser ? React.createElement("div", {
     className: "surface-card flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("span", {
@@ -3209,7 +3212,7 @@ function App() {
     },
     className: "surface-card mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5",
     style: {
-      background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)',
+      background: GLASS_ACTIVE_BG,
       color: '#fff',
       border: '2px solid rgba(78,119,255,0.58)'
     }
@@ -3265,7 +3268,7 @@ function App() {
   })) : React.createElement("div", {
     className: "surface-card rounded-lg px-5 py-10 text-center",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)'
     }
   }, React.createElement("p", {
@@ -3287,7 +3290,7 @@ function App() {
     },
     className: "surface-card rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5",
     style: {
-      background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)',
+      background: GLASS_SURFACE_BG,
       border: '2px solid rgba(255,255,255,0.10)',
       color: '#fff'
     }

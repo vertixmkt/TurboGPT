@@ -21,6 +21,10 @@ var PROMPT_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-prompts";
 var SKILL_FAVORITES_STORAGE_KEY = "turbo-gpt-favorite-skills";
 var RECENTS_STORAGE_KEY = "turbo-gpt-recent-hooks";
 
+var GLASS_ACTIVE_BG = 'linear-gradient(180deg, rgba(47,85,223,0.88) 0%, rgba(23,44,140,0.78) 48%, rgba(5,5,5,0.62) 100%)';
+var GLASS_CONTROL_BG = 'linear-gradient(180deg, rgba(36,36,36,0.74) 0%, rgba(15,15,15,0.58) 100%)';
+var GLASS_SURFACE_BG = 'linear-gradient(180deg, rgba(25,25,25,0.74) 0%, rgba(8,8,8,0.58) 100%)';
+
 var CONTENT_FORMATS = [
   { id: "reels", label: "Reels", icon: "clapperboard", hint: "abertura forte", categoryIds: ["2-choque-surpresa", "3-polmica-contrariao", "8-urgncia-cta-direto", "13-resultado-transformao"], promptSubcategories: ["Copywriting", "Social Media"], terms: ["video", "reels", "shorts", "assista", "olha", "veja", "hook", "roteiro", "aconteceu", "resultado"] },
   { id: "story", label: "Story", icon: "smartphone", hint: "conversa rápida", categoryIds: ["5-perguntas-curiosidade", "6-storytelling-histria-pessoal", "8-urgncia-cta-direto"], promptSubcategories: ["Social Media", "Copywriting"], terms: ["story", "stories", "pergunta", "dm", "enquete", "historia", "hoje", "agora", "voce"] },
@@ -484,8 +488,8 @@ function SimpleCopyButton(props) {
       onClick={handleCopy}
       className="surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
       style={copied
-        ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-        : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#fff', border: '2px solid rgba(255,255,255,0.12)' }}
+        ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+        : { background: GLASS_CONTROL_BG, color: '#fff', border: '2px solid rgba(255,255,255,0.12)' }}
       title={copied ? "Copiado" : label}>
       <i data-lucide={copied ? "check" : "copy"} className="h-4 w-4" />
       <span>{copied ? "Copiado!" : label}</span>
@@ -503,8 +507,8 @@ function SaveButton(props) {
       onClick={function(event) { event.stopPropagation(); onToggle(); }}
       className="surface-card inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold transition-all active:scale-[0.98]"
       style={saved
-        ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-        : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.12)' }}
+        ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+        : { background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.12)' }}
       title={saved ? "Remover dos favoritos" : "Salvar"}>
       <i data-lucide={saved ? "bookmark-check" : "bookmark"} className="h-4 w-4" />
       <span>{saved ? "Salvo" : "Salvar"}</span>
@@ -547,8 +551,8 @@ function FilterChip(props) {
       onClick={onClick}
       className="surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
       style={active
-        ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-        : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+        ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+        : { background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
       {icon ? <i data-lucide={icon} className="h-4 w-4" /> : null}
       {label}
     </button>
@@ -577,7 +581,7 @@ function DownloadButtons(props) {
         type="button"
         onClick={function() { downloadTextFile(item.id + ".txt", content); }}
         className="surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
-        style={{ background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+        style={{ background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
         <i data-lucide="download" className="h-3.5 w-3.5" />
         .txt
       </button>
@@ -585,7 +589,7 @@ function DownloadButtons(props) {
         type="button"
         onClick={function() { downloadTextFile(item.id + ".md", content); }}
         className="surface-card inline-flex min-h-9 items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-all"
-        style={{ background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+        style={{ background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
         <i data-lucide="download" className="h-3.5 w-3.5" />
         .md
       </button>
@@ -612,7 +616,7 @@ function ContentTypeToggle(props) {
             type="button"
             onClick={function() { onChange(option.id); }}
             className="surface-card group flex min-h-14 items-center gap-3 rounded-xl px-3 text-left transition-all active:scale-[0.98]"
-            style={active ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' } : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+            style={active ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' } : { background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
             <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all" style={active
               ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
               : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -642,8 +646,8 @@ function ViewModeButton(props) {
       onClick={onClick}
       className="surface-card group inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full px-3 pr-4 text-sm font-black transition-all active:scale-[0.97]"
       style={active
-        ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-        : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+        ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+        : { background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
       <span className="inline-flex h-8 w-8 items-center justify-center rounded-full" style={active
         ? { background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(0,0,0,0.15)' }
         : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -666,8 +670,8 @@ function ContentFormatCard(props) {
       onClick={onClick}
       className="surface-card group flex min-h-[132px] min-w-0 flex-col justify-between rounded-lg p-4 text-left transition-all active:scale-[0.98] hover:-translate-y-1 sm:min-h-[148px]"
       style={active
-        ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-        : { background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', color: '#fff', border: '2px solid rgba(255,255,255,0.10)' }}>
+        ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+        : { background: GLASS_SURFACE_BG, color: '#fff', border: '2px solid rgba(255,255,255,0.10)' }}>
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-md" style={active
         ? { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }
         : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -693,7 +697,7 @@ function HookCard(props) {
   return (
     <article
       className="surface-card group relative flex flex-col overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1"
-      style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)', minHeight: '316px' }}>
+      style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)', minHeight: '316px' }}>
       <div className={"surface-rail absolute inset-y-0 left-0 w-1.5 " + styleMeta.railClass} />
       <button type="button" onClick={onOpen} className="flex-1 block w-full text-left">
         <div className="flex items-start justify-between gap-3">
@@ -729,7 +733,7 @@ function PromptCard(props) {
   return (
     <article
       className="surface-card flex min-h-[340px] flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
-      style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+      style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
       <button type="button" onClick={onOpen} className="flex min-h-0 flex-1 flex-col text-left">
         <span className="self-start rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(255,255,255,0.06)', color: '#888', border: '1px solid rgba(255,255,255,0.08)' }}>{getPromptLabel(item.subcategory)}</span>
         <span className="block pt-6">
@@ -754,7 +758,7 @@ function SkillCard(props) {
   return (
     <article
       className="surface-card flex flex-col rounded-lg p-5 transition-all hover:-translate-y-1"
-      style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+      style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
       <div className="flex-1">
         <span className="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: 'rgba(59,130,246,0.12)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.20)' }}>Skill</span>
         <h3 className="mt-4 text-lg font-bold leading-snug" style={{ color: '#fff' }}>{item.name}</h3>
@@ -1085,7 +1089,7 @@ function App() {
                 </span>
                 <span className="min-w-0">
                   <span className="block text-lg font-black tracking-normal" style={{ color: '#fff' }}>Turbo GPT</span>
-                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>Hooks e prompts</span>
+                  <span className="block text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: '#888' }}>viralização de conteúdo</span>
                 </span>
               </button>
 
@@ -1177,7 +1181,7 @@ function App() {
 
           {search.trim() ? (
             <div className="mx-auto max-w-[1240px] px-4 pb-3 md:px-6">
-              <div className="surface-card overflow-hidden rounded-lg" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)', boxShadow: '0 18px 42px rgba(0,0,0,0.6)' }}>
+              <div className="surface-card overflow-hidden rounded-lg" style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)', boxShadow: '0 18px 42px rgba(0,0,0,0.6)' }}>
                 {searchResults.length ? searchResults.map(function(item) {
                   return <ResultRow key={item.type + "-" + item.id} item={item} onOpen={handleOpenItem} />;
                 }) : <div className="px-4 py-4 text-sm font-medium" style={{ color: '#888' }}>Nenhum resultado encontrado.</div>}
@@ -1195,7 +1199,7 @@ function App() {
               </div>
               <h1 className="mt-4 max-w-[10ch] text-3xl font-black leading-tight tracking-normal sm:max-w-none md:text-5xl" style={{ color: '#fff' }}>O que você quer criar hoje?</h1>
             </div>
-            <div className="surface-card rounded-lg px-4 py-3" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+            <div className="surface-card rounded-lg px-4 py-3" style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
               <p className="text-sm font-bold" style={{ color: '#fff' }}>Você já salvou {favoriteIds.length + promptFavoriteIds.length + skillFavoriteIds.length} ideias</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-[0.12em]" style={{ color: '#888' }}>{activeItems.length} resultados prontos</p>
             </div>
@@ -1222,7 +1226,7 @@ function App() {
               }} />
           </section>
 
-          <section className="surface-card mt-4 rounded-lg p-4" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+          <section className="surface-card mt-4 rounded-lg p-4" style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex gap-2 overflow-x-auto pb-1">
                 <ViewModeButton active={viewMode === "all"} label="Todos" icon="layout-grid" onClick={function() { setViewMode("all"); }} />
@@ -1276,8 +1280,8 @@ function App() {
                     onClick={function() { handleCategorySelect(category.id); }}
                     className="surface-card inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all active:scale-[0.97]"
                     style={selectedCategory
-                      ? { background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
-                      : { background: 'linear-gradient(180deg, #181818 0%, #121212 100%)', color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
+                      ? { background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }
+                      : { background: GLASS_CONTROL_BG, color: '#888', border: '2px solid rgba(255,255,255,0.10)' }}>
                     {category.icon ? <span>{category.icon}</span> : null}
                     {category.label}
                     <span className="rounded-full px-2 py-0.5 text-[11px]" style={{ background: 'rgba(255,255,255,0.10)' }}>{category.count}</span>
@@ -1289,7 +1293,7 @@ function App() {
 
           <section className="mt-6 pb-12">
             {!sessionUser ? (
-              <div className="surface-card flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+              <div className="surface-card flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center" style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
                 <span className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #1d4ed8 0%, #000000 100%)', color: '#fff' }}>
                   <i data-lucide="lock" className="h-6 w-6" />
                 </span>
@@ -1299,7 +1303,7 @@ function App() {
                   type="button"
                   onClick={function() { setLoginModalOpen(true); }}
                   className="surface-card mt-6 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-black transition-all hover:-translate-y-0.5"
-                  style={{ background: 'linear-gradient(180deg, #2f55df 0%, #172c8c 48%, #050505 100%)', color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }}>
+                  style={{ background: GLASS_ACTIVE_BG, color: '#fff', border: '2px solid rgba(78,119,255,0.58)' }}>
                   <i data-lucide="log-in" className="h-4 w-4" />
                   Entrar na plataforma
                 </button>
@@ -1325,7 +1329,7 @@ function App() {
                 })}
               </div>
             ) : (
-              <div className="surface-card rounded-lg px-5 py-10 text-center" style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)' }}>
+              <div className="surface-card rounded-lg px-5 py-10 text-center" style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)' }}>
                 <p className="text-lg font-bold" style={{ color: '#fff' }}>Nenhum item encontrado.</p>
                 <p className="mt-2 text-sm" style={{ color: '#888' }}>Ajuste a busca ou remova um filtro para ampliar os resultados.</p>
               </div>
@@ -1337,7 +1341,7 @@ function App() {
                   type="button"
                   onClick={function() { setVisibleCount(visibleCount + 36); }}
                   className="surface-card rounded-md px-6 py-3 text-sm font-bold transition-all hover:-translate-y-0.5"
-                  style={{ background: 'linear-gradient(180deg, #141414 0%, #0f0f0f 100%)', border: '2px solid rgba(255,255,255,0.10)', color: '#fff' }}>
+                  style={{ background: GLASS_SURFACE_BG, border: '2px solid rgba(255,255,255,0.10)', color: '#fff' }}>
                   Mostrar mais
                 </button>
               </div>
